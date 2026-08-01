@@ -6,13 +6,13 @@
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#ffffff">
 <title>Energie Studio — Gebäudetechnik planen und ausführen</title>
-<meta name="description" content="Energie Studio plant und realisiert Heizung, Lüftung, Klima, Sanitär, Elektro und Gebäudeautomation. Seit 25 Jahren, aus einer Hand, in der Schweiz und in Deutschland.">
+<meta name="description" content="Energie Studio plant und realisiert Heizung, Lüftung, Klima, Sanitär, Elektro und Gebäudeautomation. Seit 25 Jahren, aus einer Hand in der Schweiz.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Overpass+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.css">
-<link rel="stylesheet" href="assets/style.css?v=1785610000">
+<link rel="stylesheet" href="assets/style.css?v=1785615880">
 </head>
 <body>
 
@@ -33,7 +33,7 @@
         <li><a href="#kontakt">Kontakt</a></li>
       </ul>
     </nav>
-    <a class="btn btn--ghost nav__cta" href="#kontakt">Beratung anfragen
+    <a class="btn btn--primary nav__cta" href="#kontakt">Beratung anfragen
       <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6"/></svg>
     </a>
     <button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobileMenu">
@@ -73,67 +73,34 @@
     <a class="sidebar__item" href="#wissen"     data-rail="wissen"><span class="n">04</span><span class="t">Wissen</span></a>
     <a class="sidebar__item" href="#kontakt"    data-rail="kontakt"><span class="n">05</span><span class="t">Kontakt</span></a>
   </nav>
-  <button class="sidebar__menu" id="sidebarMenu" aria-expanded="false" aria-controls="mobileMenu">
-    <span>Menü</span>
-    <span class="bars" aria-hidden="true"><span></span><span></span><span></span></span>
-  </button>
 </aside>
 
 <main id="main">
 
 <!-- ══ HERO (unverändert, hell) ═══════════════════════════════════════════ -->
 <section class="hero" data-parallax>
-  <!-- Ebene 1: Konstruktionsraster, bewegt sich am stärksten -->
-  <div class="hero__grid" data-layer="1" aria-hidden="true"></div>
-
-  <!-- Ebene 2: Blaupause -->
-  <div class="hero__blueprint" data-layer="2" aria-hidden="true">
-    <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
-      <g class="hb-line">
-        <path d="M1020 720 V200 H1210 V720"/>
-        <path d="M1250 720 V340 H1430 V720"/>
-        <path d="M860 720 V480 H980 V720"/>
-        <path d="M40 720 H1580"/>
-      </g>
-      <g class="hb-thin">
-        <path d="M1020 260 H1210 M1020 320 H1210 M1020 380 H1210 M1020 440 H1210 M1020 500 H1210 M1020 560 H1210 M1020 620 H1210 M1020 680 H1210"/>
-        <path d="M1070 200 V720 M1120 200 V720 M1165 200 V720"/>
-        <path d="M1250 400 H1430 M1250 460 H1430 M1250 520 H1430 M1250 580 H1430 M1250 640 H1430"/>
-        <path d="M1300 340 V720 M1360 340 V720"/>
-        <path d="M880 540 H980 M880 600 H980 M880 660 H980"/>
-        <path d="M700 120 L860 120 L860 220 L940 220"/>
-        <path d="M1300 80 L1300 160 L1500 160 L1500 260"/>
-        <circle cx="1300" cy="80" r="12"/><path d="M1294 80 h12 M1300 74 v12"/>
-        <circle cx="1500" cy="260" r="12"/><path d="M1494 260 h12"/>
-        <path d="M120 240 h180 v120 h-180 Z M120 300 h180 M180 240 v120"/>
-        <path d="M300 760 L520 760 L520 680"/>
-      </g>
-      <g class="hb-dot"><circle cx="940" cy="220" r="4"/><circle cx="520" cy="680" r="4"/></g>
-    </svg>
-  </div>
-
   <div class="hero__visual" data-hero-visual data-layer="3">
-      <img src="assets/img/gebaeude.png" width="910" height="793"
-           alt="Schnitt durch ein Bürogebäude mit sichtbarer Gebäudetechnik: Lüftungskanäle, Steigzonen und Technikzentrale" fetchpriority="high">
+      <img src="assets/img/header-gebaeude.webp" width="2600" height="1451"
+           alt="Modernes Bürogebäude, dahinter die technische Zeichnung seiner Gebäudetechnik" fetchpriority="high">
   </div>
 
   <div class="hero__inner">
     <div class="hero__text" data-layer="4">
       <p class="kenn hero__kicker">Gebäudetechnik. Energie. Zukunft.</p>
       <h1 class="display hero__title" data-hero-title>
-        <span class="hero__line">Wir planen</span>
-        <span class="hero__line">die Lösungen</span>
-        <span class="hero__line teal">von morgen.</span>
+        <span class="hero__line">Ihr Partner für</span>
+        <span class="hero__line">nachhaltige Gebäudetechnik</span>
+        <span class="hero__line teal">seit 25 Jahren</span>
       </h1>
       <p class="lead hero__lead">
         Energie Studio begleitet Gebäude und Industrie von der Analyse über die
         Strategie bis zur Umsetzung effizienter Energielösungen.
       </p>
       <div class="hero__actions">
-        <a class="btn btn--primary" href="#projekte">Projekte entdecken
+        <a class="btn btn--ghost" href="#projekte">Projekte entdecken
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6"/></svg>
         </a>
-        <a class="btn btn--ghost" href="#kontakt">Beratung anfragen
+        <a class="btn btn--primary" href="#kontakt">Beratung anfragen
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6"/></svg>
         </a>
       </div>
@@ -141,18 +108,24 @@
 
     <div class="hero__spacer" aria-hidden="true"></div>
 
+    <!-- Die vier Punkte stehen am rechten Rand untereinander:
+         Sinnbild, feiner Trennstrich, Aussage. -->
     <div class="hero__facts" data-layer="4">
       <div class="fact">
-        <span class="fact__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21c5-3 8-6.5 8-11a8 8 0 0 0-16 0c0 4.5 3 8 8 11Z"/><path d="M12 21V7"/></svg></span>
-        <div><h3>Nachhaltig</h3><p>Energieeffiziente Konzepte für eine grüne Zukunft.</p></div>
+        <span class="fact__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="2.5" width="13" height="16" rx="1.2"/><path d="M6 6.5h2M6 10h2M6 13.5h2M10.5 6.5h3M10.5 10h2"/><circle cx="16.5" cy="15.5" r="4"/><path d="m14.8 15.6 1.3 1.3 2.6-2.7M19.4 18.6 21.5 21"/></svg></span>
+        <p>Ganzheitliche Erneuerung bestehender HLKS-Anlagen</p>
       </div>
       <div class="fact">
-        <span class="fact__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z"/></svg></span>
-        <div><h3>Effizient</h3><p>Intelligente Lösungen senken Verbrauch und Kosten.</p></div>
+        <span class="fact__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20.5V13m0 0-2 2m2-2 2 2M11 20.5V8.5m0 0-2 2m2-2 2 2M18 20.5V4m0 0-2 2m2-2 2 2"/></svg></span>
+        <p>Steigerung von Leistungsfähigkeit und Nachhaltigkeit</p>
       </div>
       <div class="fact">
-        <span class="fact__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 10v11h14V10"/></svg></span>
-        <div><h3>Ganzheitlich</h3><p>Von der Planung bis zur Umsetzung, alles aus einer Hand.</p></div>
+        <span class="fact__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 12a5 5 0 0 1 10 0v1H7v-1Z"/><path d="M5 16.5h14M6.5 20h11"/><path d="M9 7V4.5M12 6.5V3M15 7V4.5"/><circle cx="9" cy="3.6" r="1.1"/><circle cx="12" cy="2.4" r="1.1"/><circle cx="15" cy="3.6" r="1.1"/></svg></span>
+        <p>Erweiterung der Gebäudeautomation im laufenden Betrieb</p>
+      </div>
+      <div class="fact">
+        <span class="fact__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19.5h18"/><path d="m6 16 1-3.6 8.3-8.3a1.6 1.6 0 0 1 2.3 0l1.3 1.3a1.6 1.6 0 0 1 0 2.3L10.6 16H6Z"/><path d="m14.2 5.8 3 3"/></svg></span>
+        <p>Dokumentation als Entscheidungsgrundlage für Eigentümer</p>
       </div>
     </div>
   </div>
@@ -278,16 +251,16 @@
         <!-- Dasselbe Gebäude in vier Zuständen: je Gewerk sind nur die
              zugehörigen Leitungen und Geräte farbig, der Rest tritt zurück. -->
         <div class="lst__haus" data-lst-haus>
-          <img src="assets/gewerk/heizung.webp" width="1400" height="1050" decoding="async"
+          <img src="assets/gewerk/heizung.webp" width="2000" height="1500" decoding="async"
                class="is-on" data-lst-bild="0"
                alt="Gebäude im Schnitt: Technikzentrale im Untergeschoss, rote und blaue Heiz- und Kälteleitungen über alle Geschosse.">
-          <img src="assets/gewerk/lueftung.webp" width="1400" height="1050" loading="lazy" decoding="async"
+          <img src="assets/gewerk/lueftung.webp" width="2000" height="1500" loading="lazy" decoding="async"
                data-lst-bild="1"
                alt="Dasselbe Gebäude: Lüftungskanäle unter den Decken und die Luftverteilung je Geschoss.">
-          <img src="assets/gewerk/sanitaer.webp" width="1400" height="1050" loading="lazy" decoding="async"
+          <img src="assets/gewerk/sanitaer.webp" width="2000" height="1500" loading="lazy" decoding="async"
                data-lst-bild="2"
                alt="Dasselbe Gebäude: Sanitärsteigzonen und die Nasszellen über die Geschosse.">
-          <img src="assets/gewerk/automation.webp" width="1400" height="1050" loading="lazy" decoding="async"
+          <img src="assets/gewerk/automation.webp" width="2000" height="1500" loading="lazy" decoding="async"
                data-lst-bild="3"
                alt="Dasselbe Gebäude: Schaltschrank und Messstellen der Gebäudeautomation.">
         </div>
@@ -341,19 +314,18 @@
   <span class="counter" aria-hidden="true">02 / 05</span>
   <div class="wrap">
     <div class="sec__head">
-      <div>
-        <p class="kicker">Unsere Projekte</p>
-        <h2 class="h2" data-reveal>Planung mit<br>Weitblick<span class="dot">.</span></h2>
-      </div>
-      <div>
+      <p class="kicker">Unsere Projekte</p>
+      <h2 class="h2" data-reveal>Planung mit<br>Weitblick</h2>
+      <div class="sec__text">
         <p class="lead">Jedes Projekt ist einzigartig, unsere Lösungen sind es auch. Entdecken Sie eine Auswahl erfolgreich realisierter Projekte.</p>
-        <div style="margin-top:2rem"><a class="link" href="projekte.html">Alle Projekte ansehen
+        <div class="sec__more"><a class="link" href="projekte.html">Alle Projekte ansehen
           <svg width="18" height="12" viewBox="0 0 18 12" fill="none" aria-hidden="true"><path d="M0 6h16M11 1l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg>
         </a></div>
       </div>
     </div>
 
-    <div class="karten">
+    <div data-slider>
+    <div class="karten" data-slider-track>
       <a class="karte" href="projekte.html">
         <div class="karte__media"><img src="assets/img/technik-1.jpg" alt="Technikzentrale mit Verteilern und Rohrleitungen" loading="lazy"></div>
         <div class="karte__body">
@@ -381,29 +353,53 @@
           <span class="karte__go" aria-hidden="true"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M0 6h16M11 1l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg></span>
         </div>
       </a>
+      <a class="karte" href="projekte.html">
+        <div class="karte__media"><img src="assets/img/technik-3.jpg" alt="Technikraum mit Wärmeerzeugung" loading="lazy"></div>
+        <div class="karte__body">
+          <span class="kenn karte__cat">Areal &amp; Versorgung</span>
+          <h3>PUK Rheinau</h3>
+          <span class="kenn karte__meta">Rheinau, CHF 2 Mio.</span>
+          <span class="karte__go" aria-hidden="true"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M0 6h16M11 1l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+        </div>
+      </a>
+      <a class="karte" href="projekte.html">
+        <div class="karte__media"><img src="assets/img/bau-1.jpg" alt="Installationsarbeiten an der Gebäudetechnik" loading="lazy"></div>
+        <div class="karte__body">
+          <span class="kenn karte__cat">Industrie</span>
+          <h3>TE Connectivity Ltd.</h3>
+          <span class="kenn karte__meta">CHF 1.2 Mio.</span>
+          <span class="karte__go" aria-hidden="true"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M0 6h16M11 1l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+        </div>
+      </a>
+      <a class="karte" href="projekte.html">
+        <div class="karte__media"><img src="assets/img/bau-2.jpg" alt="Anlageninspektion an einer haustechnischen Anlage" loading="lazy"></div>
+        <div class="karte__body">
+          <span class="kenn karte__cat">Infrastruktur</span>
+          <h3>Flughafen Frankfurt</h3>
+          <span class="kenn karte__meta">21.6 km²</span>
+          <span class="karte__go" aria-hidden="true"><svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M0 6h16M11 1l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg></span>
+        </div>
+      </a>
+    </div>
+
+      <div class="slider__foot">
+        <div class="slider__progress"><span data-slider-progress></span></div>
+        <div class="slider__btns">
+          <button class="slider__btn" data-slider-prev aria-label="Vorherige Projekte">
+            <svg width="18" height="12" viewBox="0 0 18 12" fill="none" aria-hidden="true"><path d="M18 6H2M7 1 2 6l5 5" stroke="currentColor" stroke-width="1.4"/></svg>
+          </button>
+          <button class="slider__btn" data-slider-next aria-label="Weitere Projekte">
+            <svg width="18" height="12" viewBox="0 0 18 12" fill="none" aria-hidden="true"><path d="M0 6h16M11 1l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 </div><!-- /stack -->
 
-<!-- ══ ABLAUF ═════════════════════════════════════════════════════════════ -->
-<section class="sec sec--off" data-chapter="projekte" data-theme="light">
-  <div class="wrap">
-    <div class="sec__head">
-      <h2 class="h2" data-reveal>Wie ein Projekt<br>bei uns läuft.</h2>
-      <p class="lead">Nach SIA-Phasen. Sie wissen an jedem Punkt, was vorliegt und was als Nächstes entschieden wird.</p>
-    </div>
-
-    <div class="ablauf" id="ablauf">
-      <span class="phase__bar" data-phase-bar aria-hidden="true"></span>
-      <div class="phase"><span class="kenn phase__n">Phase 21</span><h3>Vorstudie</h3><p>Bestand aufnehmen, Bedarf klären, Varianten rechnen. Am Ende steht eine Empfehlung mit Zahlen.</p></div>
-      <div class="phase"><span class="kenn phase__n">Phase 31</span><h3>Vorprojekt</h3><p>Das gewählte Konzept wird durchgeplant und grob kostiert. Grundlage für den Baukredit.</p></div>
-      <div class="phase"><span class="kenn phase__n">Phase 32</span><h3>Bauprojekt</h3><p>Detailplanung aller Gewerke, Kostenvoranschlag, Bewilligungen.</p></div>
-      <div class="phase"><span class="kenn phase__n">Phase 41</span><h3>Ausschreibung</h3><p>Leistungsverzeichnisse, Offertvergleich, Vergabeantrag. Wir prüfen, was wirklich angeboten wird.</p></div>
-      <div class="phase"><span class="kenn phase__n">Phase 51–53</span><h3>Ausführung</h3><p>Bauleitung, Inbetriebnahme, Übergabe. Danach Messwerte statt Versprechen.</p></div>
-    </div>
-  </div>
-</section>
+<!-- Der Ablauf („Wie ein Projekt bei uns läuft") steht jetzt auf der
+     Projekt-Unterseite — hier auf der Startseite fällt er weg. -->
 
 <!-- ══════════════════════════════════════════════════════════════════════════
      TEAM — NEU nach Vorlage: hell, Schieber mit randlosen Portraits
@@ -412,14 +408,12 @@
   <span class="counter" aria-hidden="true">03 / 05</span>
   <div class="wrap">
     <div class="sec__head">
-      <div>
-        <p class="kicker">Unser Team</p>
-        <h2 class="h2" data-reveal>Kompetenz,<br>die verbindet<span class="dot">.</span></h2>
-        <p class="lead" style="margin-top:1.1rem">Interdisziplinär. Erfahren. Engagiert.<br>Wir planen gemeinsam die Gebäudetechnik von morgen.</p>
-      </div>
-      <div>
+      <p class="kicker">Unser Team</p>
+      <h2 class="h2" data-reveal>Kompetenz,<br>die verbindet</h2>
+      <p class="lead sec__sub">Interdisziplinär. Erfahren. Engagiert.<br>Wir planen gemeinsam die Gebäudetechnik von morgen.</p>
+      <div class="sec__text">
         <p class="lead">Unser Team vereint Fachwissen aus allen Bereichen der Gebäudetechnik. Was uns verbindet: der Anspruch an Qualität, Nachhaltigkeit und Innovation.</p>
-        <div style="margin-top:2rem"><a class="link" href="#kontakt">Mehr über uns
+        <div class="sec__more"><a class="link link--teal" href="#kontakt">Mehr über uns
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2 12 12 2M5 2h7v7" stroke="currentColor" stroke-width="1.4"/></svg>
         </a></div>
       </div>
@@ -429,30 +423,37 @@
   <div class="slider" data-slider>
     <div class="slider__track" data-slider-track>
       <article class="person">
-        <img src="assets/img/manuel.png" alt="Manuel Leitner, Geschäftsführung" loading="lazy">
+        <img src="assets/img/team-manuel.webp" width="1000" height="1133" alt="Manuel Leitner" loading="lazy">
         <div class="person__bar">
-          <div><span class="kenn nm">Manuel Leitner</span><span class="rl">Geschäftsführung, MAS VDC</span></div>
+          <div><span class="kenn nm">Manuel Leitner</span><span class="rl">MAS VDC</span></div>
           <span class="person__plus" aria-hidden="true"></span>
         </div>
       </article>
       <article class="person">
-        <div class="person__ph" aria-hidden="true">DR</div>
+        <img src="assets/img/team-domenico.webp" width="1000" height="1133" alt="Domenico Rottensteiner" loading="lazy">
         <div class="person__bar">
-          <div><span class="kenn nm">Domenico Rottensteiner</span><span class="rl">Dipl. Techniker HF, HLKS</span></div>
+          <div><span class="kenn nm">Domenico Rottensteiner</span><span class="rl">Dipl. Techniker HLKS</span></div>
+          <span class="person__plus" aria-hidden="true"></span>
+        </div>
+      </article>
+      <article class="person">
+        <img src="assets/img/team-severin.webp" width="1000" height="1133" alt="Severin Mustone" loading="lazy">
+        <div class="person__bar">
+          <div><span class="kenn nm">Severin Mustone</span><span class="rl">Energie Studio</span></div>
+          <span class="person__plus" aria-hidden="true"></span>
+        </div>
+      </article>
+      <article class="person">
+        <img src="assets/img/team-hasi.webp" width="1000" height="1133" alt="Hazi" loading="lazy">
+        <div class="person__bar">
+          <div><span class="kenn nm">Hazi</span><span class="rl">Team Energie Studio</span></div>
           <span class="person__plus" aria-hidden="true"></span>
         </div>
       </article>
       <article class="person">
         <div class="person__ph" aria-hidden="true">VA</div>
         <div class="person__bar">
-          <div><span class="kenn nm">Vesa Ademi</span><span class="rl">Projektleiter Heizung &amp; Kälte</span></div>
-          <span class="person__plus" aria-hidden="true"></span>
-        </div>
-      </article>
-      <article class="person">
-        <div class="person__ph" aria-hidden="true">ES</div>
-        <div class="person__bar">
-          <div><span class="kenn nm">Backoffice</span><span class="rl">Administration &amp; Abwicklung</span></div>
+          <div><span class="kenn nm">Vesa Ademi</span><span class="rl">Projektleiter Heizung Kälte</span></div>
           <span class="person__plus" aria-hidden="true"></span>
         </div>
       </article>
@@ -473,13 +474,6 @@
     </div>
   </div>
 
-  <div class="wrap">
-    <div class="standorte">
-      <div class="standort"><h3>Schweiz</h3><p>Windisch, Kanton Aargau</p></div>
-      <div class="standort"><h3>Deutschland</h3><p>Kleinblittersdorf, Saarland</p></div>
-      <div class="standort"><h3>Schwesterfirma</h3><p>Energy Consulting berät im Vorfeld — die Ausführung übernimmt Energie Studio.</p></div>
-    </div>
-  </div>
 </section>
 
 <!-- ══ WISSEN — Textblock links, Karten rechts, Blaupause im Hintergrund ══ -->
@@ -512,14 +506,16 @@
     </svg>
   </div>
 
-  <div class="wrap news__grid">
-    <div class="news__head">
+  <div class="wrap news__wrap">
+    <div class="sec__head">
       <p class="kicker">Wissen</p>
-      <h2 class="h2" data-reveal>News &amp;<br>Einblicke<span class="dot">.</span></h2>
-      <p class="lead">Bleiben Sie informiert über Normen, Förderungen und Technik aus der Gebäudetechnik.</p>
-      <div style="margin-top:2rem"><a class="link" href="#wissen">Alle News ansehen
-        <svg width="18" height="12" viewBox="0 0 18 12" fill="none" aria-hidden="true"><path d="M0 6h16M11 1l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg>
-      </a></div>
+      <h2 class="h2" data-reveal>News &amp;<br>Einblicke</h2>
+      <div class="sec__text">
+        <p class="lead">Bleiben Sie informiert über Normen, Förderungen und Technik aus der Gebäudetechnik.</p>
+        <div class="sec__more"><a class="link" href="#wissen">Alle News ansehen
+          <svg width="18" height="12" viewBox="0 0 18 12" fill="none" aria-hidden="true"><path d="M0 6h16M11 1l5 5-5 5" stroke="currentColor" stroke-width="1.4"/></svg>
+        </a></div>
+      </div>
     </div>
 
     <div class="news__cards">
@@ -566,11 +562,19 @@
 </main>
 
 <footer class="footer" id="kontakt">
+  <!-- Ganze Breite, randlos: das Bild trägt den Übergang in den Abschluss. -->
+  <figure class="footer__foto">
+    <img src="assets/img/meeting.webp" width="2400" height="1028"
+         alt="Beratungsgespräch bei Energie Studio" loading="lazy" decoding="async">
+  </figure>
+
+  <span class="footer__markbox" aria-hidden="true"><img class="footer__mark" src="assets/logo/icon.svg" alt=""></span>
+
   <div class="wrap">
     <div class="footer__contact">
       <div>
         <p class="kicker">Kontakt</p>
-        <h2 class="h2" data-reveal>Erzählen Sie uns<br>von Ihrem Vorhaben<span class="dot">.</span></h2>
+        <h2 class="h2" data-reveal>Erzählen Sie uns<br>von Ihrem Vorhaben</h2>
         <p class="lead" style="margin-top:1.4rem">
           Ob Neubau, Sanierung oder eine Anlage, die nicht das leistet, was sie soll:
           schildern Sie uns kurz die Ausgangslage. Wir melden uns innerhalb von zwei Arbeitstagen.
@@ -581,11 +585,36 @@
           </a>
         </div>
       </div>
+      <!-- Ohne Server im Hintergrund: das Formular stellt die Nachricht
+           zusammen und übergibt sie ans Mailprogramm. Kein fremder Dienst. -->
+      <form class="kform" data-kontakt-form novalidate>
+        <div class="kform__reihe">
+          <label class="kform__feld">
+            <span class="kenn">Name</span>
+            <input type="text" name="name" autocomplete="name" required>
+          </label>
+          <label class="kform__feld">
+            <span class="kenn">E-Mail</span>
+            <input type="email" name="mail" autocomplete="email" required>
+          </label>
+        </div>
+        <label class="kform__feld">
+          <span class="kenn">Telefon <em>optional</em></span>
+          <input type="tel" name="tel" autocomplete="tel">
+        </label>
+        <label class="kform__feld">
+          <span class="kenn">Ihr Vorhaben</span>
+          <textarea name="text" rows="4" required></textarea>
+        </label>
+        <button class="btn btn--primary kform__ab" type="submit">Anfrage senden
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6"/></svg>
+        </button>
+        <p class="kform__hinweis" data-kontakt-hinweis role="status"></p>
+      </form>
+
       <dl class="kontakt__list">
         <div class="kontakt__row"><dt class="kenn">E-Mail</dt><dd><a href="mailto:info@energie-studio.ch">info@energie-studio.ch</a></dd></div>
-        <div class="kontakt__row"><dt class="kenn">Schweiz</dt><dd>Windisch, Kanton Aargau</dd></div>
-        <div class="kontakt__row"><dt class="kenn">Deutschland</dt><dd>Kleinblittersdorf, Saarland</dd></div>
-        <div class="kontakt__row" style="border:0"><dt class="kenn">Leistungen</dt><dd>Planung, Ausführung und Optimierung HLKSE und Gebäudeautomation</dd></div>
+        <div class="kontakt__row" style="border:0"><dt class="kenn">Standort</dt><dd>Windisch, Kanton Aargau</dd></div>
       </dl>
     </div>
 
@@ -626,7 +655,7 @@
 
     <div class="footer__base">
       <span>© 2026 Energie Studio AG</span>
-      <span>Windisch (CH) · Kleinblittersdorf (DE)</span>
+      <span>Windisch, Kanton Aargau</span>
     </div>
   </div>
 </footer>
@@ -635,6 +664,6 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="assets/site.js?v=1785610000"></script>
+<script src="assets/site.js?v=1785615880"></script>
 </body>
 </html>

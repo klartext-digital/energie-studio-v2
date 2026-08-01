@@ -38,7 +38,13 @@
 
   --wrap: 1320px;
   --pad:  clamp(1.25rem, 4vw, 3.5rem);
-  --sec:  clamp(5rem, 9vw, 9rem);
+  /* Raender im Kopfbereich, getrennt vom uebrigen Seitenrand:
+     links sitzt der Titel auf derselben Kante wie alle anderen
+     Abschnitte, rechts endet der Inhalt frueher, damit er dem
+     Gebaeude nicht ins Bild laeuft. */
+  --hero-links:  clamp(1.5rem, 6vw, 7rem);
+  --hero-rechts: clamp(1.5rem, 4vw, 4.5rem);
+  --sec:  clamp(3.5rem, 6vw, 6.5rem);
   --radius: .625rem;        /* nur in den zwei neuen Kapiteln */
 
   --z-sticky: 100;
@@ -97,14 +103,21 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 }
 
 /* --- Typografie ----------------------------------------------------------- */
+/* Die Schriftgroesse haengt an der Spalte, nicht am Fenster — und der
+   Faktor ist so gewaehlt, dass das LAENGSTE Wort noch hineinpasst.
+   Gemessen: "Gebäudetechnik" ist 9,0 mal so breit wie die Schrift hoch
+   ist. 10,4 % der Spalte x 9,0 = 94 % der Spalte. Damit bricht kein Wort
+   mehr in der Mitte auseinander. */
 .display {
-  font-size: clamp(2.1rem, 3.5vw, 3.3rem);
-  font-weight: 600; line-height: 1.06; letter-spacing: -.02em;
+  font-size: clamp(2.1rem, 4.6vw, 4.8rem);          /* Rueckfallebene */
+  font-size: clamp(2.1rem, 10.4cqw, 4.8rem);
+  font-weight: 600; line-height: 1.12; letter-spacing: -.02em;
   text-transform: uppercase; text-wrap: balance;
 }
 .h2 {
-  font-size: clamp(1.9rem, 3vw, 2.9rem);
-  font-weight: 600; line-height: 1.06; letter-spacing: -.015em;
+  font-size: clamp(1.9rem, 4.2vw, 4.3rem);          /* Rueckfallebene */
+  font-size: clamp(1.9rem, 7.4cqw, 4.3rem);
+  font-weight: 600; line-height: 1.12; letter-spacing: -.015em;
   text-transform: uppercase; text-wrap: balance;
 }
 .lead {
@@ -133,16 +146,28 @@ p { max-width: 68ch; color: var(--body); text-wrap: pretty }
               transform 90ms var(--ease);
 }
 .btn svg { transition: transform var(--t-base) var(--ease); flex: none }
-.btn:hover svg { transform: translateX(4px) }
-.btn:active { transform: scale(.98) }
-.btn--primary { background: var(--teal); color: var(--ink) }
-.btn--primary:hover { background: var(--teal-dark) }
+
+/* Ein Verhalten für ALLE Schaltflächen, egal welche Farbe:
+   Pfeil wandert, Fläche hebt sich leicht, Schein in der Markenfarbe.
+   Beim Drücken geht sie zurück auf die Fläche. */
+.btn:hover svg { transform: translateX(5px) }
+.btn:hover  { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(80,186,160,.24) }
+.btn:active { transform: translateY(0) scale(.985); box-shadow: none }
+.btn:focus-visible { outline: 2px solid var(--teal-ink); outline-offset: 3px }
+
+/* Gefüllt = die eine wichtige Handlung. Umrandet = alles Weitere. */
+.btn--primary { background: var(--teal); color: var(--ink); border-color: var(--teal) }
+.btn--primary:hover { background: var(--teal-dark); border-color: var(--teal-dark) }
 .btn--ghost { border-color: var(--teal); color: var(--teal-ink) }
 .btn--ghost:hover { background: var(--teal); color: var(--ink); border-color: var(--teal) }
 .btn--ink { border-color: var(--ink); color: var(--ink) }
-.btn--ink:hover { background: var(--ink); color: var(--white) }
-.btn--onDark { background: var(--teal); color: var(--ink) }
-.btn--onDark:hover { background: var(--white) }
+.btn--ink:hover { background: var(--ink); color: var(--white); border-color: var(--ink) }
+.btn--onDark { background: var(--teal); color: var(--ink); border-color: var(--teal) }
+.btn--onDark:hover { background: var(--white); border-color: var(--white); box-shadow: 0 8px 22px rgba(255,255,255,.18) }
+
+/* Auch die Textlinks bekommen dieselbe Bewegung im Pfeil. */
+.link svg { transition: transform var(--t-base) var(--ease) }
+.link:hover svg { transform: translateX(5px) }
 
 /* --- Navigation (unverändert, hell) --------------------------------------- */
 .nav {
@@ -162,11 +187,21 @@ p { max-width: 68ch; color: var(--body); text-wrap: pretty }
 /* Sobald die Seitenleiste übernimmt, tritt der obere Balken zurück */
 .nav.is--replaced { transform: translateY(-100%); pointer-events: none }
 .nav__inner {
-  display: flex; align-items: center; gap: 2rem; height: 5.5rem;
-  width: 100%; max-width: var(--wrap); margin-inline: auto; padding-inline: var(--pad);
+  /* Drei Spalten, aussen gleich breit: nur so steht das Menue in der echten
+     Bildmitte, egal wie breit Logo und Knopf sind. Volle Breite auf
+     denselben Raendern wie der Kopfbereich darunter. */
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: center; gap: 2rem; height: 6.5rem;
+  width: 100%;
+  padding-left: var(--hero-links); padding-right: var(--hero-rechts);
 }
-.nav__logo img { height: 2.6rem; width: auto }
-.nav__links { display: flex; gap: clamp(1.2rem, 2.4vw, 2.6rem); margin-left: auto }
+.nav__logo { display: flex; align-items: center; justify-self: start }
+.nav__logo img { height: 4.6rem; width: auto }
+/* Der Knopf sitzt rechts in seiner Spalte und waechst nicht mit ihr mit. */
+.nav__cta { justify-self: end }
+/* Das Menue steht mittig: gleicher Abstand nach links wie nach rechts,
+   unabhaengig davon wie breit Logo und Knopf sind. */
+.nav__links { display: flex; gap: clamp(1.2rem, 2.4vw, 2.6rem) }
 .nav__links a {
   position: relative; font-size: .82rem; font-weight: 500;
   letter-spacing: .09em; text-transform: uppercase; padding-block: .4rem;
@@ -200,51 +235,34 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
 
 /* --- Hero (unverändert, hell) --------------------------------------------- */
 .hero {
-  position: relative; padding-top: 5.5rem; min-height: min(100svh, 50rem);
+  /* Der Abstand oben muss der Navigationshoehe entsprechen, sonst
+   rutscht der Titelblock darunter. */
+  position: relative; padding-top: 6.5rem; min-height: 100svh;
   display: flex; align-items: center; overflow: hidden;
-  background:
-    radial-gradient(120% 90% at 78% 42%, rgba(80,186,160,.13) 0%, rgba(80,186,160,0) 58%),
-    linear-gradient(180deg, var(--white) 0%, var(--off) 100%);
-}
-.hero__grid {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(to right,  var(--linie) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--linie) 1px, transparent 1px);
-  background-size: 7.5rem 7.5rem; opacity: .8;
-  mask-image: radial-gradient(85% 75% at 50% 45%, #000 30%, transparent 100%);
-  -webkit-mask-image: radial-gradient(85% 75% at 50% 45%, #000 30%, transparent 100%);
-  pointer-events: none;
+  /* Flache Flaeche statt Verlauf: das Gebaeudebild bringt seinen eigenen
+     hellen Grund mit, ein Verlauf dahinter zeichnet sonst eine sichtbare
+     Kante entlang der Bildbegrenzung. */
+  background: var(--off);
 }
 /* --- Parallax-Ebenen im Hero ---------------------------------------------
    Vier Tiefen: Raster ganz hinten bewegt sich am stärksten, der Text vorn
    am wenigsten. Der Höhenunterschied erzeugt die Tiefe.                  */
 .hero [data-layer] { will-change: transform }
 
-/* Die beiden Hintergrund-Ebenen ragen oben über den Hero hinaus. Ohne
-   diesen Vorrat wandern sie beim Scrollen nach unten weg und hinterlassen
-   eine leere Fläche. Der Überstand muss mindestens so gross sein wie ihr
-   Weg (siehe yPercent-Werte in site.js). */
-.hero__grid, .hero__blueprint { top: -50%; bottom: auto; height: 150% }
-
-.hero__blueprint {
-  position: absolute; inset: 0; pointer-events: none;
-  mask-image: linear-gradient(to right, transparent 0%, transparent 22%, #000 58%, #000 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 22%, #000 58%, #000 100%);
-}
-.hero__blueprint svg { position: absolute; inset: 0; width: 100%; height: 100% }
-.hb-line { fill: none; stroke: var(--teal-ink); stroke-width: 1.2; opacity: .3 }
-.hb-thin { fill: none; stroke: var(--teal-ink); stroke-width: .85; opacity: .18 }
-.hb-dot  { fill: var(--teal-ink); opacity: .38 }
-
 /* Volle Bildschirmbreite statt zentriertem Container: Text schmal links,
    Merkmale ganz aussen rechts — dazwischen bleibt maximaler Raum fürs
    Gebäude, genau wie in der Vorlage. */
 .hero__inner {
   position: relative; width: 100%; max-width: none;
-  padding: clamp(2rem, 3.5vw, 3rem) var(--pad);
-  /* 33 % — schmaler passen die beiden Buttons nicht mehr nebeneinander */
-  display: grid; grid-template-columns: 33% minmax(0, 1fr) 13.5rem;
+  /* Raender im Kopfbereich, bewusst festgelegt:
+     links steht der Text auf derselben Kante wie alles andere auf der Seite,
+     rechts endet der Inhalt vor dem Gebaeude und laeuft ihm nie hinein. */
+  padding: clamp(2rem, 3.5vw, 3rem) var(--hero-rechts) clamp(2rem, 3.5vw, 3rem) var(--hero-links);
+  /* Einspaltig: der Titelblock steht links, das Gebaeude liegt als Bild
+     dahinter in der rechten Haelfte. Die Merkmale sitzen jetzt unter den
+     Knoepfen und laufen dem Gebaeude nicht mehr ins Bild. */
+  display: grid;
+  grid-template-columns: minmax(0, 42rem) minmax(0, 1fr) 17rem;
   align-items: center; gap: clamp(1.25rem, 2.4vw, 2.5rem);
 }
 .hero__kicker { color: var(--teal-ink); margin-bottom: 1.3rem }
@@ -259,30 +277,39 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
    Es liegt nicht mehr im Raster, darum der Platzhalter in der Mitte. */
 .hero__visual {
   position: absolute;
-  /* zwischen Textspalte und Merkmalspalte, unten bündig */
-  left: 34%; right: 17%;
-  top: 5%; bottom: 0;
+  /* Das Gebaeude sitzt in der rechten Haelfte und darf bis an den rechten
+     Rand laufen. Links bleibt die Flaeche fuer Titel und Text frei. */
+  left: 16%; right: calc(13.5rem + var(--hero-rechts) - 3rem);
+  top: 2%; bottom: 0;
   z-index: 0;
   pointer-events: none;
 }
 .hero__visual img {
   width: 100%; height: 100%;
   object-fit: contain;
-  object-position: bottom center;
-  filter: drop-shadow(0 40px 70px rgba(26,26,26,.16));
+  object-position: center bottom;
+  /* Kein Schlagschatten mehr: das Bild bringt seine eigene Bodenspiegelung
+     mit, ein zweiter Schatten daruntergelegt wirkt aufgeklebt. */
 }
 .hero__spacer { min-height: 1px }
 
 /* Text und Merkmale liegen vor dem Gebäude */
 .hero__text, .hero__facts { position: relative; z-index: 1 }
-.hero__facts { display: flex; flex-direction: column; gap: 2.4rem }
-.fact { display: grid; grid-template-columns: 2.5rem 1fr; gap: .9rem; align-items: start }
-.fact__icon { width: 2.5rem; height: 2.5rem; border: 1px solid var(--teal); border-radius: 50%; display: grid; place-items: center; color: var(--teal-ink) }
-.fact__icon svg { width: 1.05rem; height: 1.05rem }
-.fact h3 { font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .45rem }
-.fact p { font-size: .85rem; line-height: 1.55; max-width: 22ch }
+/* Bezugsgroesse fuer die Titelschrift — siehe cqw oben. */
+.hero__text, .sec__head, .footer__contact, .page-head .wrap, .kontakt { container-type: inline-size }
+/* Die vier Punkte stehen am rechten Rand untereinander.
+   Aufbau je Zeile: Sinnbild — feiner senkrechter Strich — Aussage.
+   Der Strich ist der Rahmen der Textspalte, kein eigenes Element. */
+.hero__facts { display: flex; flex-direction: column; gap: clamp(1.5rem, 2.4vw, 2.1rem) }
+.fact { display: grid; grid-template-columns: 2.6rem 1fr; align-items: center; gap: 1.1rem }
+.fact__icon { width: 2.6rem; height: 2.6rem; display: grid; place-items: center; color: var(--teal-ink) }
+.fact__icon svg { width: 100%; height: 100% }
+.fact p {
+  font-size: .9rem; line-height: 1.5; max-width: 26ch;
+  padding-left: 1.1rem; border-left: 1px solid var(--linie);
+}
 
-.hero__scroll { position: absolute; left: var(--pad); bottom: 2rem; display: flex; align-items: center; gap: .7rem; color: var(--body) }
+.hero__scroll { position: absolute; right: var(--hero-rechts); bottom: 1.75rem; display: flex; align-items: center; gap: .7rem; color: var(--body) }
 .hero__scroll .bar { width: 3rem; height: 1px; background: var(--linie); position: relative; overflow: hidden }
 .hero__scroll .bar::after { content: ""; position: absolute; inset: 0; background: var(--teal); transform: translateX(-100%); animation: sweep 2.4s var(--ease-io) infinite }
 @keyframes sweep { 0% { transform: translateX(-100%) } 60%,100% { transform: translateX(100%) } }
@@ -299,17 +326,43 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
 .sec--ink p, .sec--ink .lead { color: var(--body-dark) }
 .sec--teal p, .sec--teal .lead { color: rgba(26,26,26,.78) }
 
+/* Einheitliches Kopfmuster für ALLE Sektionen:
+   Zeile 1 — die Kennung oben links.
+   Zeile 2 — links der grosse Titel, rechts daneben der Fliesstext.
+   Beide beginnen auf derselben Höhe, weil sie in derselben Rasterzeile
+   sitzen und oben ausgerichtet sind. */
 .sec__head {
   display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  gap: clamp(1.5rem, 4vw, 4rem); align-items: end;
+  /* Die drei Zeilen müssen benannt sein, sonst zeigt "-1" ins Leere und
+     der Text rutscht nach ganz oben. */
+  grid-template-rows: auto auto auto;
+  column-gap: clamp(1.5rem, 4vw, 4rem);
+  row-gap: clamp(.9rem, 1.6vw, 1.4rem);
+  align-items: start;
   margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
 }
+.sec__head > .kicker   { grid-column: 1; grid-row: 1; margin-bottom: 0 }
+.sec__head > .h2       { grid-column: 1; grid-row: 2 }
+.sec__head > .sec__sub { grid-column: 1; grid-row: 3; margin-top: .4rem }
+/* Die Grossbuchstaben des Titels beginnen etwas unter der Oberkante seiner
+   Zeile — der kleine Versatz bringt die erste Textzeile optisch auf
+   dieselbe Linie. */
+.sec__head > .sec__text {
+  grid-column: 2; grid-row: 2 / -1;
+  padding-top: .3em; max-width: 40ch;
+}
+.sec__head > .sec__text .lead { max-width: none }
+.sec__more { margin-top: clamp(1.4rem, 2.4vw, 2rem) }
+/* Fehlt die Kennung, rückt der Titel in die erste Zeile — und der Text
+   mit ihm, damit die Oberkanten weiter zusammenbleiben. */
+.sec__head > .h2:first-child { grid-row: 1 }
+.sec__head > .h2:first-child ~ .sec__text { grid-row: 1 / -1 }
 
 /* --- Philosophie ----------------------------------------------------------
    Grosser, zentrierter Satz. Die Buchstaben starten blass und werden beim
    Scrollen nacheinander deckend — der Text schreibt sich gewissermassen
    selbst, während man liest. */
-.philo { background: var(--off); padding-block: clamp(6rem, 12vw, 12rem) }
+.philo { background: var(--white); padding-block: clamp(4rem, 8vw, 8.5rem) }
 /* Hier ist die Seitenleiste noch nicht da — also auch keine Einrückung,
    sonst sitzt der Satz sichtbar aus der Bildmitte verschoben. */
 .philo .wrap { padding-left: var(--pad); padding-right: var(--pad) }
@@ -353,7 +406,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
   position: sticky; top: 0;
   height: 100svh; overflow: hidden;
   display: grid;
-  grid-template-columns: minmax(0, 46fr) minmax(0, 54fr);
+  grid-template-columns: minmax(0, 40fr) minmax(0, 60fr);
   grid-template-rows: 1fr;
 }
 
@@ -440,8 +493,8 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
 
 .lst__h {
   font-size: clamp(1.85rem, 2.9vw, 2.95rem);
-  font-weight: 800; line-height: .95; letter-spacing: -.03em;
-  text-transform: uppercase; overflow-wrap: break-word;
+  font-weight: 800; line-height: 1.08; letter-spacing: -.03em;
+  text-transform: uppercase; overflow-wrap: normal; hyphens: auto;
   margin-bottom: clamp(.9rem, 2vh, 1.5rem);
 }
 .lst__slide p { font-size: clamp(.92rem, 1.05vw, 1.02rem); line-height: 1.66; max-width: 42ch }
@@ -483,7 +536,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
 .lst__stage  { position: absolute; inset: 0 }
 
 .lst__haus {
-  position: absolute; inset: 7% 8% 7% 2%; transform-origin: 50% 50%;
+  position: absolute; inset: 0; transform-origin: 50% 50%;
   transition: transform calc(1.4s * var(--motion)) var(--ease-out);
 }
 /* Die vier Zustände liegen deckungsgleich übereinander; nur einer ist zu
@@ -491,7 +544,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
    wechselt beim Überblenden nur die farbige Hervorhebung. */
 .lst__haus img {
   position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: contain; object-position: center;
+  width: 100%; height: 100%; object-fit: cover; object-position: center;
   opacity: 0; transition: opacity calc(700ms * var(--motion)) var(--ease);
 }
 .lst__haus img.is-on { opacity: 1 }
@@ -500,7 +553,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
    gleiche Geometrie, deshalb springt der Wechsel nicht. Fällt sie aus,
    bleibt das Standbild stehen: die Section funktioniert ohne sie vollständig. */
 .lst__film {
-  position: absolute; inset: 7% 8% 7% 2%;
+  position: absolute; inset: 0;
   opacity: 0; transition: opacity var(--t-slow) var(--ease);
   pointer-events: none;
 }
@@ -641,7 +694,7 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
 /* --- Wissen / News --------------------------------------------------------
    Textblock links, Karten rechts. Heller Grund mit Blaupause, Karten in
    Weiss. Hover wie bei den Projekten: Teal-Rahmen plus Schein.        */
-.news { background: var(--off); overflow: hidden }
+.news { background: var(--nebel); overflow: hidden }
 
 .news__bp {
   position: absolute; inset: 0; pointer-events: none;
@@ -652,15 +705,13 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
 .nb-thin { fill: none; stroke: var(--ink); stroke-width: .7; opacity: .1 }
 .nb-line { fill: none; stroke: var(--ink); stroke-width: 1; opacity: .14 }
 
-.news__grid {
-  position: relative; z-index: 1;
-  display: grid; grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
-  gap: clamp(2rem, 4vw, 4.5rem); align-items: start;
-}
-.news__head .kicker { color: var(--teal-ink) }
-.news__head .kicker::before { background: currentColor }
-.news__head .h2 { font-weight: 800; line-height: .95; letter-spacing: -.025em }
-.news__head .lead { margin-top: 1.4rem; max-width: 34ch }
+/* Kopf über die ganze Breite wie in den anderen Kapiteln — Titel links,
+   Fliesstext rechts daneben. Die Karten stehen darunter und laufen über
+   die volle Seitenbreite. */
+.news__wrap { position: relative; z-index: 1 }
+.news .sec__head .kicker { color: var(--teal-ink) }
+.news .sec__head .kicker::before { background: currentColor }
+.news .sec__head .h2 { font-weight: 800; line-height: 1.08; letter-spacing: -.025em }
 
 .news__cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 1.6vw, 1.5rem) }
 
@@ -695,7 +746,30 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
 
 /* --- Kontakt -------------------------------------------------------------- */
 .kontakt { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start }
-.kontakt__list { display: flex; flex-direction: column; margin-top: .5rem }
+/* --- Kontaktformular ------------------------------------------------------
+   Schlichte Felder auf Dunkel: nur eine Linie unten, die beim Tippen in
+   der Markenfarbe aufleuchtet. */
+.kform { display: flex; flex-direction: column; gap: 1.4rem }
+.kform__reihe { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem }
+.kform__feld { display: flex; flex-direction: column; gap: .5rem }
+.kform__feld .kenn { color: var(--teal); font-size: .72rem }
+.kform__feld .kenn em { font-style: normal; color: rgba(255,255,255,.35); text-transform: none; letter-spacing: .02em }
+.kform input, .kform textarea {
+  width: 100%; background: transparent; color: var(--white);
+  border: 0; border-bottom: 1px solid var(--line-dark);
+  padding: .6rem 0; font: inherit; font-size: .95rem;
+  transition: border-color var(--t-fast) var(--ease);
+}
+.kform textarea { resize: vertical; min-height: 5.5rem; line-height: 1.5 }
+.kform input:focus, .kform textarea:focus { outline: none; border-bottom-color: var(--teal) }
+.kform input:user-invalid, .kform textarea:user-invalid { border-bottom-color: #d9614f }
+.kform__ab { align-self: start; margin-top: .4rem }
+.kform__hinweis { font-size: .85rem; color: var(--teal); margin: 0; min-height: 1.2em }
+.kform__hinweis[data-fehler] { color: #e8917f }
+
+@media (max-width: 640px) { .kform__reihe { grid-template-columns: 1fr } }
+
+.kontakt__list { display: flex; flex-direction: column; margin-top: 2.5rem }
 .kontakt__row { display: grid; grid-template-columns: 8rem 1fr; gap: 1rem; padding-block: 1.3rem; border-bottom: 1px solid var(--line-dark) }
 .kontakt__row dt { color: var(--teal) }
 .kontakt__row dd { margin: 0; font-size: 1.05rem }
@@ -706,12 +780,44 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
    er legt sich über die Seite, statt dass die Seite zu ihm scrollt. Der
    Platzhalter darunter liefert den nötigen Scrollweg.
    Ohne Skript bleibt alles normal im Fluss und sichtbar.               */
+/* Über der Seitenleiste, nicht darunter: der Abschluss soll über die
+   ganze Breite laufen, die Kapitelnavigation hat hier ausgedient.
+   Oben ohne Abstand, damit das Foto bündig anschliesst. */
 .footer {
-  position: relative; z-index: 3;
+  position: relative; z-index: 420;
   background: var(--ink); color: var(--white);
-  padding-block: clamp(3.5rem, 7vw, 6rem) 2.5rem;
+  padding-block: 0 2.5rem;
   border-top: 1px solid var(--line-dark);
 }
+.footer:not(:has(.footer__foto)) { padding-top: clamp(3.5rem, 7vw, 6rem) }
+
+/* Grosse Bildmarke als ruhiger Hintergrund, unten rechts angeschnitten.
+   Sie bekommt einen eigenen Rahmen zum Beschneiden — waere es der Footer
+   selbst, wuerde der auch die Titel kappen. */
+.footer__markbox {
+  position: absolute; inset: 0; overflow: hidden;
+  pointer-events: none; z-index: 0;
+}
+.footer__mark {
+  position: absolute; right: -4%; bottom: -12%;
+  width: clamp(20rem, 34vw, 40rem); height: auto;
+  opacity: .05; pointer-events: none; user-select: none; z-index: 0;
+}
+.footer > .wrap { position: relative; z-index: 1 }
+/* Foto über die ganze Breite, oben im Footer. Der Verlauf nach unten
+   führt ins Dunkel des Abschlusses, damit keine harte Kante entsteht. */
+/* Höhe getrennt setzen, nicht über aspect-ratio mit max-height — das
+   würde die Breite mitschrumpfen und das Bild säße nur halb so breit da. */
+.footer__foto {
+  position: relative; margin: 0 0 clamp(2.5rem, 5vw, 4.5rem);
+  width: 100%; height: clamp(13rem, 34svh, 25rem); overflow: hidden;
+}
+.footer__foto img { width: 100%; height: 100%; object-fit: cover; object-position: center 42% }
+.footer__foto::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(8,13,11,.28) 0%, rgba(8,13,11,0) 34%, rgba(8,13,11,.85) 100%);
+}
+
 .footer-space { display: none }
 
 html.curtain .footer {
@@ -724,7 +830,9 @@ html.curtain .footer-space { display: block }
 /* Die letzte Sektion bleibt stehen, während der Vorhang hochkommt —
    sonst scrollt man durch eine leere Fläche. Möglich nur, weil der
    Platzhalter innerhalb von <main> liegt und den Klebe-Raum liefert. */
-html.curtain #wissen { position: sticky; top: 0; z-index: 0 }
+   Unten festkleben, nicht oben: die Sektion ist höher als der Bildschirm,
+   bei top:0 bliebe ihr unteres Ende für immer unerreichbar. */
+html.curtain #wissen { position: sticky; bottom: 0; z-index: 0 }
 
 /* Kontakt und Abschluss bilden einen Block */
 .footer__contact {
@@ -736,7 +844,7 @@ html.curtain #wissen { position: sticky; top: 0; z-index: 0 }
 }
 .footer__contact .kicker { color: var(--teal) }
 .footer__contact .kicker::before { background: currentColor }
-.footer__contact .h2 { font-weight: 800; line-height: .95; letter-spacing: -.025em }
+.footer__contact .h2 { font-weight: 800; line-height: 1.08; letter-spacing: -.025em }
 .footer__contact .lead, .footer__contact p { color: var(--body-dark) }
 
 /* --- Footer-Inhalt -------------------------------------------------------- */
@@ -756,7 +864,7 @@ html.curtain #wissen { position: sticky; top: 0; z-index: 0 }
 .footer__col li { font-size: .92rem; color: var(--body-dark) }
 .footer__col a { transition: color var(--t-fast) var(--ease) }
 .footer__col a:hover { color: var(--teal) }
-.footer__cta { margin-top: 1.5rem; padding: .8rem 1.1rem; font-size: .72rem }
+.footer__cta { margin-top: 1.5rem }
 
 .footer__base {
   display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between;
@@ -788,25 +896,22 @@ html.curtain #wissen { position: sticky; top: 0; z-index: 0 }
    ========================================================================== */
 
 /* Gemeinsame Bausteine der neuen Kapitel und des Footers ------------------- */
-.v2 .kicker, .footer__contact .kicker, .news__head .kicker, .lst .kicker {
+.v2 .kicker, .footer__contact .kicker, .news .sec__head .kicker, .lst .kicker {
   display: flex; align-items: center; gap: .85rem;
   font-family: "Overpass Mono", ui-monospace, monospace;
   font-size: .78rem; font-weight: 500;
   letter-spacing: .16em; text-transform: uppercase;
   color: var(--teal); margin-bottom: 1.5rem;
 }
-.v2 .kicker::before, .footer__contact .kicker::before, .news__head .kicker::before, .lst .kicker::before { content: ""; width: 2.25rem; height: 1px; background: currentColor; flex: none }
+.v2 .kicker::before, .footer__contact .kicker::before, .news .sec__head .kicker::before, .lst .kicker::before { content: ""; width: 2.25rem; height: 1px; background: currentColor; flex: none }
 .v2--light .kicker, .lst .kicker { color: var(--teal-ink) }
 
 /* Fettere Headline mit Teal-Punkt als Signatur */
-.v2 .h2 { font-weight: 800; line-height: .95; letter-spacing: -.025em }
+.v2 .h2 { font-weight: 800; line-height: 1.08; letter-spacing: -.025em }
 
-/* Einheitliches Kopfmuster für beide Kapitel: Titel links gross, Text rechts. */
-.v2 .sec__head { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start }
-.v2 .sec__head .lead { max-width: 34ch }
-.dot { color: var(--teal) }
-.v2--light .dot { color: var(--teal-ink) }
-
+/* Nur die Spaltenteilung weicht in den Kapiteln leicht ab — das Muster
+   selbst (Kicker, Titel, Text rechts daneben) kommt aus .sec__head. */
+.v2 .sec__head { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) }
 /* Textlink mit Unterstrich */
 .link {
   display: inline-flex; align-items: center; gap: 1.4rem;
@@ -817,6 +922,9 @@ html.curtain #wissen { position: sticky; top: 0; z-index: 0 }
 }
 .link:hover { color: var(--teal); gap: 1.9rem }
 .v2--light .link:hover { color: var(--teal-ink) }
+/* Bewusst in der Markenfarbe — Schrift und Unterstrich zusammen. */
+.link--teal { color: var(--teal-ink); border-bottom-color: var(--teal-ink) }
+.link--teal:hover { color: var(--teal) }
 
 /* --- Überdeck-Scroll ------------------------------------------------------
    Die vorherige Sektion bleibt oben stehen, die nächste schiebt sich von
@@ -851,7 +959,8 @@ html.curtain #wissen { position: sticky; top: 0; z-index: 0 }
   position: fixed; left: 0; top: 0; bottom: 0; z-index: var(--z-nav);
   width: var(--sidebar);
   display: flex; flex-direction: column;
-  padding: 2.25rem 1.75rem;
+  /* Seitlich knapper als früher — der gewonnene Platz geht ans Logo. */
+  padding: 2.25rem 1.3rem;
   border-right: 1px solid var(--line-dark);
   background: var(--deep); color: var(--white);
   opacity: 0; visibility: hidden;
@@ -866,7 +975,8 @@ html.curtain #wissen { position: sticky; top: 0; z-index: 0 }
 .sidebar.is-light { background: var(--off); color: var(--ink); border-right-color: var(--linie) }
 
 .sidebar__logo { display: block; margin-bottom: auto }
-.sidebar__logo img { height: 2.4rem; width: auto }
+/* Nutzt die Spaltenbreite jetzt voll aus statt nur zwei Drittel. */
+.sidebar__logo img { display: block; width: 100%; height: auto }
 .sidebar__logo .onDark { display: block }
 .sidebar__logo .onLight { display: none }
 .sidebar.is-light .sidebar__logo .onDark { display: none }
@@ -979,7 +1089,31 @@ body.menu-open .sidebar__menu .bars span:nth-child(3) { transform: translateY(-6
 
 .v2 .wrap, .v2 .sec__head, .v2 .karten { position: relative; z-index: 1 }
 
-.karten { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: clamp(1.1rem, 1.8vw, 1.75rem) }
+/* Die Karten liegen in einer Reihe und lassen sich nach rechts wischen —
+   die Pfeile darunter tun dasselbe für Maus und Tastatur. */
+.karten {
+  --karten-luecke: clamp(1.1rem, 1.8vw, 1.75rem);
+  --karten-sicht: 3;
+  display: grid; grid-auto-flow: column;
+  grid-auto-columns: calc((100% - (var(--karten-sicht) - 1) * var(--karten-luecke)) / var(--karten-sicht));
+  gap: var(--karten-luecke);
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; -ms-overflow-style: none;
+  padding-block: 5px;              /* damit der Hover-Schein nicht abschneidet */
+}
+.karten::-webkit-scrollbar { display: none }
+.karte { scroll-snap-align: start }
+
+/* Die Fusszeile mit Fortschritt und Pfeilen — auf Dunkel andere Farben. */
+.v2--dark .slider__foot { margin-top: clamp(1.6rem, 2.6vw, 2.4rem) }
+.v2--dark .slider__progress { background: var(--line-dark) }
+.v2--dark .slider__progress span { background: var(--teal) }
+.v2--dark .slider__btn { border-color: var(--line-dark); color: var(--white) }
+.v2--dark .slider__btn:hover:not(:disabled) { border-color: var(--teal); background: var(--teal); color: var(--deep) }
+
+@media (max-width: 1100px) { .karten { --karten-sicht: 2 } }
+@media (max-width: 700px)  { .karten { --karten-sicht: 1.15 } }
 
 /* Das Foto füllt die ganze Karte, der Text liegt darauf. Hochformat wie in
    der Vorlage — kein getrennter Textkasten unter dem Bild. */
@@ -1047,7 +1181,7 @@ body.menu-open .sidebar__menu .bars span:nth-child(3) { transform: translateY(-6
 .karte:hover .karte__go { border-color: var(--teal); color: var(--teal); transform: scale(1.06) }
 
 /* --- Kapitel Team (hell, Schieber) ---------------------------------------- */
-.v2--light { background: var(--off); color: var(--ink) }
+.v2--light { background: var(--white); color: var(--ink) }
 
 /* Der Schieber sitzt auf derselben Kante wie alles andere */
 .slider {
@@ -1108,12 +1242,21 @@ body.menu-open .sidebar__menu .bars span:nth-child(3) { transform: translateY(-6
 .slider__btn:hover:not(:disabled) { border-color: var(--teal-ink); background: var(--teal-ink); color: var(--white) }
 .slider__btn:disabled { opacity: .3; cursor: default }
 
-.standorte { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 2rem; margin-top: clamp(2.5rem, 4vw, 4rem); border-top: 1px solid var(--linie); padding-top: 2.25rem }
-.standort h3 { font-size: .95rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin-bottom: .7rem }
-.standort p { font-size: .92rem; margin: 0 }
 
 /* --- Reveals -------------------------------------------------------------- */
-.line-mask { display: block; overflow: hidden }
+/* Die Maske versteckt die Zeile, bis sie hochfaehrt — aber NUR senkrecht.
+   overflow:hidden schneidet immer in beide Richtungen; genau dadurch
+   fehlten am Zeilenende Buchstaben. clip-path kann gezielt nur oben und
+   unten beschneiden und laesst waagrecht alles stehen. */
+.line-mask {
+  display: block;
+  clip-path: inset(0 -100vw -.06em -100vw);
+}
+/* Notbremse: kein Titel darf je ueber seinen Kasten hinauslaufen. */
+/* break-word war der Fehler: es zerlegt Woerter mitten drin ("GEBÄUDETECHNI /
+   K"). Woerter duerfen nur noch an echten Silbenstellen getrennt werden —
+   das erledigt die Silbentrennung anhand von lang="de-CH". */
+.display, .h2, .hero__line, .split-line { overflow-wrap: normal; hyphens: auto }
 .split-line { display: block; will-change: transform }
 
 /* --- Unterseite ----------------------------------------------------------- */
@@ -1187,7 +1330,18 @@ html.capture .slider__track { overflow: visible }
   .hero__facts { flex-direction: column; gap: 1.6rem }
   .fact { flex: none }
   .hero__scroll { display: none }
-  .sec__head, .kontakt { grid-template-columns: 1fr }
+  /* Auf schmalen Schirmen steht alles untereinander — die feste
+     Zeilen- und Spaltenzuteilung muss dafür wieder aufgehoben werden,
+     sonst hängt der Fliesstext in einer zweiten, unsichtbaren Spalte. */
+  /* .v2 .sec__head ist spezifischer als .sec__head — ohne die Kapitel
+     hier mitzunennen bliebe der Titel auf dem Handy halb so breit. */
+  .sec__head, .v2 .sec__head, .news .sec__head, .kontakt { grid-template-columns: 1fr }
+  .sec__head { grid-template-rows: none }
+  .sec__head > .kicker,
+  .sec__head > .h2,
+  .sec__head > .sec__sub,
+  .sec__head > .sec__text { grid-column: 1; grid-row: auto }
+  .sec__head > .sec__text { padding-top: 0; max-width: none }
   .slider__track { grid-auto-columns: 72% }
   .case, .case:nth-child(even) .case__media { grid-template-columns: 1fr; order: 0 }
   .specs li, .kontakt__row { grid-template-columns: 1fr; gap: .25rem }
@@ -1195,7 +1349,6 @@ html.capture .slider__track { overflow: visible }
 }
 
 @media (max-width: 1200px) {
-  .news__grid { grid-template-columns: 1fr; gap: 2.5rem }
 }
 
 @media (max-width: 1100px) {

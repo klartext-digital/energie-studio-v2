@@ -162,7 +162,7 @@
         scrollTrigger: { trigger: el, start: "top 88%", once: true }
       });
     });
-    document.querySelectorAll(".v2 .kicker, .news__head .kicker, .karte, .news__card, .person, .phase").forEach(function (el) {
+    document.querySelectorAll(".v2 .kicker, .news .sec__head .kicker, .karte, .news__card, .person, .phase").forEach(function (el) {
       gsap.fromTo(el, { autoAlpha: 0, y: 22 }, {
         autoAlpha: 1, y: 0, duration: .8, ease: "expo.out",
         scrollTrigger: { trigger: el, start: "top 92%", once: true }
@@ -321,13 +321,16 @@
      weiterer Eintrag in FILME.                                            */
   var FILME = {
     0: { ordner: "assets/film/heizung/",  anzahl: 80, endung: ".webp" },
-    1: { ordner: "assets/film/lueftung/", anzahl: 80, endung: ".webp" }
+    1: { ordner: "assets/film/lueftung/", anzahl: 80, endung: ".webp" },
+    /* 87 statt 80: die driftenden Schlussbilder sind gekappt, dafuer
+       leuchten in den letzten 18 die Nassraeume auf — bei stehender Kamera. */
+    2: { ordner: "assets/film/sanitaer/", anzahl: 127, endung: ".webp" }
   };
 
   /* Die Einzelbilder heissen bei jeder Neufassung gleich. Ohne diese Kennung
      bliebe der Browser beim alten Satz — die Seite sähe unverändert aus.
      Beim Neubauen der Bildfolgen mit hochzählen. */
-  var FILM_STAND = "4";
+  var FILM_STAND = "12";
 
   function initFilm(section, fortschritt, N) {
     var leinwand = section.querySelector("[data-lst-film]");
@@ -367,11 +370,12 @@
       }
       if (!b || b === letztesBild) return;
       letztesBild = b;
+      /* Das Bild fuellt die Flaeche randlos aus (wie object-fit: cover).
+         Was ueber den Rahmen hinausragt, wird beschnitten — dafuer gibt es
+         keine weiche Blende und keinen leeren Streifen mehr am Rand. */
       var kb = leinwand.width / leinwand.height, ki = b.width / b.height, w, h;
-      if (ki > kb) { w = leinwand.width;  h = w / ki; }
-      else         { h = leinwand.height; w = h * ki; }
-      stift.fillStyle = GRUND;
-      stift.fillRect(0, 0, leinwand.width, leinwand.height);
+      if (ki > kb) { h = leinwand.height; w = h * ki; }
+      else         { w = leinwand.width;  h = w / ki; }
       stift.drawImage(b, (leinwand.width - w) / 2, (leinwand.height - h) / 2, w, h);
     }
 
@@ -605,6 +609,11 @@
     var veil   = document.querySelector("[data-kontakt-veil]");
     if (!footer || !space || reduce || !hasGsap || !DESKTOP) return;
 
+    /* Der Vorhang setzt den Footer unten fest. Ist er höher als der
+       Bildschirm, bliebe sein oberer Teil — Foto und Überschrift —
+       dauerhaft ausserhalb des Bildes. Dann läuft er lieber normal mit. */
+    if (footer.offsetHeight > window.innerHeight) return;
+
     function size() {
       // Footerhöhe plus Scrollweg für die Fahrt nach oben
       space.style.height = (footer.offsetHeight + window.innerHeight * 0.65) + "px";
@@ -640,38 +649,44 @@
     });
   }
 
-  /* ── Team-Schieber ───────────────────────────────────────────────────── */
+  /* ── Schieber ─────────────────────────────────────────────────────────
+     Gilt für alle Bahnen mit [data-slider]: die Teamportraits und die
+     Projektkarten. Ein Klick schiebt um genau eine Kachel weiter.      */
   function initSlider() {
-    var wrap = document.querySelector("[data-slider]");
-    if (!wrap) return;
-    var track = wrap.querySelector("[data-slider-track]");
-    var prev  = wrap.querySelector("[data-slider-prev]");
-    var next  = wrap.querySelector("[data-slider-next]");
-    var bar   = wrap.querySelector("[data-slider-progress]");
-    var items = track.querySelectorAll(".person");
-    if (!track || !items.length) return;
+    document.querySelectorAll("[data-slider]").forEach(function (wrap) {
+      var track = wrap.querySelector("[data-slider-track]");
+      if (!track || !track.children.length) return;
+      var prev  = wrap.querySelector("[data-slider-prev]");
+      var next  = wrap.querySelector("[data-slider-next]");
+      var bar   = wrap.querySelector("[data-slider-progress]");
+      var erste = track.children[0];
 
-    function step() { return items[0].getBoundingClientRect().width; }
+      /* Kachelbreite plus Lücke — sonst bleibt bei jedem Klick ein Rest. */
+      function step() {
+        var luecke = parseFloat(getComputedStyle(track).columnGap) || 0;
+        return erste.getBoundingClientRect().width + luecke;
+      }
 
-    function sync() {
-      var max = track.scrollWidth - track.clientWidth;
-      var p = max > 2 ? track.scrollLeft / max : 1;
-      /* Der Balken zeigt den sichtbaren Anteil plus Fortschritt —
-         bei vier von vier sichtbaren Karten ist er voll. */
-      var visible = track.clientWidth / track.scrollWidth;
-      if (bar) bar.style.transform = "scaleX(" + Math.min(1, visible + p * (1 - visible)) + ")";
-      if (prev) prev.disabled = track.scrollLeft <= 2;
-      if (next) next.disabled = track.scrollLeft >= max - 2;
-    }
+      function sync() {
+        var max = track.scrollWidth - track.clientWidth;
+        var p = max > 2 ? track.scrollLeft / max : 1;
+        /* Der Balken zeigt den sichtbaren Anteil plus Fortschritt —
+           passt alles ins Bild, ist er voll. */
+        var sichtbar = track.clientWidth / track.scrollWidth;
+        if (bar) bar.style.transform = "scaleX(" + Math.min(1, sichtbar + p * (1 - sichtbar)) + ")";
+        if (prev) prev.disabled = track.scrollLeft <= 2;
+        if (next) next.disabled = track.scrollLeft >= max - 2;
+      }
 
-    function slide(dir) {
-      track.scrollBy({ left: dir * step(), behavior: reduce ? "auto" : "smooth" });
-    }
-    if (prev) prev.addEventListener("click", function () { slide(-1); });
-    if (next) next.addEventListener("click", function () { slide(1); });
-    track.addEventListener("scroll", sync, { passive: true });
-    window.addEventListener("resize", sync);
-    sync();
+      function slide(dir) {
+        track.scrollBy({ left: dir * step(), behavior: reduce ? "auto" : "smooth" });
+      }
+      if (prev) prev.addEventListener("click", function () { slide(-1); });
+      if (next) next.addEventListener("click", function () { slide(1); });
+      track.addEventListener("scroll", sync, { passive: true });
+      window.addEventListener("resize", sync);
+      sync();
+    });
   }
 
   /* ── Kennzahlen ──────────────────────────────────────────────────────── */
@@ -755,6 +770,47 @@
     });
   }
 
+  /* ── Kontaktformular ─────────────────────────────────────────────────────
+     Es gibt keinen Server, der die Anfrage entgegennimmt. Statt ein
+     Formular vorzutäuschen, das ins Leere läuft, stellt das Skript die
+     Nachricht zusammen und übergibt sie ans Mailprogramm. */
+  function initKontaktForm() {
+    var form = document.querySelector("[data-kontakt-form]");
+    if (!form) return;
+    var hinweis = form.querySelector("[data-kontakt-hinweis]");
+    var ADRESSE = "info@energie-studio.ch";
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var d = new FormData(form);
+      var name = (d.get("name") || "").trim();
+      var mail = (d.get("mail") || "").trim();
+      var tel  = (d.get("tel")  || "").trim();
+      var text = (d.get("text") || "").trim();
+
+      if (!name || !mail || !text) {
+        hinweis.textContent = "Bitte Name, E-Mail und Ihr Vorhaben ausfüllen.";
+        hinweis.setAttribute("data-fehler", "");
+        return;
+      }
+      hinweis.removeAttribute("data-fehler");
+
+      var betreff = "Anfrage von " + name;
+      var koerper = [
+        text, "",
+        "— — —",
+        "Name: " + name,
+        "E-Mail: " + mail,
+        tel ? "Telefon: " + tel : null
+      ].filter(Boolean).join("\n");
+
+      window.location.href = "mailto:" + ADRESSE +
+        "?subject=" + encodeURIComponent(betreff) +
+        "&body="    + encodeURIComponent(koerper);
+      hinweis.textContent = "Ihr Mailprogramm öffnet sich mit der fertigen Anfrage.";
+    });
+  }
+
   /* ── Start, genau einmal ─────────────────────────────────────────────── */
   var booted = false;
   function boot() {
@@ -774,6 +830,7 @@
     initCounters();
     initPhasen();
     initMedia();
+    initKontaktForm();
     if (hasGsap) ScrollTrigger.refresh();
   }
 

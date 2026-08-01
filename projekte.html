@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Overpass+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.css">
-<link rel="stylesheet" href="assets/style.css?v=1785610000">
+<link rel="stylesheet" href="assets/style.css?v=1785615880">
 </head>
 <body>
 
@@ -32,7 +32,7 @@
         <li><a href="index.html#kontakt">Kontakt</a></li>
       </ul>
     </nav>
-    <a class="btn btn--ghost nav__cta" href="index.html#kontakt">Beratung anfragen
+    <a class="btn btn--primary nav__cta" href="index.html#kontakt">Beratung anfragen
       <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6"/></svg>
     </a>
     <button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobileMenu">
@@ -58,7 +58,7 @@
     <h1 class="display" data-reveal>Planung mit<br>Weitblick.</h1>
     <p class="lead" style="margin-top:1.4rem">
       Von der Variantenstudie bis zur schlüsselfertigen Übergabe. Areale, Kliniken,
-      Industrie und Logistik in der Schweiz und in Deutschland.
+      Industrie und Logistik in der Schweiz.
     </p>
   </div>
 </section>
@@ -153,12 +153,11 @@
 <!-- ══ WEITERE REFERENZEN (hell) ══════════════════════════════════════════ -->
 <section class="sec sec--off">
   <div class="wrap">
-    <div class="head">
-      <div>
-        
-        <h2 class="h2" data-reveal>Weitere Referenzen.</h2>
+    <div class="sec__head">
+      <h2 class="h2" data-reveal>Weitere Referenzen.</h2>
+      <div class="sec__text">
+        <p class="lead">Auswahl aus laufenden und abgeschlossenen Mandaten.</p>
       </div>
-      <p class="lead">Auswahl aus laufenden und abgeschlossenen Mandaten.</p>
     </div>
     <ul class="refs">
       <li><span class="nm">ON Campus Zürich</span><span class="kenn tg">Gebäudetechnik</span></li>
@@ -171,6 +170,28 @@
       <li><span class="nm">Bundesasylzentrum Embrach</span><span class="kenn tg">Gebäudetechnik</span></li>
       <li><span class="nm">Energieoptimierung PUK Lengg</span><span class="kenn tg">Optimierung</span></li>
     </ul>
+  </div>
+</section>
+
+<!-- ══ ABLAUF — von der Startseite hierher gezogen ════════════════════════ -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec__head">
+      <p class="kicker">Ablauf</p>
+      <h2 class="h2" data-reveal>Wie ein Projekt<br>bei uns läuft.</h2>
+      <div class="sec__text">
+        <p class="lead">Nach SIA-Phasen. Sie wissen an jedem Punkt, was vorliegt und was als Nächstes entschieden wird.</p>
+      </div>
+    </div>
+
+    <div class="ablauf" id="ablauf">
+      <span class="phase__bar" data-phase-bar aria-hidden="true"></span>
+      <div class="phase"><span class="kenn phase__n">Phase 21</span><h3>Vorstudie</h3><p>Bestand aufnehmen, Bedarf klären, Varianten rechnen. Am Ende steht eine Empfehlung mit Zahlen.</p></div>
+      <div class="phase"><span class="kenn phase__n">Phase 31</span><h3>Vorprojekt</h3><p>Das gewählte Konzept wird durchgeplant und grob kostiert. Grundlage für den Baukredit.</p></div>
+      <div class="phase"><span class="kenn phase__n">Phase 32</span><h3>Bauprojekt</h3><p>Detailplanung aller Gewerke, Kostenvoranschlag, Bewilligungen.</p></div>
+      <div class="phase"><span class="kenn phase__n">Phase 41</span><h3>Ausschreibung</h3><p>Leistungsverzeichnisse, Offertvergleich, Vergabeantrag. Wir prüfen, was wirklich angeboten wird.</p></div>
+      <div class="phase"><span class="kenn phase__n">Phase 51–53</span><h3>Ausführung</h3><p>Bauleitung, Inbetriebnahme, Übergabe. Danach Messwerte statt Versprechen.</p></div>
+    </div>
   </div>
 </section>
 
@@ -190,7 +211,7 @@
       </div>
       <dl class="kontakt__list">
         <div class="kontakt__row"><dt class="kenn">E-Mail</dt><dd><a href="mailto:info@energie-studio.ch">info@energie-studio.ch</a></dd></div>
-        <div class="kontakt__row" style="border:0"><dt class="kenn">Standorte</dt><dd>Windisch (CH) · Kleinblittersdorf (DE)</dd></div>
+        <div class="kontakt__row" style="border:0"><dt class="kenn">Standort</dt><dd>Windisch, Kanton Aargau</dd></div>
       </dl>
     </div>
   </div>
@@ -208,7 +229,7 @@
       <li><a href="index.html#kontakt">Kontakt</a></li>
       <li><a href="https://energie-studio.ch/impressum-datenschutz/">Impressum &amp; Datenschutz</a></li>
     </ul>
-    <span class="footer__base">© 2026 Energie Studio AG · Windisch (CH) · Kleinblittersdorf (DE)</span>
+    <span class="footer__base">© 2026 Energie Studio AG · Windisch, Kanton Aargau</span>
   </div>
 </footer>
 
@@ -216,6 +237,6 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="assets/site.js?v=1785610000"></script>
+<script src="assets/site.js?v=1785615880"></script>
 </body>
 </html>
