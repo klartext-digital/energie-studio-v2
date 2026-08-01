@@ -1,0 +1,1216 @@
+/* ==========================================================================
+   Energie Studio — Stylesheet
+
+   Grundstil: hell (Header und übrige Kapitel unverändert).
+   NEU nach Kundenvorlage, nur in zwei Kapiteln:
+     · Projekte   — dunkel, Blaupause, Karten mit Glow
+     · Team       — hell, Schieber mit randlosen Portraits
+   Farben und Schriften ausschliesslich aus dem CD. Siehe DESIGN.md.
+   ========================================================================== */
+
+/* --- Tokens --------------------------------------------------------------- */
+:root {
+  --ink:        #1a1a1a;
+  --teal:       #50baa0;
+  --white:      #ffffff;
+
+  --off:        #f7f8f8;
+  --nebel:      #edf0ef;
+  --linie:      #dde3e1;
+  --body:       #5a6764;
+  --teal-ink:   #2b8067;   /* Teal als Textfarbe auf Hell — 4.79:1, erfüllt AA */
+  --teal-dark:  #43a68e;
+
+  --deep:       #080d0b;   /* dunkle Kapitel nach Vorlage */
+  --deep-2:     #0e1613;
+  --deep-3:     #141d1a;
+
+  --line-dark:  rgba(255,255,255,.12);
+  --body-dark:  rgba(255,255,255,.6);
+
+  --motion: 1;
+  --t-fast:  calc(140ms * var(--motion));
+  --t-base:  calc(280ms * var(--motion));
+  --t-slow:  calc(520ms * var(--motion));
+  --ease:      cubic-bezier(.2, 0, 0, 1);
+  --ease-io:   cubic-bezier(.4, 0, .2, 1);
+  --ease-out:  cubic-bezier(.16, 1, .3, 1);
+
+  --wrap: 1320px;
+  --pad:  clamp(1.25rem, 4vw, 3.5rem);
+  --sec:  clamp(5rem, 9vw, 9rem);
+  --radius: .625rem;        /* nur in den zwei neuen Kapiteln */
+
+  --z-sticky: 100;
+  --z-nav:    200;
+  --z-menu:   300;
+}
+
+@media (prefers-reduced-motion: reduce) { :root { --motion: 0 } }
+
+/* --- Grundlagen ----------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box }
+
+html {
+  color-scheme: light;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* clip statt hidden: hidden auf body macht den Body zum Scroll-Container
+     und hebelt damit die Sprungmarken aus. */
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  background: var(--white);
+  color: var(--ink);
+  font-family: Inter, system-ui, -apple-system, sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
+  overflow-x: clip;
+}
+body.menu-open { overflow: hidden }
+
+img, svg { display: block; max-width: 100% }
+img { height: auto }
+a { color: inherit; text-decoration: none }
+ul, ol { margin: 0; padding: 0; list-style: none }
+h1, h2, h3, h4, p { margin: 0 }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer }
+
+:focus-visible { outline: 2px solid var(--teal-ink); outline-offset: 3px }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* Eine einzige Content-Kante für die ganze Seite: links hinter der
+   Seitenleiste, rechts der Seitenrand. Ohne das driften die Kapitel
+   auseinander (vorher 196/196, 264/56 und 0/0 nebeneinander). */
+.wrap {
+  width: 100%; max-width: none;
+  padding-left: calc(var(--sidebar) + var(--pad));
+  padding-right: var(--pad);
+}
+
+/* --- Typografie ----------------------------------------------------------- */
+.display {
+  font-size: clamp(2.1rem, 3.5vw, 3.3rem);
+  font-weight: 600; line-height: 1.06; letter-spacing: -.02em;
+  text-transform: uppercase; text-wrap: balance;
+}
+.h2 {
+  font-size: clamp(1.9rem, 3vw, 2.9rem);
+  font-weight: 600; line-height: 1.06; letter-spacing: -.015em;
+  text-transform: uppercase; text-wrap: balance;
+}
+.lead {
+  font-size: clamp(1.05rem, 1.2vw, 1.2rem);
+  line-height: 1.6; color: var(--body); max-width: 60ch; text-wrap: pretty;
+}
+p { max-width: 68ch; color: var(--body); text-wrap: pretty }
+
+.kenn {
+  font-family: "Overpass Mono", ui-monospace, monospace;
+  font-size: .8rem; font-weight: 500;
+  letter-spacing: .06em; text-transform: uppercase;
+  line-height: 1; font-variant-numeric: tabular-nums;
+}
+
+/* --- Buttons -------------------------------------------------------------- */
+.btn {
+  display: inline-flex; align-items: center; gap: .7rem;
+  padding: 1rem 1.6rem;
+  font-size: .82rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase;
+  border: 1px solid transparent;
+  transition: background-color var(--t-fast) var(--ease),
+              color var(--t-fast) var(--ease),
+              border-color var(--t-fast) var(--ease),
+              transform 90ms var(--ease);
+}
+.btn svg { transition: transform var(--t-base) var(--ease); flex: none }
+.btn:hover svg { transform: translateX(4px) }
+.btn:active { transform: scale(.98) }
+.btn--primary { background: var(--teal); color: var(--ink) }
+.btn--primary:hover { background: var(--teal-dark) }
+.btn--ghost { border-color: var(--teal); color: var(--teal-ink) }
+.btn--ghost:hover { background: var(--teal); color: var(--ink); border-color: var(--teal) }
+.btn--ink { border-color: var(--ink); color: var(--ink) }
+.btn--ink:hover { background: var(--ink); color: var(--white) }
+.btn--onDark { background: var(--teal); color: var(--ink) }
+.btn--onDark:hover { background: var(--white) }
+
+/* --- Navigation (unverändert, hell) --------------------------------------- */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: var(--z-nav);
+  background: rgba(255,255,255,0);
+  border-bottom: 1px solid transparent;
+  transition: background-color var(--t-base) var(--ease-io),
+              border-color var(--t-base) var(--ease-io),
+              transform var(--t-base) var(--ease-io);
+}
+.nav.is--stuck {
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom-color: var(--linie);
+}
+.nav.is--hidden { transform: translateY(-100%) }
+/* Sobald die Seitenleiste übernimmt, tritt der obere Balken zurück */
+.nav.is--replaced { transform: translateY(-100%); pointer-events: none }
+.nav__inner {
+  display: flex; align-items: center; gap: 2rem; height: 5.5rem;
+  width: 100%; max-width: var(--wrap); margin-inline: auto; padding-inline: var(--pad);
+}
+.nav__logo img { height: 2.6rem; width: auto }
+.nav__links { display: flex; gap: clamp(1.2rem, 2.4vw, 2.6rem); margin-left: auto }
+.nav__links a {
+  position: relative; font-size: .82rem; font-weight: 500;
+  letter-spacing: .09em; text-transform: uppercase; padding-block: .4rem;
+  transition: color var(--t-fast) var(--ease);
+}
+.nav__links a::after {
+  content: ""; position: absolute; left: 0; bottom: 0; width: 100%; height: 1px;
+  background: var(--teal); transform: scaleX(0); transform-origin: right;
+  transition: transform var(--t-base) var(--ease);
+}
+.nav__links a:hover { color: var(--teal-ink) }
+.nav__links a:hover::after, .nav__links a[aria-current="page"]::after { transform: scaleX(1); transform-origin: left }
+.nav__cta { padding: .85rem 1.3rem; font-size: .74rem }
+
+.burger { display: none; width: 2.75rem; height: 2.75rem; margin-left: auto; flex-direction: column; justify-content: center; gap: 5px }
+.burger span { display: block; height: 2px; width: 24px; background: var(--ink); transition: transform var(--t-base) var(--ease), opacity var(--t-fast) var(--ease) }
+body.menu-open .burger span:nth-child(1) { transform: translateY(7px) rotate(45deg) }
+body.menu-open .burger span:nth-child(2) { opacity: 0 }
+body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg) }
+
+.mobile-menu {
+  position: fixed; inset: 0; z-index: var(--z-menu); background: var(--white);
+  padding: 7rem var(--pad) 3rem; display: flex; flex-direction: column; gap: .4rem;
+  transform: translateY(-100%); transition: transform var(--t-base) var(--ease-io); overflow-y: auto;
+}
+.mobile-menu.open { transform: translateY(0) }
+.mobile-menu a {
+  font-size: clamp(1.8rem, 8vw, 2.6rem); font-weight: 600; text-transform: uppercase;
+  letter-spacing: -.01em; padding-block: .5rem; border-bottom: 1px solid var(--linie);
+}
+
+/* --- Hero (unverändert, hell) --------------------------------------------- */
+.hero {
+  position: relative; padding-top: 5.5rem; min-height: min(100svh, 50rem);
+  display: flex; align-items: center; overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 78% 42%, rgba(80,186,160,.13) 0%, rgba(80,186,160,0) 58%),
+    linear-gradient(180deg, var(--white) 0%, var(--off) 100%);
+}
+.hero__grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(to right,  var(--linie) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--linie) 1px, transparent 1px);
+  background-size: 7.5rem 7.5rem; opacity: .8;
+  mask-image: radial-gradient(85% 75% at 50% 45%, #000 30%, transparent 100%);
+  -webkit-mask-image: radial-gradient(85% 75% at 50% 45%, #000 30%, transparent 100%);
+  pointer-events: none;
+}
+/* --- Parallax-Ebenen im Hero ---------------------------------------------
+   Vier Tiefen: Raster ganz hinten bewegt sich am stärksten, der Text vorn
+   am wenigsten. Der Höhenunterschied erzeugt die Tiefe.                  */
+.hero [data-layer] { will-change: transform }
+
+/* Die beiden Hintergrund-Ebenen ragen oben über den Hero hinaus. Ohne
+   diesen Vorrat wandern sie beim Scrollen nach unten weg und hinterlassen
+   eine leere Fläche. Der Überstand muss mindestens so gross sein wie ihr
+   Weg (siehe yPercent-Werte in site.js). */
+.hero__grid, .hero__blueprint { top: -50%; bottom: auto; height: 150% }
+
+.hero__blueprint {
+  position: absolute; inset: 0; pointer-events: none;
+  mask-image: linear-gradient(to right, transparent 0%, transparent 22%, #000 58%, #000 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 22%, #000 58%, #000 100%);
+}
+.hero__blueprint svg { position: absolute; inset: 0; width: 100%; height: 100% }
+.hb-line { fill: none; stroke: var(--teal-ink); stroke-width: 1.2; opacity: .3 }
+.hb-thin { fill: none; stroke: var(--teal-ink); stroke-width: .85; opacity: .18 }
+.hb-dot  { fill: var(--teal-ink); opacity: .38 }
+
+/* Volle Bildschirmbreite statt zentriertem Container: Text schmal links,
+   Merkmale ganz aussen rechts — dazwischen bleibt maximaler Raum fürs
+   Gebäude, genau wie in der Vorlage. */
+.hero__inner {
+  position: relative; width: 100%; max-width: none;
+  padding: clamp(2rem, 3.5vw, 3rem) var(--pad);
+  /* 33 % — schmaler passen die beiden Buttons nicht mehr nebeneinander */
+  display: grid; grid-template-columns: 33% minmax(0, 1fr) 13.5rem;
+  align-items: center; gap: clamp(1.25rem, 2.4vw, 2.5rem);
+}
+.hero__kicker { color: var(--teal-ink); margin-bottom: 1.3rem }
+.hero__title { margin-bottom: 1.4rem }
+.hero__title .teal { color: var(--teal-ink) }
+.hero__title .hero__line { display: block }
+.hero__lead { margin-bottom: 1.9rem; font-size: 1.02rem; max-width: 40ch }
+.hero__actions { display: flex; flex-wrap: wrap; gap: .8rem }
+.hero__actions .btn { padding: .9rem 1.25rem; font-size: .78rem; gap: .55rem }
+/* Das Gebäude ist eine eigene Ebene über der ganzen rechten Hälfte und
+   steht auf der Unterkante des Bildschirms auf — wie in der Vorlage.
+   Es liegt nicht mehr im Raster, darum der Platzhalter in der Mitte. */
+.hero__visual {
+  position: absolute;
+  /* zwischen Textspalte und Merkmalspalte, unten bündig */
+  left: 34%; right: 17%;
+  top: 5%; bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero__visual img {
+  width: 100%; height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  filter: drop-shadow(0 40px 70px rgba(26,26,26,.16));
+}
+.hero__spacer { min-height: 1px }
+
+/* Text und Merkmale liegen vor dem Gebäude */
+.hero__text, .hero__facts { position: relative; z-index: 1 }
+.hero__facts { display: flex; flex-direction: column; gap: 2.4rem }
+.fact { display: grid; grid-template-columns: 2.5rem 1fr; gap: .9rem; align-items: start }
+.fact__icon { width: 2.5rem; height: 2.5rem; border: 1px solid var(--teal); border-radius: 50%; display: grid; place-items: center; color: var(--teal-ink) }
+.fact__icon svg { width: 1.05rem; height: 1.05rem }
+.fact h3 { font-size: .8rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; margin-bottom: .45rem }
+.fact p { font-size: .85rem; line-height: 1.55; max-width: 22ch }
+
+.hero__scroll { position: absolute; left: var(--pad); bottom: 2rem; display: flex; align-items: center; gap: .7rem; color: var(--body) }
+.hero__scroll .bar { width: 3rem; height: 1px; background: var(--linie); position: relative; overflow: hidden }
+.hero__scroll .bar::after { content: ""; position: absolute; inset: 0; background: var(--teal); transform: translateX(-100%); animation: sweep 2.4s var(--ease-io) infinite }
+@keyframes sweep { 0% { transform: translateX(-100%) } 60%,100% { transform: translateX(100%) } }
+@media (prefers-reduced-motion: reduce) { .hero__scroll .bar::after { animation: none } }
+
+/* --- Sektionen ------------------------------------------------------------ */
+/* relative ist nötig, sonst verliert der Kapitelzähler seinen Bezugsrahmen */
+.sec { padding-block: var(--sec); position: relative }
+.sec--off  { background: var(--off) }
+.sec--ink  { background: var(--ink); color: var(--white) }
+/* Das Band läuft rechts randlos aus, muss links aber hinter der
+   Seitenleiste beginnen — sonst verschwindet die erste Kennzahl. */
+.sec--teal { background: var(--teal); color: var(--ink); padding-left: var(--sidebar) }
+.sec--ink p, .sec--ink .lead { color: var(--body-dark) }
+.sec--teal p, .sec--teal .lead { color: rgba(26,26,26,.78) }
+
+.sec__head {
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem); align-items: end;
+  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+/* --- Philosophie ----------------------------------------------------------
+   Grosser, zentrierter Satz. Die Buchstaben starten blass und werden beim
+   Scrollen nacheinander deckend — der Text schreibt sich gewissermassen
+   selbst, während man liest. */
+.philo { background: var(--off); padding-block: clamp(6rem, 12vw, 12rem) }
+/* Hier ist die Seitenleiste noch nicht da — also auch keine Einrückung,
+   sonst sitzt der Satz sichtbar aus der Bildmitte verschoben. */
+.philo .wrap { padding-left: var(--pad); padding-right: var(--pad) }
+.philo__text {
+  max-width: 38ch;
+  margin-inline: auto;
+  text-align: justify;
+  /* Silbentrennung, sonst reisst der Blocksatz bei grosser Schrift Löcher */
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  font-size: clamp(1.3rem, 2.5vw, 2.3rem);
+  font-weight: 500;
+  line-height: 1.32;
+  letter-spacing: -.015em;
+  color: var(--ink);
+}
+/* Keine CSS-Transition auf den Zeichen: die Deckkraft hängt direkt am
+   Scrollrad und würde durch eine Übergangszeit hinterherhinken. */
+
+
+/* --- Leistungen: Gewerke am Haus -----------------------------------------
+   Aufbau nach Kundenvorlage: links Zähler, Balken 01–04 und Text, rechts
+   das Haus. Die Section bleibt stehen (sticky), das Haus fährt beim Scrollen
+   auf das jeweilige Gewerk zu und markiert es. Vier Schritte, ein Haus.   */
+
+.ico-sprite { position: absolute; width: 0; height: 0; overflow: hidden }
+.lst svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round }
+
+.lst {
+  position: relative;
+  /* Vier Schritte à zwei Bildschirmlängen, dazu eine Länge zum Einlaufen und
+     eine für den Vorhang. Zwei Längen je Gewerk klingen viel, sind aber das
+     Mindeste: darunter rauscht die Kamerafahrt vorbei, bevor man das Gewerk
+     überhaupt gelesen hat. Zweieinhalb statt zwei: die Kamerafahrt soll
+     sich Zeit lassen, man muss jedes Gewerk in Ruhe ansehen können. */
+  height: 1200svh;
+  background: var(--off);
+  --lst-t: calc(900ms * var(--motion));
+}
+.lst__pin {
+  position: sticky; top: 0;
+  height: 100svh; overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, 46fr) minmax(0, 54fr);
+  grid-template-rows: 1fr;
+}
+
+/* ── Linke Spalte ── */
+.lst__panel {
+  position: relative; z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr auto;
+  column-gap: clamp(1.1rem, 1.9vw, 2.25rem);
+  align-content: center;
+  padding: clamp(2.5rem, 5vh, 4.5rem) clamp(1rem, 2vw, 2rem) clamp(2rem, 4vh, 3rem)
+           calc(var(--sidebar) + var(--pad));
+}
+
+/* Zähler oben links, wie in der Vorlage */
+.lst__count {
+  grid-column: 1 / -1; margin: 0 0 auto;
+  font-family: "Overpass Mono", ui-monospace, monospace;
+  font-size: .8rem; letter-spacing: .16em; font-variant-numeric: tabular-nums;
+  color: var(--teal-ink);
+}
+.lst__count-t { color: var(--body); opacity: .7; margin-left: .35rem }
+
+/* Balken 01–04: Punkt, Linie, zwei Zeilen Text */
+/* Auf grossen Bildschirmen stehen die Gewerke in der Seitenleiste — hier
+   wäre der Balken die zweite Navigation. Erst wenn die Seitenleiste
+   verschwindet (unter 1100 px), übernimmt er wieder. */
+.lst__rail {
+  display: none;
+  grid-column: 1; grid-row: 2; align-self: center;
+  flex-direction: column;
+  gap: clamp(1.5rem, 3.4vh, 2.6rem);
+  position: relative;
+}
+.lst__rail::before {
+  content: ""; position: absolute; left: 5px; top: .45rem; bottom: .45rem;
+  width: 1px; background: var(--linie);
+}
+.lst__step {
+  position: relative; display: block; text-align: left; padding: 0 0 0 1.6rem;
+  color: var(--body);
+  transition: color var(--t-base) var(--ease);
+}
+.lst__step::before {
+  content: ""; position: absolute; left: 0; top: .3rem;
+  width: 11px; height: 11px; border-radius: 50%;
+  background: var(--linie);
+  transition: background-color var(--t-base) var(--ease), transform var(--t-base) var(--ease-out);
+}
+.lst__step .n {
+  display: block;
+  font-family: "Overpass Mono", ui-monospace, monospace;
+  font-size: .78rem; letter-spacing: .14em; line-height: 1;
+  margin-bottom: .35rem;
+}
+.lst__step .t {
+  display: block; font-size: .71rem; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase; line-height: 1.5;
+}
+.lst__step:hover { color: var(--ink) }
+.lst__step.is-on { color: var(--teal-ink); font-weight: 700 }
+.lst__step.is-on .n, .lst__step.is-on .t { font-weight: 700 }
+.lst__step.is-on::before { background: var(--teal); transform: scale(1.1) }
+.lst__step::after {
+  content: ""; position: absolute; left: 5px; top: 1.1rem; bottom: -.15rem; width: 1px;
+  background: var(--teal); transform: scaleY(0); transform-origin: top;
+  transition: transform var(--t-base) var(--ease);
+}
+.lst__step.is-on::after { transform: scaleY(1) }
+
+/* Text */
+.lst__copy { grid-column: 1; grid-row: 2; align-self: center; min-width: 0 }
+.lst__copy .kicker { margin-bottom: clamp(1rem, 2.4vh, 1.9rem) }
+
+/* Die vier Textblöcke liegen übereinander; nur einer ist sichtbar. */
+.lst__slides { position: relative; display: grid }
+.lst__slide {
+  grid-area: 1 / 1;
+  opacity: 0; visibility: hidden; transform: translateY(14px);
+  transition: opacity var(--t-base) var(--ease), transform var(--lst-t) var(--ease-out), visibility var(--t-base);
+}
+.lst__slide.is-on { opacity: 1; visibility: visible; transform: none }
+
+.lst__h {
+  font-size: clamp(1.85rem, 2.9vw, 2.95rem);
+  font-weight: 800; line-height: .95; letter-spacing: -.03em;
+  text-transform: uppercase; overflow-wrap: break-word;
+  margin-bottom: clamp(.9rem, 2vh, 1.5rem);
+}
+.lst__slide p { font-size: clamp(.92rem, 1.05vw, 1.02rem); line-height: 1.66; max-width: 42ch }
+
+/* Aufzählung unter dem Text, wie in der Vorlage mit Gedankenstrich */
+.lst__liste {
+  margin-top: clamp(1.3rem, 3vh, 2.1rem);
+  padding-top: clamp(1.1rem, 2.4vh, 1.7rem);
+  border-top: 1px solid var(--linie);
+  display: flex; flex-direction: column; gap: .62rem;
+  max-width: 30rem;
+}
+.lst__liste li {
+  position: relative; padding-left: 1.5rem;
+  font-size: .88rem; line-height: 1.5; color: var(--body);
+}
+.lst__liste li::before {
+  content: ""; position: absolute; left: 0; top: .72em;
+  width: .7rem; height: 1px; background: var(--teal-ink); opacity: .8;
+}
+
+/* Hinweis unten */
+.lst__hint {
+  grid-column: 1 / -1; grid-row: 3; margin: auto 0 0;
+  display: flex; align-items: center; gap: 1.1rem;
+  font-family: "Overpass Mono", ui-monospace, monospace;
+  font-size: .68rem; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--body);
+}
+.lst__hint svg { width: 1.15rem; height: 1.15rem; flex: none; color: var(--teal-ink); animation: lst-nudge 2.6s var(--ease-io) infinite }
+@keyframes lst-nudge { 0%, 62%, 100% { transform: none } 78% { transform: translateY(5px) } }
+@media (prefers-reduced-motion: reduce) { .lst__hint svg { animation: none } }
+
+/* ── Rechte Seite: das Gebäude steht frei auf der Fläche ──
+   Kein Bildkasten, kein Rahmen, keine Kante — Text und Objekt liegen auf
+   demselben Grund. Platzhalter; hier kommt später die Grafik bzw. das
+   Video an dieselbe Stelle.                                            */
+.lst__visual { position: relative }
+.lst__stage  { position: absolute; inset: 0 }
+
+.lst__haus {
+  position: absolute; inset: 7% 8% 7% 2%; transform-origin: 50% 50%;
+  transition: transform calc(1.4s * var(--motion)) var(--ease-out);
+}
+/* Die vier Zustände liegen deckungsgleich übereinander; nur einer ist zu
+   sehen. Alle vier zeigen dasselbe Gebäude aus derselben Kamera, deshalb
+   wechselt beim Überblenden nur die farbige Hervorhebung. */
+.lst__haus img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: contain; object-position: center;
+  opacity: 0; transition: opacity calc(700ms * var(--motion)) var(--ease);
+}
+.lst__haus img.is-on { opacity: 1 }
+
+/* Die Bildfolge liegt im selben Rahmen wie das Standbild — gleiche Fläche,
+   gleiche Geometrie, deshalb springt der Wechsel nicht. Fällt sie aus,
+   bleibt das Standbild stehen: die Section funktioniert ohne sie vollständig. */
+.lst__film {
+  position: absolute; inset: 7% 8% 7% 2%;
+  opacity: 0; transition: opacity var(--t-slow) var(--ease);
+  pointer-events: none;
+}
+.lst__film canvas { display: block; width: 100%; height: 100% }
+.lst__visual.hat-film .lst__film { opacity: 1 }
+/* Läuft die Bildfolge, sitzt die Bewegung in den Einzelbildern — Standbild
+   und Kamerafahrt treten so lange zurück, sonst bewegt sich beides.
+
+   Das Ausblenden ist weich, das Einblenden geschieht sofort: sonst laufen am
+   Ende der Fahrt zwei Blenden gleichzeitig — Rahmen und Einzelbild — und die
+   Fläche taucht dazwischen sichtbar ins Weisse ab. So löst stattdessen die
+   letzte Filmeinstellung sauber ins nächste Gewerk auf.                   */
+.lst__visual.hat-film .lst__haus {
+  opacity: 0;
+  transition: transform calc(1.4s * var(--motion)) var(--ease-out),
+              opacity var(--t-slow) var(--ease);
+}
+/* Die Leitlinie zeigt auf eine feste Stelle am Standbild. Während die Kamera
+   fährt, stimmt sie nicht mehr — die Fahrt selbst sagt ohnehin, worum es geht. */
+.lst__visual.hat-film .lst__lead { opacity: 0 }
+
+/* Leitlinie zum betrachteten Bereich, wie in der Vorlage */
+.lst__lead {
+  position: absolute; left: 30%; top: 78%;
+  display: flex; align-items: center; pointer-events: none;
+  transition: left var(--lst-t) var(--ease-out), top var(--lst-t) var(--ease-out);
+}
+.lst__lead .pkt {
+  width: 9px; height: 9px; border-radius: 50%; flex: none;
+  background: var(--teal); box-shadow: 0 0 0 5px rgba(80,186,160,.22), 0 0 22px rgba(80,186,160,.6);
+}
+.lst__lead .lin { height: 1px; width: clamp(3rem, 9vw, 8.5rem); background: var(--teal-ink); opacity: .55; flex: none }
+.lst__lead-l {
+  font-family: "Overpass Mono", ui-monospace, monospace;
+  font-size: .62rem; font-weight: 500; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--teal-ink); white-space: nowrap;
+  padding: .4rem .62rem; border: 1px solid rgba(43,128,103,.28);
+  background: rgba(247,248,248,.94);
+  backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+}
+
+/* ── Die vier Kamerastände ──
+   Behutsam: das Objekt steht frei, es darf nicht angeschnitten werden.
+
+   Diese Sprünge gelten nur als Rückfallebene. Sobald GSAP übernimmt
+   (html.gsap-lst), hängt die Fahrt direkt am Scrollrad und läuft
+   stufenlos zwischen denselben Ständen — siehe site.js.              */
+html:not(.gsap-lst) .lst__visual[data-step="0"] .lst__haus { transform: translate(1.5%, -3%) scale(1.07) }
+html:not(.gsap-lst) .lst__visual[data-step="1"] .lst__haus { transform: translate(1%,    4%) scale(1.06) }
+html:not(.gsap-lst) .lst__visual[data-step="2"] .lst__haus { transform: translate(-1%,   1%) scale(1.06) }
+html:not(.gsap-lst) .lst__visual[data-step="3"] .lst__haus { transform: translate(0, -1%)    scale(0.94) }
+
+html:not(.gsap-lst) .lst__visual[data-step="0"] .lst__lead { left: 27%; top: 76% }
+html:not(.gsap-lst) .lst__visual[data-step="1"] .lst__lead { left: 34%; top: 30% }
+html:not(.gsap-lst) .lst__visual[data-step="2"] .lst__lead { left: 30%; top: 54% }
+html:not(.gsap-lst) .lst__visual[data-step="3"] .lst__lead { left: 52%; top: 44% }
+
+/* Unter GSAP gehören Ausschnitt und Leitlinie dem Skript — eigene
+   CSS-Übergänge würden dagegenlaufen. Der Textwechsel bleibt bei CSS. */
+html.gsap-lst .lst__haus,
+html.gsap-lst .lst__lead { transition: none }
+/* Das Ausblenden gehört aber weiterhin dem Stylesheet — GSAP rührt die
+   Deckkraft nicht an. */
+html.gsap-lst .lst__visual.hat-film .lst__haus { transition: opacity var(--t-slow) var(--ease) }
+html.gsap-lst .lst__lead { transition: opacity calc(500ms * var(--motion)) var(--ease) }
+/* Der Punkt soll genau auf dem Ziel sitzen, nicht daneben */
+html.gsap-lst .lst__lead { left: 0; top: 0; margin: -4px 0 0 -4px }
+
+/* Ohne Skript und bei reduzierter Bewegung: alles ruhig und lesbar */
+html.capture .lst { height: auto }
+html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
+
+/* Schmaler Bildschirm: Balken und Text rücken zusammen */
+
+@media (max-width: 1320px) {
+  .lst__pin { grid-template-columns: minmax(0, 50fr) minmax(0, 50fr) }
+  .lst__step .t { font-size: .67rem; letter-spacing: .06em }
+}
+
+/* Hochformat: Objekt oben, Text darunter — beides auf derselben Fläche */
+@media (max-width: 900px) {
+  /* Ohne Bildfolge braucht es weniger Weg, aber lesen soll man trotzdem. */
+  .lst { height: 760svh }
+  .lst__pin {
+    grid-template-columns: 1fr; grid-template-rows: 34svh auto;
+    align-content: start;
+  }
+  .lst__visual { grid-row: 1 }
+  /* Standbild und Bildfolge müssen denselben Rahmen behalten, sonst springt
+     der Wechsel zwischen beiden auf dem Tablet. */
+  .lst__haus,
+  .lst__film { inset: 2% 6% 2% 6% }
+  .lst__lead .lin { width: 2.5rem }
+  .lst__lead-l { font-size: .55rem }
+  .lst__panel {
+    grid-row: 2; align-content: start;
+    grid-template-columns: 1fr; grid-template-rows: auto auto auto;
+    padding: 1.5rem var(--pad) .5rem;
+  }
+  .lst__count { margin-bottom: 1.1rem }
+  .lst__rail {
+    grid-column: 1; grid-row: 2; align-self: start;
+    flex-direction: row; gap: 1.5rem; margin-bottom: 1.5rem;
+  }
+  .lst__rail::before { left: 5px; right: 5px; top: 5px; bottom: auto; width: auto; height: 1px }
+  .lst__step { padding: 1.3rem 0 0; flex: none }
+  .lst__step .t { display: none }
+  .lst__step .n { font-size: .72rem; margin: 0 }
+  .lst__step::after { display: none }
+  .lst__copy { grid-column: 1; grid-row: 3 }
+  .lst__copy .kicker { margin-bottom: .9rem }
+  .lst__h { font-size: clamp(1.75rem, 8vw, 2.4rem) }
+  .lst__slide p { max-width: none; font-size: .92rem }
+  .lst__liste { max-width: none }
+  .lst__liste li { font-size: .82rem }
+  .lst__hint { display: none }
+}
+
+@media (max-width: 520px) {
+  .lst__pin { grid-template-rows: 30svh auto }
+}
+
+/* --- Kennzahlen ----------------------------------------------------------- */
+.zahlen { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(26,26,26,.16) }
+.zahl { background: var(--teal); padding: clamp(1.8rem, 3vw, 2.8rem) }
+.zahl__v { font-size: clamp(2.6rem, 5vw, 4.2rem); font-weight: 600; line-height: 1; letter-spacing: -.03em; font-variant-numeric: tabular-nums; display: flex; align-items: baseline; gap: .1rem }
+.zahl__v sup { font-size: .38em; font-weight: 500; align-self: flex-start; margin-top: .5em }
+.zahl__k { margin-top: 1rem; color: rgba(26,26,26,.78) }
+
+/* --- Ablauf --------------------------------------------------------------- */
+.ablauf { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--linie); border: 1px solid var(--linie) }
+.phase { background: var(--off); padding: clamp(1.4rem, 2.4vw, 2rem) }
+.phase__n { color: var(--teal-ink); margin-bottom: 1.4rem; display: block }
+.phase h3 { font-size: .95rem; font-weight: 600; text-transform: uppercase; letter-spacing: -.005em; margin-bottom: .6rem }
+.phase p { font-size: .875rem; line-height: 1.55; margin: 0 }
+.phase__bar { position: absolute; left: 0; top: -1px; height: 2px; width: 100%; background: var(--teal); transform-origin: left; z-index: 1 }
+
+/* --- Wissen / News --------------------------------------------------------
+   Textblock links, Karten rechts. Heller Grund mit Blaupause, Karten in
+   Weiss. Hover wie bei den Projekten: Teal-Rahmen plus Schein.        */
+.news { background: var(--off); overflow: hidden }
+
+.news__bp {
+  position: absolute; inset: 0; pointer-events: none;
+  mask-image: linear-gradient(to right, #000 0%, #000 34%, transparent 62%);
+  -webkit-mask-image: linear-gradient(to right, #000 0%, #000 34%, transparent 62%);
+}
+.news__bp svg { position: absolute; inset: 0; width: 100%; height: 100% }
+.nb-thin { fill: none; stroke: var(--ink); stroke-width: .7; opacity: .1 }
+.nb-line { fill: none; stroke: var(--ink); stroke-width: 1; opacity: .14 }
+
+.news__grid {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+  gap: clamp(2rem, 4vw, 4.5rem); align-items: start;
+}
+.news__head .kicker { color: var(--teal-ink) }
+.news__head .kicker::before { background: currentColor }
+.news__head .h2 { font-weight: 800; line-height: .95; letter-spacing: -.025em }
+.news__head .lead { margin-top: 1.4rem; max-width: 34ch }
+
+.news__cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 1.6vw, 1.5rem) }
+
+.news__card {
+  display: flex; flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--linie); border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color var(--t-base) var(--ease),
+              box-shadow var(--t-base) var(--ease),
+              transform var(--t-base) var(--ease);
+}
+.news__card:hover, .news__card:focus-visible {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 1px var(--teal), 0 0 34px rgba(80,186,160,.28), 0 0 80px rgba(80,186,160,.1);
+  transform: translateY(-4px);
+}
+.news__media { aspect-ratio: 4 / 3; overflow: hidden; background: var(--nebel) }
+.news__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms var(--ease-out) }
+.news__card:hover .news__media img { transform: scale(1.05) }
+
+.news__body { position: relative; padding: 1.5rem 1.5rem 4.25rem; display: flex; flex-direction: column; gap: .85rem; flex: 1 }
+.news__date { color: var(--teal-ink) }
+.news__body h3 { font-size: 1.05rem; font-weight: 700; line-height: 1.28; letter-spacing: -.01em; text-wrap: balance }
+.news__body p { font-size: .9rem; line-height: 1.55; margin: 0 }
+.news__go {
+  position: absolute; left: 1.5rem; bottom: 1.5rem;
+  color: var(--ink); transition: transform var(--t-base) var(--ease), color var(--t-base) var(--ease);
+}
+.news__card:hover .news__go { transform: translateX(5px); color: var(--teal-ink) }
+
+
+/* --- Kontakt -------------------------------------------------------------- */
+.kontakt { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start }
+.kontakt__list { display: flex; flex-direction: column; margin-top: .5rem }
+.kontakt__row { display: grid; grid-template-columns: 8rem 1fr; gap: 1rem; padding-block: 1.3rem; border-bottom: 1px solid var(--line-dark) }
+.kontakt__row dt { color: var(--teal) }
+.kontakt__row dd { margin: 0; font-size: 1.05rem }
+.kontakt__row a:hover { color: var(--teal) }
+
+/* --- Footer als Vorhang ---------------------------------------------------
+   Der Footer wird unten festgesetzt und beim Scrollen ins Bild gefahren —
+   er legt sich über die Seite, statt dass die Seite zu ihm scrollt. Der
+   Platzhalter darunter liefert den nötigen Scrollweg.
+   Ohne Skript bleibt alles normal im Fluss und sichtbar.               */
+.footer {
+  position: relative; z-index: 3;
+  background: var(--ink); color: var(--white);
+  padding-block: clamp(3.5rem, 7vw, 6rem) 2.5rem;
+  border-top: 1px solid var(--line-dark);
+}
+.footer-space { display: none }
+
+html.curtain .footer {
+  position: fixed; left: 0; right: 0; bottom: 0;
+  z-index: 350;
+  box-shadow: 0 -30px 70px rgba(0,0,0,.4);
+  will-change: transform;
+}
+html.curtain .footer-space { display: block }
+/* Die letzte Sektion bleibt stehen, während der Vorhang hochkommt —
+   sonst scrollt man durch eine leere Fläche. Möglich nur, weil der
+   Platzhalter innerhalb von <main> liegt und den Klebe-Raum liefert. */
+html.curtain #wissen { position: sticky; top: 0; z-index: 0 }
+
+/* Kontakt und Abschluss bilden einen Block */
+.footer__contact {
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(2.5rem, 5vw, 5.5rem); align-items: start;
+  padding-bottom: clamp(3rem, 5vw, 4.5rem);
+  margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+  border-bottom: 1px solid var(--line-dark);
+}
+.footer__contact .kicker { color: var(--teal) }
+.footer__contact .kicker::before { background: currentColor }
+.footer__contact .h2 { font-weight: 800; line-height: .95; letter-spacing: -.025em }
+.footer__contact .lead, .footer__contact p { color: var(--body-dark) }
+
+/* --- Footer-Inhalt -------------------------------------------------------- */
+.footer__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr));
+  gap: clamp(2rem, 4vw, 4rem);
+  padding-bottom: clamp(2.5rem, 4vw, 3.5rem);
+}
+.footer__logo { height: 2.6rem; width: auto; margin-bottom: 1.4rem }
+.footer__claim { font-size: .92rem; line-height: 1.6; color: var(--body-dark); margin: 0 }
+.footer__col h3 {
+  font-size: .74rem; font-weight: 600; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--teal); margin-bottom: 1.1rem;
+}
+.footer__col ul { display: flex; flex-direction: column; gap: .6rem }
+.footer__col li { font-size: .92rem; color: var(--body-dark) }
+.footer__col a { transition: color var(--t-fast) var(--ease) }
+.footer__col a:hover { color: var(--teal) }
+.footer__cta { margin-top: 1.5rem; padding: .8rem 1.1rem; font-size: .72rem }
+
+.footer__base {
+  display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between;
+  padding-top: 1.75rem; border-top: 1px solid var(--line-dark);
+  font-size: .82rem; color: rgba(255,255,255,.45);
+}
+.footer__base a:hover { color: var(--teal) }
+
+#kontakt .kontakt__veil {
+  position: absolute; inset: 0; z-index: 2;
+  background: #000; opacity: 0; pointer-events: none;
+}
+/* Grosse Wortmarke gibt dem Vorhang Fläche und einen Abschluss */
+.footer__word {
+  font-size: clamp(3rem, 11vw, 10rem); font-weight: 800;
+  line-height: .85; letter-spacing: -.04em; text-transform: uppercase;
+  color: rgba(255,255,255,.06);
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+  user-select: none;
+}
+.footer__in { display: flex; flex-wrap: wrap; gap: 1.5rem 2rem; justify-content: space-between; align-items: center }
+.footer__links { display: flex; flex-wrap: wrap; gap: 1.6rem }
+.footer__links a { font-size: .82rem; letter-spacing: .06em; text-transform: uppercase; color: var(--body-dark); transition: color var(--t-fast) var(--ease) }
+.footer__links a:hover { color: var(--teal) }
+.footer__base { font-size: .82rem; color: rgba(255,255,255,.45) }
+
+/* ==========================================================================
+   NEU nach Kundenvorlage — nur diese zwei Kapitel
+   ========================================================================== */
+
+/* Gemeinsame Bausteine der neuen Kapitel und des Footers ------------------- */
+.v2 .kicker, .footer__contact .kicker, .news__head .kicker, .lst .kicker {
+  display: flex; align-items: center; gap: .85rem;
+  font-family: "Overpass Mono", ui-monospace, monospace;
+  font-size: .78rem; font-weight: 500;
+  letter-spacing: .16em; text-transform: uppercase;
+  color: var(--teal); margin-bottom: 1.5rem;
+}
+.v2 .kicker::before, .footer__contact .kicker::before, .news__head .kicker::before, .lst .kicker::before { content: ""; width: 2.25rem; height: 1px; background: currentColor; flex: none }
+.v2--light .kicker, .lst .kicker { color: var(--teal-ink) }
+
+/* Fettere Headline mit Teal-Punkt als Signatur */
+.v2 .h2 { font-weight: 800; line-height: .95; letter-spacing: -.025em }
+
+/* Einheitliches Kopfmuster für beide Kapitel: Titel links gross, Text rechts. */
+.v2 .sec__head { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); align-items: start }
+.v2 .sec__head .lead { max-width: 34ch }
+.dot { color: var(--teal) }
+.v2--light .dot { color: var(--teal-ink) }
+
+/* Textlink mit Unterstrich */
+.link {
+  display: inline-flex; align-items: center; gap: 1.4rem;
+  font-family: "Overpass Mono", monospace;
+  font-size: .8rem; letter-spacing: .13em; text-transform: uppercase;
+  padding-bottom: .55rem; border-bottom: 1px solid currentColor;
+  transition: color var(--t-fast) var(--ease), gap var(--t-base) var(--ease);
+}
+.link:hover { color: var(--teal); gap: 1.9rem }
+.v2--light .link:hover { color: var(--teal-ink) }
+
+/* --- Überdeck-Scroll ------------------------------------------------------
+   Die vorherige Sektion bleibt oben stehen, die nächste schiebt sich von
+   unten darüber. Kein Wegscrollen, sondern ein Vorhang.                    */
+.stack { position: relative }
+/* Der Vorhang beginnt eine Bildschirmlänge vor dem Ende der Leistungen und
+   liegt darüber. Die Leistungen bleiben durch ihren eigenen sticky-Halt
+   stehen — dadurch schiebt sich die dunkle Fläche über sie, statt dass die
+   Seite unter ihr wegscrollt. */
+.stack__over { position: relative; z-index: 5; margin-top: -100svh }
+/* Blende, die die zurückbleibende Sektion beim Überdecken abdunkelt */
+.stack__veil {
+  position: absolute; inset: 0; z-index: 4;
+  background: #000; opacity: 0; pointer-events: none;
+}
+
+/* --- Kapitel Projekte (dunkel) -------------------------------------------- */
+.v2--dark {
+  background: var(--deep); color: var(--white);
+  position: relative; overflow: hidden;
+  min-height: 100svh;
+  display: flex; align-items: center;
+}
+.v2--dark p, .v2--dark .lead { color: var(--body-dark) }
+
+/* --- Seitenleiste als durchgehende Navigation -----------------------------
+   Fest links, erscheint sobald der helle Seitenkopf verlassen ist, und
+   übernimmt dort die Navigation. Farbe kippt mit dem Kapitel mit.        */
+:root { --sidebar: 13rem }
+
+.sidebar {
+  position: fixed; left: 0; top: 0; bottom: 0; z-index: var(--z-nav);
+  width: var(--sidebar);
+  display: flex; flex-direction: column;
+  padding: 2.25rem 1.75rem;
+  border-right: 1px solid var(--line-dark);
+  background: var(--deep); color: var(--white);
+  opacity: 0; visibility: hidden;
+  transition: opacity var(--t-base) var(--ease-io),
+              visibility var(--t-base),
+              background-color var(--t-slow) var(--ease-io),
+              color var(--t-slow) var(--ease-io),
+              border-color var(--t-slow) var(--ease-io);
+}
+.sidebar.is-visible { opacity: 1; visibility: visible }
+/* Helle Kapitel: Leiste kippt mit */
+.sidebar.is-light { background: var(--off); color: var(--ink); border-right-color: var(--linie) }
+
+.sidebar__logo { display: block; margin-bottom: auto }
+.sidebar__logo img { height: 2.4rem; width: auto }
+.sidebar__logo .onDark { display: block }
+.sidebar__logo .onLight { display: none }
+.sidebar.is-light .sidebar__logo .onDark { display: none }
+.sidebar.is-light .sidebar__logo .onLight { display: block }
+
+/* Kapitelzähler rechts aussen, wie in der Team-Vorlage */
+.counter {
+  position: absolute; right: var(--pad); top: 50%;
+  transform: translateY(-50%);
+  writing-mode: vertical-rl;
+  font-family: "Overpass Mono", monospace;
+  font-size: .72rem; letter-spacing: .2em; opacity: .4;
+  z-index: 1;
+}
+
+.sidebar__nav { display: flex; flex-direction: column; gap: 1.5rem; margin-block: auto }
+.sidebar__item { position: relative; display: block; transition: color var(--t-base) var(--ease), padding-left var(--t-base) var(--ease) }
+.sidebar__item .n {
+  display: block; font-family: "Overpass Mono", monospace;
+  font-size: .7rem; letter-spacing: .14em; opacity: .45; margin-bottom: .15rem;
+}
+.sidebar__item .t { display: block; font-size: .78rem; font-weight: 500; letter-spacing: .13em; text-transform: uppercase }
+.sidebar__item::before {
+  content: ""; position: absolute; left: -1.75rem; top: 1.25rem;
+  width: 1.3rem; height: 1px; background: var(--teal);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform var(--t-base) var(--ease);
+}
+.sidebar__item:hover { color: var(--teal) }
+.sidebar__item.is-active { color: var(--teal); padding-left: .5rem }
+.sidebar__item.is-active::before { transform: scaleX(1) }
+.sidebar__item.is-active .n { opacity: 1 }
+.sidebar.is-light .sidebar__item:hover,
+.sidebar.is-light .sidebar__item.is-active { color: var(--teal-ink) }
+.sidebar.is-light .sidebar__item::before { background: var(--teal-ink) }
+
+/* Untermenü der Gewerke — klappt auf, solange das Kapitel läuft. Damit
+   gibt es nur eine Navigation statt zweier untereinander.
+
+   Der Trick mit 0fr → 1fr braucht GENAU EINE Rasterzeile. Liegen die vier
+   Einträge direkt im Raster, bekommen drei davon eigene Zeilen und
+   behalten ihre Höhe — dann bleibt die Lücke auch im zugeklappten
+   Zustand stehen. Darum die Hülle drumherum.                          */
+.sidebar__subwrap {
+  display: grid; grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows calc(380ms * var(--motion)) var(--ease-out),
+              visibility 0s linear calc(380ms * var(--motion));
+}
+.sidebar.has-sub .sidebar__subwrap {
+  grid-template-rows: 1fr; visibility: visible;
+  transition: grid-template-rows calc(380ms * var(--motion)) var(--ease-out), visibility 0s;
+}
+.sidebar__sub { min-height: 0; overflow: hidden }
+.sidebar__sub li:first-child { padding-top: .9rem }
+.sidebar__sub li + li { padding-top: .72rem }
+
+.sidebar__sub-i {
+  position: relative; display: block; text-align: left; padding-left: 1.05rem;
+  font-family: "Overpass Mono", ui-monospace, monospace;
+  font-size: .66rem; letter-spacing: .07em; text-transform: uppercase;
+  line-height: 1.45; color: currentColor;
+  opacity: 0; transform: translateX(-7px);
+  transition: opacity calc(220ms * var(--motion)) var(--ease), transform calc(300ms * var(--motion)) var(--ease-out),
+              color var(--t-base) var(--ease);
+}
+/* Die Einträge kommen kurz nacheinander nach — beim Zuklappen alle
+   zugleich, sonst wirkt es zäh. */
+.sidebar.has-sub .sidebar__sub-i { opacity: .5; transform: none }
+.sidebar.has-sub .sidebar__sub li:nth-child(1) .sidebar__sub-i { transition-delay: calc(60ms * var(--motion)) }
+.sidebar.has-sub .sidebar__sub li:nth-child(2) .sidebar__sub-i { transition-delay: calc(110ms * var(--motion)) }
+.sidebar.has-sub .sidebar__sub li:nth-child(3) .sidebar__sub-i { transition-delay: calc(160ms * var(--motion)) }
+.sidebar.has-sub .sidebar__sub li:nth-child(4) .sidebar__sub-i { transition-delay: calc(210ms * var(--motion)) }
+
+.sidebar__sub-i::before {
+  content: ""; position: absolute; left: 0; top: .42em;
+  width: 6px; height: 6px; border-radius: 50%; background: currentColor;
+  opacity: .45; transition: background-color var(--t-base) var(--ease), opacity var(--t-base) var(--ease);
+}
+.sidebar.has-sub .sidebar__sub-i:hover { opacity: .85 }
+.sidebar.has-sub .sidebar__sub-i.is-on { opacity: 1; color: var(--teal) }
+.sidebar__sub-i.is-on::before { background: var(--teal); opacity: 1 }
+.sidebar.is-light .sidebar__sub-i.is-on { color: var(--teal-ink) }
+.sidebar.is-light .sidebar__sub-i.is-on::before { background: var(--teal-ink) }
+
+.sidebar__menu {
+  display: flex; align-items: center; gap: .8rem;
+  font-size: .76rem; font-weight: 500; letter-spacing: .13em; text-transform: uppercase;
+  transition: color var(--t-fast) var(--ease);
+}
+.sidebar__menu:hover { color: var(--teal) }
+.sidebar.is-light .sidebar__menu:hover { color: var(--teal-ink) }
+.sidebar__menu .bars { display: flex; flex-direction: column; gap: 4px; width: 22px }
+.sidebar__menu .bars span { display: block; height: 2px; width: 100%; background: currentColor; transition: transform var(--t-base) var(--ease), opacity var(--t-fast) var(--ease) }
+body.menu-open .sidebar__menu .bars span:nth-child(1) { transform: translateY(6px) rotate(45deg) }
+body.menu-open .sidebar__menu .bars span:nth-child(2) { opacity: 0 }
+body.menu-open .sidebar__menu .bars span:nth-child(3) { transform: translateY(-6px) rotate(-45deg) }
+
+.blueprint {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+  /* Links ausblenden: dort steht der Text. */
+  mask-image: linear-gradient(to right, transparent 0%, transparent 26%, #000 62%, #000 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 26%, #000 62%, #000 100%);
+}
+.blueprint svg { position: absolute; inset: 0; height: 100%; width: 100% }
+/* Atmosphäre, nicht Konkurrenz zum Text — darum bewusst zurückhaltend. */
+.bp-line { fill: none; stroke: var(--teal); stroke-width: 1.2; opacity: .26 }
+.bp-thin { fill: none; stroke: var(--teal); stroke-width: .8; opacity: .15 }
+.bp-dot  { fill: var(--teal); opacity: .35 }
+
+.v2 .wrap, .v2 .sec__head, .v2 .karten { position: relative; z-index: 1 }
+
+.karten { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: clamp(1.1rem, 1.8vw, 1.75rem) }
+
+/* Das Foto füllt die ganze Karte, der Text liegt darauf. Hochformat wie in
+   der Vorlage — kein getrennter Textkasten unter dem Bild. */
+.karte {
+  position: relative; display: block; overflow: hidden;
+  aspect-ratio: 1 / 1.12;
+  border: 1px solid var(--line-dark); border-radius: var(--radius);
+  background: var(--deep-2);
+  transition: border-color var(--t-base) var(--ease),
+              box-shadow var(--t-base) var(--ease),
+              transform var(--t-base) var(--ease);
+}
+/* Rahmen und Schein sind der Hover-Zustand, nicht eine fest markierte Karte. */
+.karte:hover, .karte:focus-visible {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 1px var(--teal), 0 0 34px rgba(80,186,160,.32), 0 0 80px rgba(80,186,160,.12);
+  transform: translateY(-4px);
+}
+
+.karte__media { position: absolute; inset: 0 }
+.karte__media img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1000ms var(--ease-out);
+}
+.karte:hover .karte__media img { transform: scale(1.05) }
+
+.karte__body {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 7rem 1.6rem 1.55rem;
+  /* Mehrstufiger Verlauf statt harter Kante — weicher Auslauf nach oben */
+  background: linear-gradient(to top,
+    rgba(8,13,11,.98)  0%,
+    rgba(8,13,11,.95) 14%,
+    rgba(8,13,11,.86) 30%,
+    rgba(8,13,11,.66) 46%,
+    rgba(8,13,11,.42) 62%,
+    rgba(8,13,11,.20) 78%,
+    rgba(8,13,11,.06) 90%,
+    rgba(8,13,11,0)  100%);
+}
+
+/* Feine Lichtkante oben — nimmt der Karte das Flache */
+.karte::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.09);
+  pointer-events: none;
+}
+.karte__cat { color: var(--teal); display: block; margin-bottom: .6rem }
+.karte__body h3 {
+  font-size: clamp(1.1rem, 1.35vw, 1.3rem); font-weight: 500;
+  line-height: 1.25; letter-spacing: -.01em; margin-bottom: .8rem;
+  max-width: 14ch; color: var(--white);
+}
+.karte__meta { color: var(--teal); opacity: .9 }
+.karte__go {
+  position: absolute; right: 1.5rem; bottom: 1.5rem;
+  width: 2.75rem; height: 2.75rem; border-radius: 50%;
+  display: grid; place-items: center;
+  border: 1px solid rgba(255,255,255,.35); color: var(--white);
+  backdrop-filter: blur(2px);
+  transition: border-color var(--t-base) var(--ease),
+              color var(--t-base) var(--ease),
+              transform var(--t-base) var(--ease);
+}
+.karte:hover .karte__go { border-color: var(--teal); color: var(--teal); transform: scale(1.06) }
+
+/* --- Kapitel Team (hell, Schieber) ---------------------------------------- */
+.v2--light { background: var(--off); color: var(--ink) }
+
+/* Der Schieber sitzt auf derselben Kante wie alles andere */
+.slider {
+  position: relative;
+  padding-left: calc(var(--sidebar) + var(--pad));
+  padding-right: var(--pad);
+}
+.slider .wrap { padding: 0 }        /* sonst doppelte Einrückung */
+.slider__track {
+  display: grid; grid-auto-flow: column; grid-auto-columns: 25%;
+  overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+}
+.slider__track::-webkit-scrollbar { display: none }
+
+.person { position: relative; scroll-snap-align: start; overflow: hidden; aspect-ratio: 3 / 3.4; background: var(--deep-2) }
+.person + .person { border-left: 1px solid var(--off) }
+.person > img { width: 100%; height: 100%; object-fit: cover; object-position: center 18%; transition: transform 800ms var(--ease-out) }
+.person:hover > img { transform: scale(1.045) }
+
+/* Platzhalter für noch fehlende Portraits: Konstruktionsraster statt leerer
+   Fläche, damit die Lücke gewollt aussieht und nicht wie ein Ladefehler. */
+.person__ph {
+  position: relative; width: 100%; height: 100%;
+  display: grid; place-items: center;
+  background:
+    linear-gradient(rgba(80,186,160,.05), rgba(80,186,160,.05)),
+    repeating-linear-gradient(0deg, rgba(255,255,255,.05) 0 1px, transparent 1px 44px),
+    repeating-linear-gradient(90deg, rgba(255,255,255,.05) 0 1px, transparent 1px 44px),
+    var(--deep-2);
+  color: rgba(255,255,255,.3); font-size: 2.6rem; font-weight: 300; letter-spacing: .04em;
+}
+.person__ph::after {
+  content: "Foto folgt"; position: absolute; left: 50%; top: calc(50% + 2.4rem);
+  transform: translateX(-50%);
+  font-family: "Overpass Mono", monospace; font-size: .68rem;
+  letter-spacing: .16em; text-transform: uppercase; color: rgba(80,186,160,.5);
+}
+
+.person__bar {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 1.6rem 1.4rem 1.3rem;
+  background: linear-gradient(to top, rgba(8,13,11,.94) 0%, rgba(8,13,11,.72) 55%, rgba(8,13,11,0) 100%);
+  display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 1rem;
+}
+.person__bar .nm { color: var(--teal); display: block; margin-bottom: .35rem }
+.person__bar .rl { font-size: .92rem; color: var(--white); line-height: 1.3 }
+.person__plus { width: 1.5rem; height: 1.5rem; position: relative; color: var(--white); flex: none; transition: transform var(--t-base) var(--ease), color var(--t-base) var(--ease) }
+.person__plus::before, .person__plus::after { content: ""; position: absolute; left: 50%; top: 50%; background: currentColor }
+.person__plus::before { width: 1px; height: 100%; transform: translate(-50%,-50%) }
+.person__plus::after  { width: 100%; height: 1px; transform: translate(-50%,-50%) }
+.person:hover .person__plus { transform: rotate(90deg); color: var(--teal) }
+
+.slider__foot { display: flex; align-items: center; gap: 2rem; margin-top: 2rem }
+.slider__progress { flex: 1; height: 1px; background: var(--linie); position: relative; overflow: hidden }
+.slider__progress span { position: absolute; inset: 0; background: var(--teal-ink); transform-origin: left; transform: scaleX(.25); transition: transform var(--t-base) var(--ease) }
+.slider__btns { display: flex; gap: .6rem }
+.slider__btn { width: 3rem; height: 3rem; border-radius: 50%; border: 1px solid var(--linie); display: grid; place-items: center; transition: border-color var(--t-fast) var(--ease), background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease) }
+.slider__btn:hover:not(:disabled) { border-color: var(--teal-ink); background: var(--teal-ink); color: var(--white) }
+.slider__btn:disabled { opacity: .3; cursor: default }
+
+.standorte { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 2rem; margin-top: clamp(2.5rem, 4vw, 4rem); border-top: 1px solid var(--linie); padding-top: 2.25rem }
+.standort h3 { font-size: .95rem; font-weight: 600; text-transform: uppercase; letter-spacing: .04em; margin-bottom: .7rem }
+.standort p { font-size: .92rem; margin: 0 }
+
+/* --- Reveals -------------------------------------------------------------- */
+.line-mask { display: block; overflow: hidden }
+.split-line { display: block; will-change: transform }
+
+/* --- Unterseite ----------------------------------------------------------- */
+.page-head { padding: 11rem 0 clamp(3rem, 6vw, 5rem); background: var(--off); border-bottom: 1px solid var(--linie) }
+.case { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: clamp(1.5rem, 4vw, 4rem); align-items: center; padding-block: clamp(2.5rem, 5vw, 4rem) }
+.case + .case { border-top: 1px solid var(--linie) }
+.case:nth-child(even) .case__media { order: 2 }
+.case__media { aspect-ratio: 4 / 3; overflow: hidden; background: var(--nebel) }
+.case__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms var(--ease-out) }
+.case:hover .case__media img { transform: scale(1.04) }
+.case h2 { font-size: clamp(1.5rem, 2.4vw, 2.2rem); font-weight: 600; text-transform: uppercase; letter-spacing: -.015em; margin-bottom: .9rem; text-wrap: balance }
+.specs { margin-top: 1.6rem; border-top: 1px solid var(--linie) }
+.specs li { display: grid; grid-template-columns: 11rem 1fr; gap: 1rem; padding-block: .75rem; border-bottom: 1px solid var(--linie) }
+.specs .k { color: var(--teal-ink) }
+.specs .v { font-size: .95rem }
+.refs { border-top: 1px solid var(--linie) }
+.refs li { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; padding-block: 1.1rem; border-bottom: 1px solid var(--linie) }
+.refs .nm { font-weight: 500 }
+.refs .tg { color: var(--teal-ink) }
+
+/* --- Aufnahmemodus -------------------------------------------------------- */
+html.capture .hero { min-height: 0; height: 50rem }
+html.capture .v2--dark { min-height: 0 }
+html.capture .stack__under { position: static }
+html.capture .stack__veil { display: none }
+html.capture .slider__track { overflow: visible }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+/* Zwischenstufe: schmaleres Fenster braucht mehr Textbreite, sonst brechen
+   die beiden Buttons um und das Gebäude schiebt sich unter die Merkmale. */
+@media (max-width: 1440px) and (min-width: 1181px) {
+  .hero__inner { grid-template-columns: 38% minmax(0, 1fr) 12rem }
+  .hero__visual { left: 39%; right: 20% }
+  /* etwas kompakter, damit beide Buttons nebeneinander bleiben */
+  .hero__actions .btn { padding: .85rem 1rem; font-size: .74rem; gap: .45rem }
+}
+
+@media (max-width: 1180px) {
+  .hero__inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) }
+  .hero__visual { position: relative; left: auto; right: auto; top: auto; bottom: auto; grid-column: 1 / -1 }
+  .hero__spacer { display: none }
+  .hero__facts { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; gap: 2rem; padding-top: 1rem; border-top: 1px solid var(--linie) }
+  .fact { flex: 1 1 14rem }
+  .zahlen { grid-template-columns: repeat(2, 1fr) }
+  .ablauf { grid-template-columns: repeat(3, 1fr) }
+  .slider__track { grid-auto-columns: 33.333% }
+}
+
+@media (max-width: 1100px) {
+  /* Seitenleiste braucht Platz; darunter rückt der Inhalt an den Rand */
+  :root { --sidebar: 0px }
+  .sidebar { display: none }
+  /* Ohne Seitenleiste übernimmt der Balken in der Section die Gewerke */
+  .lst__rail { display: flex }
+  .lst__panel { grid-template-columns: 6rem minmax(0, 1fr) }
+  .lst__copy { grid-column: 2 }
+  .nav.is--replaced { transform: none; pointer-events: auto }
+  .v2--dark { min-height: 0 }
+  .stack__under { position: static }
+}
+
+@media (max-width: 900px) {
+  .nav__links, .nav__cta { display: none }
+  .burger { display: flex }
+  .nav__inner { height: 4.75rem }
+  .hero { padding-top: 4.75rem; min-height: 0 }
+  .hero__inner { grid-template-columns: 1fr; gap: 2.25rem }
+  .hero__visual { order: -1; width: 100%; max-width: 30rem; margin: 0 auto }
+  .hero__facts { flex-direction: column; gap: 1.6rem }
+  .fact { flex: none }
+  .hero__scroll { display: none }
+  .sec__head, .kontakt { grid-template-columns: 1fr }
+  .slider__track { grid-auto-columns: 72% }
+  .case, .case:nth-child(even) .case__media { grid-template-columns: 1fr; order: 0 }
+  .specs li, .kontakt__row { grid-template-columns: 1fr; gap: .25rem }
+  .page-head { padding-top: 9rem }
+}
+
+@media (max-width: 1200px) {
+  .news__grid { grid-template-columns: 1fr; gap: 2.5rem }
+}
+
+@media (max-width: 1100px) {
+  .footer__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem }
+  .footer__contact { grid-template-columns: 1fr; gap: 2.5rem }
+}
+
+@media (max-width: 820px) {
+  .news__cards { grid-template-columns: 1fr }
+}
+
+@media (max-width: 640px) {
+  .footer__grid { grid-template-columns: 1fr; gap: 2rem }
+  .zahlen { grid-template-columns: 1fr }
+  .ablauf { grid-template-columns: 1fr }
+  .slider__track { grid-auto-columns: 84% }
+  .footer__in { flex-direction: column; align-items: flex-start }
+}
