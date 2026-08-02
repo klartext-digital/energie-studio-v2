@@ -79,7 +79,10 @@ body {
   font-family: Inter, system-ui, -apple-system, sans-serif;
   font-size: 1rem;
   line-height: 1.65;
-  overflow-x: clip;
+  /* KEIN overflow-x hier: sobald body in einer Achse beschnitten wird,
+     gilt die andere Achse als mitbeschnitten — und damit funktioniert
+     position: sticky im ganzen Dokument nicht mehr. Der waagerechte
+     Ueberlauf wird bereits von <html> abgefangen. */
 }
 body.menu-open { overflow: hidden }
 
@@ -855,19 +858,40 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
 
 .footer-space { display: none }
 
+/* Der Footer bleibt im normalen Fluss und wird nur nach unten verschoben —
+   frueher war er hier fest ans Fensterende geheftet. Das ging, solange er
+   auf den Bildschirm passte; mit Foto und Kontaktformular ist er fast
+   doppelt so hoch, und sein oberer Teil waere dauerhaft unerreichbar
+   gewesen. So faehrt er genauso von unten hoch, laesst sich danach aber
+   ganz durchscrollen. */
+/* Der Footer bleibt im normalen Fluss. Den Vorhang macht die letzte
+   Sektion: sie klebt unten fest, waehrend der Footer von unten darueber
+   schiebt. Frueher war der Footer selbst ans Fenster geheftet — das ging
+   nur, solange er auf den Bildschirm passte. Mit Foto und Kontaktformular
+   ist er fast doppelt so hoch; festgeheftet waere seine obere Haelfte
+   dauerhaft unerreichbar. */
 html.curtain .footer {
-  position: fixed; left: 0; right: 0; bottom: 0;
+  position: relative;
+  /* Eine Fensterhoehe frueher beginnen: nur so faehrt der Footer hoch,
+     WAEHREND die letzte Sektion noch festklebt — sonst schiebt er sich
+     ueber eine leere Flaeche. */
+  margin-top: -100svh;
   z-index: 350;
   box-shadow: 0 -30px 70px rgba(0,0,0,.4);
-  will-change: transform;
 }
 html.curtain .footer-space { display: block }
-/* Die letzte Sektion bleibt stehen, während der Vorhang hochkommt —
-   sonst scrollt man durch eine leere Fläche. Möglich nur, weil der
-   Platzhalter innerhalb von <main> liegt und den Klebe-Raum liefert. */
-   Unten festkleben, nicht oben: die Sektion ist höher als der Bildschirm,
-   bei top:0 bliebe ihr unteres Ende für immer unerreichbar. */
-html.curtain #wissen { position: sticky; bottom: 0; z-index: 0 }
+/* Die letzte Sektion bleibt stehen, waehrend der Vorhang hochkommt —
+   sonst scrollt man durch eine leere Flaeche. Moeglich nur, weil der
+   Platzhalter innerhalb von <main> liegt und den Klebe-Raum liefert.
+   Unten festkleben, nicht oben: die Sektion ist hoeher als der Bildschirm,
+   bei top:0 bliebe ihr unteres Ende fuer immer unerreichbar. */
+/* z-index 6: ueber der Projekte-Sektion (5) und ueber Team. Mit 0 stand
+   die Team-Sektion beim Ueberblenden ueber den News-Karten.
+   Der Klebepunkt kommt aus site.js: "bottom: 0" haelt eine Sektion nur
+   fest, WAEHREND man sich ihr naehert. Damit sie stehen bleibt, waehrend
+   der Footer an ihr vorbei hochfaehrt, braucht es "top" mit einem
+   negativen Wert — die Sektion ist hoeher als der Bildschirm. */
+html.curtain #wissen { position: sticky; z-index: 6 }
 
 /* Kontakt und Abschluss bilden einen Block */
 .footer__contact {
@@ -948,18 +972,33 @@ html.curtain #wissen { position: sticky; bottom: 0; z-index: 0 }
    selbst (Kicker, Titel, Text rechts daneben) kommt aus .sec__head. */
 .v2 .sec__head { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) }
 /* Textlink mit Unterstrich */
+/* Die Verweise neben den Titeln: fette Versalien, darunter ein Strich in
+   der Markenfarbe. Der Strich ist bewusst ein eigenes Element (::after)
+   statt border-bottom — nur so kann er in Tuerkis stehen, waehrend die
+   Schrift dunkel bleibt, und beim Zeigen mitwachsen. */
 .link {
+  position: relative;
   display: inline-flex; align-items: center; gap: 1.4rem;
   font-family: "Overpass Mono", monospace;
+  font-weight: 700;
   font-size: .8rem; letter-spacing: .13em; text-transform: uppercase;
-  padding-bottom: .55rem; border-bottom: 1px solid currentColor;
+  padding-bottom: .7rem;
   transition: color var(--t-fast) var(--ease), gap var(--t-base) var(--ease);
 }
-.link:hover { color: var(--teal); gap: 1.9rem }
-.v2--light .link:hover { color: var(--teal-ink) }
-/* Bewusst in der Markenfarbe — Schrift und Unterstrich zusammen. */
-.link--teal { color: var(--teal-ink); border-bottom-color: var(--teal-ink) }
-.link--teal:hover { color: var(--teal) }
+.link::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 2px; background: var(--teal);
+  transform-origin: left center;
+  transition: transform var(--t-base) var(--ease), background var(--t-fast) var(--ease);
+}
+.link:hover { gap: 1.9rem }
+.link:hover::after { transform: scaleY(1.6) }
+.link:focus-visible { outline: 2px solid var(--teal-ink); outline-offset: 4px }
+/* Auf dunklem Grund darf der Strich heller stehen. */
+.sec--ink .link::after, .v2--dark .link::after, .footer .link::after { background: var(--teal) }
+/* --link--teal gab es, als Schrift UND Strich gruen sein sollten. Jetzt ist
+   der Strich immer gruen, die Klasse faerbt nur noch die Schrift mit. */
+.link--teal { color: var(--teal-ink) }
 
 /* --- Überdeck-Scroll ------------------------------------------------------
    Die vorherige Sektion bleibt oben stehen, die nächste schiebt sich von

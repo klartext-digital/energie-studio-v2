@@ -621,23 +621,33 @@
     var veil   = document.querySelector("[data-kontakt-veil]");
     if (!footer || !space || reduce || !hasGsap || !DESKTOP) return;
 
-    /* Der Vorhang setzt den Footer unten fest. Ist er höher als der
-       Bildschirm, bliebe sein oberer Teil — Foto und Überschrift —
-       dauerhaft ausserhalb des Bildes. Dann läuft er lieber normal mit. */
-    if (footer.offsetHeight > window.innerHeight) return;
+    /* Frueher stand hier eine Sperre: ist der Footer hoeher als der
+       Bildschirm, lief der Vorhang gar nicht. Sie ist nicht mehr noetig —
+       der Footer wird jetzt nur verschoben statt festgeheftet, also bleibt
+       er in jeder Hoehe vollstaendig erreichbar. */
 
     function size() {
       // Footerhöhe plus Scrollweg für die Fahrt nach oben
-      space.style.height = (footer.offsetHeight + window.innerHeight * 0.65) + "px";
+      /* Nur noch der Weg, den die letzte Sektion stehen bleibt — die Hoehe
+         des Footers steuert er selbst bei, er ist ja im Fluss. */
+      /* So lange bleibt die letzte Sektion stehen: gerade so viel, dass der
+         Footer in dieser Zeit von unterhalb des Bildrands bis ueber den
+         ganzen Schirm faehrt — also etwas mehr als eine Fensterhoehe. */
+      space.style.height = Math.round(window.innerHeight * 1.15) + "px";
+      /* Klebepunkt der letzten Sektion: so weit nach oben versetzt, dass
+         ihre Unterkante am Fensterboden steht. Sie ist hoeher als der
+         Bildschirm, der Wert ist also negativ. */
+      var letzte = document.getElementById("wissen");
+      if (letzte) letzte.style.top = Math.min(0, window.innerHeight - letzte.offsetHeight) + "px";
     }
     root.classList.add("curtain");
     size();
     window.addEventListener("resize", function () { size(); ScrollTrigger.refresh(); });
 
-    gsap.fromTo(footer, { yPercent: 100 }, {
-      yPercent: 0, ease: "none",
-      scrollTrigger: { trigger: space, start: "top bottom", end: "bottom bottom", scrub: true }
-    });
+    /* Keine Verschiebung des Footers mehr: die Bewegung entsteht daraus,
+       dass die letzte Sektion unten festklebt und der Footer im normalen
+       Fluss darueber schiebt. Das sieht gleich aus, laesst sich aber ganz
+       durchscrollen. */
 
     if (veil) {
       gsap.fromTo(veil, { opacity: 0 }, {
