@@ -1478,3 +1478,19 @@ html.capture .slider__track { overflow: visible }
   .lst__h { font-size: 1.55rem; letter-spacing: -.02em }
   .lst__pin { padding-inline: 0 }
 }
+
+/* --- Zurueck nach oben ---------------------------------------------------- */
+/* Steht unten links im Footer, vor der Zeile mit dem Jahr. Faehrt weich
+   nach oben statt die Seite neu zu laden. */
+.nach-oben {
+  display: inline-flex; align-items: center; gap: .6rem;
+  margin-right: auto;
+  font-family: "Overpass Mono", monospace;
+  font-size: .78rem; letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(255,255,255,.72);
+  transition: color var(--t-fast) var(--ease), gap var(--t-base) var(--ease);
+}
+.nach-oben svg { transition: transform var(--t-base) var(--ease) }
+.nach-oben:hover { color: var(--teal); gap: .9rem }
+.nach-oben:hover svg { transform: translateY(-3px) }
+.nach-oben:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px }

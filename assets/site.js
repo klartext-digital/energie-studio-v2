@@ -127,6 +127,34 @@
     setTimeout(lauf, 1200);
   }
 
+  /* ── Zurueck nach oben ───────────────────────────────────────────────────
+     Betrifft den Pfeil unten im Footer und das Logo in der Seitenleiste.
+     Zeigt der Verweis auf dieselbe Seite, wird nicht neu geladen, sondern
+     weich nach oben gefahren — sonst blitzt die Seite kurz weiss auf.   */
+  function initNachOben() {
+    function nachOben(e) {
+      e.preventDefault();
+      if (lenis) lenis.scrollTo(0, { duration: 1.1 });
+      else window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+      if (history.replaceState) history.replaceState(null, "", location.pathname);
+    }
+
+    document.querySelectorAll("[data-nach-oben]").forEach(function (a) {
+      a.addEventListener("click", nachOben);
+    });
+
+    /* Logo und Wortmarke: nur wenn sie auf die AKTUELLE Seite zeigen. Auf
+       der Projektseite sollen sie weiterhin zur Startseite fuehren. */
+    var hier = location.pathname.replace(/\/index\.html$/, "/");
+    document.querySelectorAll(".sidebar__logo, .nav__logo").forEach(function (a) {
+      var ziel = a.pathname ? a.pathname.replace(/\/index\.html$/, "/") : null;
+      if (ziel === hier) {
+        a.addEventListener("click", nachOben);
+        a.setAttribute("title", "Nach oben");
+      }
+    });
+  }
+
   /* ── Barrierefreiheit: unversehrte Textkopie vor jedem Split ─────────── */
   function makeAccessible(el) {
     if (el.getAttribute("aria-hidden") === "true") return;
@@ -413,13 +441,13 @@
        Sanitaer aufhoert, loescht die Markierung, faehrt in die Nacht und
        zuendet dann das Netz aus Fuehlern, Reglern und Leitzentrale an.
        Die Textspalte bleibt dabei hell wie bei den anderen Gewerken. */
-    3: { ordner: "assets/film/automation/", anzahl: 124, endung: ".webp" }
+    3: { ordner: "assets/film/automation/", anzahl: 125, endung: ".webp" }
   };
 
   /* Die Einzelbilder heissen bei jeder Neufassung gleich. Ohne diese Kennung
      bliebe der Browser beim alten Satz — die Seite sähe unverändert aus.
      Beim Neubauen der Bildfolgen mit hochzählen. */
-  var FILM_STAND = "15";
+  var FILM_STAND = "16";
 
   function initFilm(section, fortschritt, N) {
     var leinwand = section.querySelector("[data-lst-film]");
@@ -914,6 +942,7 @@
   /* ── Start, genau einmal ─────────────────────────────────────────────── */
   var booted = false;
   function boot() {
+    initNachOben();
     initPruefung();
     if (booted) return;
     booted = true;
