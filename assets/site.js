@@ -447,7 +447,7 @@
   /* Die Einzelbilder heissen bei jeder Neufassung gleich. Ohne diese Kennung
      bliebe der Browser beim alten Satz — die Seite sähe unverändert aus.
      Beim Neubauen der Bildfolgen mit hochzählen. */
-  var FILM_STAND = "16";
+  var FILM_STAND = "17";
 
   function initFilm(section, fortschritt, N) {
     var leinwand = section.querySelector("[data-lst-film]");
