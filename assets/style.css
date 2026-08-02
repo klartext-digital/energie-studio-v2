@@ -310,7 +310,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
      deutlich ueber der Titeloberkante statt knapp darueber. Die feine
      Zeichnung, die dabei hinter den Titel reicht, liegt hinter dem Text
      und ist blass genug, um ihn nicht zu stoeren. */
-  left: 9%; right: calc(17rem + var(--hero-rechts) - 3rem);
+  left: 3%; right: calc(17rem + var(--hero-rechts) - 3rem);
   top: 0; bottom: 0;
   z-index: 0;
   pointer-events: none;
