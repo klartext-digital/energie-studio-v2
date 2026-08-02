@@ -796,11 +796,11 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
 .kform { display: flex; flex-direction: column; gap: 1.4rem }
 .kform__reihe { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem }
 .kform__feld { display: flex; flex-direction: column; gap: .5rem }
-.kform__feld .kenn { color: var(--teal); font-size: .72rem }
-.kform__feld .kenn em { font-style: normal; color: rgba(255,255,255,.35); text-transform: none; letter-spacing: .02em }
+.kform__feld .kenn { color: var(--teal-ink); font-size: .72rem }
+.kform__feld .kenn em { font-style: normal; color: var(--body); opacity: .7; text-transform: none; letter-spacing: .02em }
 .kform input, .kform textarea {
-  width: 100%; background: transparent; color: var(--white);
-  border: 0; border-bottom: 1px solid var(--line-dark);
+  width: 100%; background: transparent; color: var(--ink);
+  border: 0; border-bottom: 1px solid var(--linie);
   padding: .6rem 0; font: inherit; font-size: .95rem;
   transition: border-color var(--t-fast) var(--ease);
 }
@@ -808,16 +808,16 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
 .kform input:focus, .kform textarea:focus { outline: none; border-bottom-color: var(--teal) }
 .kform input:user-invalid, .kform textarea:user-invalid { border-bottom-color: #d9614f }
 .kform__ab { align-self: start; margin-top: .4rem }
-.kform__hinweis { font-size: .85rem; color: var(--teal); margin: 0; min-height: 1.2em }
-.kform__hinweis[data-fehler] { color: #e8917f }
+.kform__hinweis { font-size: .85rem; color: var(--teal-ink); margin: 0; min-height: 1.2em }
+.kform__hinweis[data-fehler] { color: #b23a26 }
 
 @media (max-width: 640px) { .kform__reihe { grid-template-columns: 1fr } }
 
 .kontakt__list { display: flex; flex-direction: column; margin-top: 2.5rem }
-.kontakt__row { display: grid; grid-template-columns: 8rem 1fr; gap: 1rem; padding-block: 1.3rem; border-bottom: 1px solid var(--line-dark) }
-.kontakt__row dt { color: var(--teal) }
+.kontakt__row { display: grid; grid-template-columns: 8rem 1fr; gap: 1rem; padding-block: 1.3rem; border-bottom: 1px solid var(--linie) }
+.kontakt__row dt { color: var(--teal-ink) }
 .kontakt__row dd { margin: 0; font-size: 1.05rem }
-.kontakt__row a:hover { color: var(--teal) }
+.kontakt__row a:hover { color: var(--teal-ink) }
 
 /* --- Footer als Vorhang ---------------------------------------------------
    Der Footer wird unten festgesetzt und beim Scrollen ins Bild gefahren —
@@ -827,11 +827,14 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
 /* Über der Seitenleiste, nicht darunter: der Abschluss soll über die
    ganze Breite laufen, die Kapitelnavigation hat hier ausgedient.
    Oben ohne Abstand, damit das Foto bündig anschliesst. */
+/* Footer steht auf demselben hellen Grau wie die News- und die
+   Projekte-Sektion. Alles darin ist mit umgestellt: Schrift, Linien,
+   Formular, Bildmarke und der Verlauf unter dem Foto. */
 .footer {
   position: relative; z-index: 420;
-  background: var(--ink); color: var(--white);
+  background: var(--nebel); color: var(--ink);
   padding-block: 0 2.5rem;
-  border-top: 1px solid var(--line-dark);
+  border-top: 1px solid var(--linie);
 }
 .footer:not(:has(.footer__foto)) { padding-top: clamp(3.5rem, 7vw, 6rem) }
 
@@ -849,7 +852,9 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
 .footer__mark {
   position: absolute; right: -6%; bottom: -14%;
   width: clamp(26rem, 46vw, 56rem); height: auto;
-  opacity: .12; pointer-events: none; user-select: none; z-index: 0;
+  /* Auf hellem Grund braucht es die dunkle Fassung des Zeichens und
+     weniger Deckkraft, sonst wird es zur Flaeche statt zum Hintergrund. */
+  opacity: .07; pointer-events: none; user-select: none; z-index: 0;
 }
 .footer > .wrap { position: relative; z-index: 1 }
 /* Foto über die ganze Breite, oben im Footer. Der Verlauf nach unten
@@ -866,7 +871,7 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
 .footer__foto img { width: 100%; height: 100%; object-fit: cover; object-position: center 30% }
 .footer__foto::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(to bottom, rgba(8,13,11,.28) 0%, rgba(8,13,11,0) 34%, rgba(8,13,11,.85) 100%);
+  background: linear-gradient(to bottom, rgba(237,240,239,.30) 0%, rgba(237,240,239,0) 30%, rgba(237,240,239,.92) 100%);
 }
 
 .footer-space { display: none }
@@ -912,12 +917,12 @@ html.curtain #wissen { position: sticky; z-index: 6 }
   gap: clamp(2.5rem, 5vw, 5.5rem); align-items: start;
   padding-bottom: clamp(3rem, 5vw, 4.5rem);
   margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
-  border-bottom: 1px solid var(--line-dark);
+  border-bottom: 1px solid var(--linie);
 }
-.footer__contact .kicker { color: var(--teal) }
+.footer__contact .kicker { color: var(--teal-ink) }
 .footer__contact .kicker::before { background: currentColor }
 .footer__contact .h2 { font-weight: 800; line-height: 1.08; letter-spacing: -.025em }
-.footer__contact .lead, .footer__contact p { color: var(--body-dark) }
+.footer__contact .lead, .footer__contact p { color: var(--body) }
 
 /* --- Footer-Inhalt -------------------------------------------------------- */
 .footer__grid {
@@ -927,23 +932,23 @@ html.curtain #wissen { position: sticky; z-index: 6 }
   padding-bottom: clamp(2.5rem, 4vw, 3.5rem);
 }
 .footer__logo { height: 2.6rem; width: auto; margin-bottom: 1.4rem }
-.footer__claim { font-size: .92rem; line-height: 1.6; color: var(--body-dark); margin: 0 }
+.footer__claim { font-size: .92rem; line-height: 1.6; color: var(--body); margin: 0 }
 .footer__col h3 {
   font-size: .74rem; font-weight: 600; letter-spacing: .12em;
   text-transform: uppercase; color: var(--teal); margin-bottom: 1.1rem;
 }
 .footer__col ul { display: flex; flex-direction: column; gap: .6rem }
-.footer__col li { font-size: .92rem; color: var(--body-dark) }
+.footer__col li { font-size: .92rem; color: var(--body) }
 .footer__col a { transition: color var(--t-fast) var(--ease) }
-.footer__col a:hover { color: var(--teal) }
+.footer__col a:hover { color: var(--teal-ink) }
 .footer__cta { margin-top: 1.5rem }
 
 .footer__base {
   display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between;
-  padding-top: 1.75rem; border-top: 1px solid var(--line-dark);
-  font-size: .82rem; color: rgba(255,255,255,.45);
+  padding-top: 1.75rem; border-top: 1px solid var(--linie);
+  font-size: .82rem; color: var(--body);
 }
-.footer__base a:hover { color: var(--teal) }
+.footer__base a:hover { color: var(--teal-ink) }
 
 #kontakt .kontakt__veil {
   position: absolute; inset: 0; z-index: 2;
@@ -953,15 +958,15 @@ html.curtain #wissen { position: sticky; z-index: 6 }
 .footer__word {
   font-size: clamp(3rem, 11vw, 10rem); font-weight: 800;
   line-height: .85; letter-spacing: -.04em; text-transform: uppercase;
-  color: rgba(255,255,255,.06);
+  color: rgba(26,26,26,.05);
   margin-bottom: clamp(2rem, 4vw, 3.5rem);
   user-select: none;
 }
 .footer__in { display: flex; flex-wrap: wrap; gap: 1.5rem 2rem; justify-content: space-between; align-items: center }
 .footer__links { display: flex; flex-wrap: wrap; gap: 1.6rem }
-.footer__links a { font-size: .82rem; letter-spacing: .06em; text-transform: uppercase; color: var(--body-dark); transition: color var(--t-fast) var(--ease) }
-.footer__links a:hover { color: var(--teal) }
-.footer__base { font-size: .82rem; color: rgba(255,255,255,.45) }
+.footer__links a { font-size: .82rem; letter-spacing: .06em; text-transform: uppercase; color: var(--body); transition: color var(--t-fast) var(--ease) }
+.footer__links a:hover { color: var(--teal-ink) }
+.footer__base { font-size: .82rem; color: var(--body) }
 
 /* ==========================================================================
    NEU nach Kundenvorlage — nur diese zwei Kapitel
@@ -1008,7 +1013,7 @@ html.curtain #wissen { position: sticky; z-index: 6 }
 .link:hover::after { transform: scaleY(1.6) }
 .link:focus-visible { outline: 2px solid var(--teal-ink); outline-offset: 4px }
 /* Auf dunklem Grund darf der Strich heller stehen. */
-.sec--ink .link::after, .footer .link::after { background: var(--teal) }
+.sec--ink .link::after { background: var(--teal) }
 /* --link--teal gab es, als Schrift UND Strich gruen sein sollten. Jetzt ist
    der Strich immer gruen, die Klasse faerbt nur noch die Schrift mit. */
 .link--teal { color: var(--teal-ink) }
@@ -1521,13 +1526,13 @@ html.capture .slider__track { overflow: visible }
   margin-right: auto;
   font-family: "Overpass Mono", monospace;
   font-size: .78rem; letter-spacing: .12em; text-transform: uppercase;
-  color: rgba(255,255,255,.72);
+  color: var(--body);
   transition: color var(--t-fast) var(--ease), gap var(--t-base) var(--ease);
 }
 .nach-oben svg { transition: transform var(--t-base) var(--ease) }
-.nach-oben:hover { color: var(--teal); gap: .9rem }
+.nach-oben:hover { color: var(--teal-ink); gap: .9rem }
 .nach-oben:hover svg { transform: translateY(-3px) }
-.nach-oben:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px }
+.nach-oben:focus-visible { outline: 2px solid var(--teal-ink); outline-offset: 4px }
 
 /* Start-Eintrag ganz oben in der Seitenleiste: statt einer Kapitelnummer
    steht dort der Pfeil nach oben. */
