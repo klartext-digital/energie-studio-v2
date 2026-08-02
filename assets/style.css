@@ -1,3 +1,19 @@
+/* --- Ersatzschrift mit angeglichenen Massen ------------------------------
+   Bis Inter geladen ist, rendert eine Systemschrift. Die laeuft je nach
+   Geraet bis zu 4,5 % BREITER als Inter — genau dann quillt ein langes Wort
+   wie "Gebäudetechnik" ueber seine Spalte und wird abgeschnitten. Mit
+   size-adjust bekommt die Ersatzschrift dieselbe Laufweite; die Zeile ist
+   damit vor UND nach dem Laden gleich breit, und der Sprung entfaellt. */
+@font-face {
+  font-family: "Inter Ersatz";
+  src: local("Helvetica Neue"), local("Helvetica"), local("Arial");
+  size-adjust: 96%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+  font-display: swap;
+}
+
 /* ==========================================================================
    Energie Studio — Stylesheet
 
@@ -76,7 +92,7 @@ body {
   margin: 0;
   background: var(--white);
   color: var(--ink);
-  font-family: Inter, system-ui, -apple-system, sans-serif;
+  font-family: Inter, "Inter Ersatz", system-ui, -apple-system, sans-serif;
   font-size: 1rem;
   line-height: 1.65;
   /* KEIN overflow-x hier: sobald body in einer Achse beschnitten wird,
@@ -118,7 +134,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
    mehr in der Mitte auseinander. */
 .display {
   font-size: clamp(2.1rem, 4.6vw, 4.8rem);          /* Rueckfallebene */
-  font-size: clamp(2.1rem, 10.4cqw, 4.8rem);
+  font-size: clamp(2.1rem, 10cqw, 4.8rem);
   font-weight: 600; line-height: 1.12; letter-spacing: -.02em;
   text-transform: uppercase; text-wrap: balance;
 }
@@ -288,9 +304,14 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
   /* Das Gebaeude sitzt in der rechten Haelfte und darf bis an den rechten
      Rand laufen. Links bleibt die Flaeche fuer Titel und Text frei. */
   /* 17rem: dieselbe Breite wie die Spalte mit den vier Punkten rechts —
-     sonst laeuft das Gebaeude unter deren Text. */
-  left: 16%; right: calc(17rem + var(--hero-rechts) - 3rem);
-  top: 2%; bottom: 0;
+     sonst laeuft das Gebaeude unter deren Text.
+     Links weiter aufgemacht (9 statt 16 %): das Bild ist breitenbegrenzt,
+     es waechst also nur ueber die Rahmenbreite. So steht die Gebaeudeecke
+     deutlich ueber der Titeloberkante statt knapp darueber. Die feine
+     Zeichnung, die dabei hinter den Titel reicht, liegt hinter dem Text
+     und ist blass genug, um ihn nicht zu stoeren. */
+  left: 9%; right: calc(17rem + var(--hero-rechts) - 3rem);
+  top: 0; bottom: 0;
   z-index: 0;
   pointer-events: none;
 }
