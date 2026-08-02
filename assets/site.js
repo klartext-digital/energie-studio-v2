@@ -412,14 +412,14 @@
     /* Der einzige Clip, der die Tageszeit wechselt: er beginnt dort, wo
        Sanitaer aufhoert, loescht die Markierung, faehrt in die Nacht und
        zuendet dann das Netz aus Fuehlern, Reglern und Leitzentrale an.
-       Die Sektion faehrt ueber --nacht farblich mit (siehe unten). */
+       Die Textspalte bleibt dabei hell wie bei den anderen Gewerken. */
     3: { ordner: "assets/film/automation/", anzahl: 124, endung: ".webp" }
   };
 
   /* Die Einzelbilder heissen bei jeder Neufassung gleich. Ohne diese Kennung
      bliebe der Browser beim alten Satz — die Seite sähe unverändert aus.
      Beim Neubauen der Bildfolgen mit hochzählen. */
-  var FILM_STAND = "14";
+  var FILM_STAND = "15";
 
   function initFilm(section, fortschritt, N) {
     var leinwand = section.querySelector("[data-lst-film]");
@@ -428,7 +428,7 @@
 
     var stift = leinwand.getContext("2d", { alpha: false });
     var GRUND = (getComputedStyle(root).getPropertyValue("--off") || "").trim() || "#f7f8f8";
-    var teile = {}, letztesBild = null, filmAn = false, letzteNacht = -1;
+    var teile = {}, letztesBild = null, filmAn = false;
 
     Object.keys(FILME).forEach(function (k) {
       teile[k] = { def: FILME[k], bilder: new Array(FILME[k].anzahl),
@@ -482,14 +482,7 @@
          Kamera bis zum Umschalten durchläuft. */
       var lokal = Math.min(1, (p * N - i) / 0.76);
       zeichne(t, Math.min(t.def.anzahl - 1, Math.floor(lokal * t.def.anzahl)));
-      /* Beim letzten Gewerk faehrt die ganze Sektion mit dem Bild in die
-         Nacht. Der Wert steht etwas vor dem Bild, damit der Hintergrund
-         schon dunkel ist, wenn die Lichter im Haus angehen. */
-      var nacht = (i === N - 1) ? Math.max(0, Math.min(1, (lokal - 0.06) / 0.5)) : 0;
-      if (nacht !== letzteNacht) {
-        letzteNacht = nacht;
-        section.style.setProperty("--nacht", nacht.toFixed(3));
-      }
+
     }
 
     /* Geladen wird in drei Wellen: erst jedes vierte Bild, dann die Hälften,
