@@ -286,7 +286,12 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
      dahinter in der rechten Haelfte. Die Merkmale sitzen jetzt unter den
      Knoepfen und laufen dem Gebaeude nicht mehr ins Bild. */
   display: grid;
-  grid-template-columns: minmax(0, 42rem) minmax(0, 1fr) minmax(0, 17rem);
+  /* Feste Untergrenze fuer die Merkmal-Spalte: 13rem reichen fuer das
+     laengste Wort ("Entscheidungsgrundlage" braucht rund 158 Punkte).
+     Mit 0 als Untergrenze schrumpfte sie darunter und das Wort ragte
+     heraus; mit min-content sprengte sie das Raster. Die erste Spalte
+     gibt zuerst nach, sie hat 42rem nur als Obergrenze. */
+  grid-template-columns: minmax(0, 42rem) minmax(0, 1fr) minmax(13rem, 17rem);
   align-items: center; gap: clamp(1.25rem, 2.4vw, 2.5rem);
 }
 .hero__kicker { color: var(--teal-ink); margin-bottom: 1.3rem }
@@ -1003,7 +1008,7 @@ html.curtain #wissen { position: sticky; z-index: 6 }
 .link:hover::after { transform: scaleY(1.6) }
 .link:focus-visible { outline: 2px solid var(--teal-ink); outline-offset: 4px }
 /* Auf dunklem Grund darf der Strich heller stehen. */
-.sec--ink .link::after, .v2--dark .link::after, .footer .link::after { background: var(--teal) }
+.sec--ink .link::after, .footer .link::after { background: var(--teal) }
 /* --link--teal gab es, als Schrift UND Strich gruen sein sollten. Jetzt ist
    der Strich immer gruen, die Klasse faerbt nur noch die Schrift mit. */
 .link--teal { color: var(--teal-ink) }
@@ -1024,13 +1029,16 @@ html.curtain #wissen { position: sticky; z-index: 6 }
 }
 
 /* --- Kapitel Projekte (dunkel) -------------------------------------------- */
-.v2--dark {
-  background: var(--deep); color: var(--white);
+/* Projekte steht auf demselben Grau wie die News-Sektion. Frueher war der
+   Block schwarz; die Klasse hiess deshalb v2--dark. */
+.v2--grau {
+  background: var(--nebel); color: var(--ink);
   position: relative; overflow: hidden;
   min-height: 100svh;
   display: flex; align-items: center;
 }
-.v2--dark p, .v2--dark .lead { color: var(--body-dark) }
+.v2--grau p, .v2--grau .lead { color: var(--body) }
+.v2--grau .kicker { color: var(--teal-ink) }
 
 /* --- Seitenleiste als durchgehende Navigation -----------------------------
    Fest links, erscheint sobald der helle Seitenkopf verlassen ist, und
@@ -1196,11 +1204,11 @@ body.menu-open .sidebar__menu .bars span:nth-child(3) { transform: translateY(-6
 .karte { scroll-snap-align: start }
 
 /* Die Fusszeile mit Fortschritt und Pfeilen — auf Dunkel andere Farben. */
-.v2--dark .slider__foot { margin-top: clamp(1.6rem, 2.6vw, 2.4rem) }
-.v2--dark .slider__progress { background: var(--line-dark) }
-.v2--dark .slider__progress span { background: var(--teal) }
-.v2--dark .slider__btn { border-color: var(--line-dark); color: var(--white) }
-.v2--dark .slider__btn:hover:not(:disabled) { border-color: var(--teal); background: var(--teal); color: var(--deep) }
+.v2--grau .slider__foot { margin-top: clamp(1.6rem, 2.6vw, 2.4rem) }
+.v2--grau .slider__progress { background: var(--linie) }
+.v2--grau .slider__progress span { background: var(--teal) }
+.v2--grau .slider__btn { border-color: var(--linie); color: var(--ink) }
+.v2--grau .slider__btn:hover:not(:disabled) { border-color: var(--teal); background: var(--teal); color: var(--ink) }
 
 @media (max-width: 1100px) { .karten { --karten-sicht: 2 } }
 @media (max-width: 700px)  { .karten { --karten-sicht: 1.15 } }
@@ -1210,8 +1218,10 @@ body.menu-open .sidebar__menu .bars span:nth-child(3) { transform: translateY(-6
 .karte {
   position: relative; display: block; overflow: hidden;
   aspect-ratio: 1 / 1.12;
-  border: 1px solid var(--line-dark); border-radius: var(--radius);
-  background: var(--deep-2);
+  /* Auf hellem Grund braucht die Karte eine helle Kante — mit der
+     weissen Linie von frueher waere sie unsichtbar. */
+  border: 1px solid var(--linie); border-radius: var(--radius);
+  background: var(--off);
   transition: border-color var(--t-base) var(--ease),
               box-shadow var(--t-base) var(--ease),
               transform var(--t-base) var(--ease);
@@ -1248,7 +1258,7 @@ body.menu-open .sidebar__menu .bars span:nth-child(3) { transform: translateY(-6
 /* Feine Lichtkante oben — nimmt der Karte das Flache */
 .karte::after {
   content: ""; position: absolute; inset: 0; border-radius: inherit;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.09);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.04);
   pointer-events: none;
 }
 .karte__cat { color: var(--teal); display: block; margin-bottom: .6rem }
@@ -1371,7 +1381,7 @@ body.menu-open .sidebar__menu .bars span:nth-child(3) { transform: translateY(-6
 
 /* --- Aufnahmemodus -------------------------------------------------------- */
 html.capture .hero { min-height: 0; height: 50rem }
-html.capture .v2--dark { min-height: 0 }
+html.capture .v2--grau { min-height: 0 }
 html.capture .stack__under { position: static }
 html.capture .stack__veil { display: none }
 html.capture .slider__track { overflow: visible }
@@ -1382,7 +1392,10 @@ html.capture .slider__track { overflow: visible }
 /* Zwischenstufe: schmaleres Fenster braucht mehr Textbreite, sonst brechen
    die beiden Buttons um und das Gebäude schiebt sich unter die Merkmale. */
 @media (max-width: 1440px) and (min-width: 1181px) {
-  .hero__inner { grid-template-columns: 38% minmax(0, 1fr) 12rem }
+  /* 12rem waren hier zu schmal: die Merkmal-Spalte braucht rund 17rem,
+     sonst ragt "Entscheidungsgrundlage" ueber den Rand und wird vom
+     Kopfbereich abgeschnitten. Der Titelblock gibt dafuer etwas nach. */
+  .hero__inner { grid-template-columns: 34% minmax(0, 1fr) minmax(15rem, 17rem) }
   .hero__visual { left: 39%; right: 20% }
   /* etwas kompakter, damit beide Buttons nebeneinander bleiben */
   .hero__actions .btn { padding: .85rem 1rem; font-size: .74rem; gap: .45rem }
@@ -1420,7 +1433,7 @@ html.capture .slider__track { overflow: visible }
   .lst__panel { grid-template-columns: 6rem minmax(0, 1fr) }
   .lst__copy { grid-column: 2 }
   .nav.is--replaced { transform: none; pointer-events: auto }
-  .v2--dark { min-height: 0 }
+  .v2--grau { min-height: 0 }
   .stack__under { position: static }
 }
 
