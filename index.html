@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Overpass+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.css">
-<link rel="stylesheet" href="assets/style.css?v=1785615880">
+<link rel="stylesheet" href="assets/style.css?v=1785661050">
 </head>
 <body>
 
@@ -564,11 +564,14 @@
 <footer class="footer" id="kontakt">
   <!-- Ganze Breite, randlos: das Bild trägt den Übergang in den Abschluss. -->
   <figure class="footer__foto">
-    <img src="assets/img/meeting.webp" width="2400" height="1028"
-         alt="Beratungsgespräch bei Energie Studio" loading="lazy" decoding="async">
+    <!-- Kein loading="lazy": der Footer liegt im Vorhang-Bereich, dort haelt
+         der Browser das Bild dauerhaft fuer ausserhalb des Sichtfelds und
+         fordert es nie an. Das Band blieb dadurch schwarz. -->
+    <img src="assets/img/meeting.webp?v=1785661050" width="2400" height="1546"
+         alt="Beratungsgespräch bei Energie Studio" decoding="async">
   </figure>
 
-  <span class="footer__markbox" aria-hidden="true"><img class="footer__mark" src="assets/logo/icon.svg" alt=""></span>
+  <span class="footer__markbox" aria-hidden="true"><img class="footer__mark" src="assets/logo/icon-onDark.svg" alt=""></span>
 
   <div class="wrap">
     <div class="footer__contact">

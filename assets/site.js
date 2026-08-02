@@ -322,9 +322,13 @@
   var FILME = {
     0: { ordner: "assets/film/heizung/",  anzahl: 80, endung: ".webp" },
     1: { ordner: "assets/film/lueftung/", anzahl: 80, endung: ".webp" },
-    /* 87 statt 80: die driftenden Schlussbilder sind gekappt, dafuer
-       leuchten in den letzten 18 die Nassraeume auf — bei stehender Kamera. */
     2: { ordner: "assets/film/sanitaer/", anzahl: 127, endung: ".webp" }
+    /* Gebaeude-Automation kommt hierher, sobald das Endbild freigegeben und
+       der Clip gebaut ist:
+       3: { ordner: "assets/film/automation/", anzahl: N, endung: ".webp" }
+       Er ist der einzige Clip, der die Tageszeit wechselt — er beginnt dort,
+       wo Sanitaer aufhoert, faehrt in die Nacht und zuendet dann das Netz an.
+       Die Sektion faehrt ueber --nacht farblich mit (siehe unten). */
   };
 
   /* Die Einzelbilder heissen bei jeder Neufassung gleich. Ohne diese Kennung
@@ -339,7 +343,7 @@
 
     var stift = leinwand.getContext("2d", { alpha: false });
     var GRUND = (getComputedStyle(root).getPropertyValue("--off") || "").trim() || "#f7f8f8";
-    var teile = {}, letztesBild = null, filmAn = false;
+    var teile = {}, letztesBild = null, filmAn = false, letzteNacht = -1;
 
     Object.keys(FILME).forEach(function (k) {
       teile[k] = { def: FILME[k], bilder: new Array(FILME[k].anzahl),
@@ -393,6 +397,14 @@
          Kamera bis zum Umschalten durchläuft. */
       var lokal = Math.min(1, (p * N - i) / 0.76);
       zeichne(t, Math.min(t.def.anzahl - 1, Math.floor(lokal * t.def.anzahl)));
+      /* Beim letzten Gewerk faehrt die ganze Sektion mit dem Bild in die
+         Nacht. Der Wert steht etwas vor dem Bild, damit der Hintergrund
+         schon dunkel ist, wenn die Lichter im Haus angehen. */
+      var nacht = (i === N - 1) ? Math.max(0, Math.min(1, (lokal - 0.06) / 0.5)) : 0;
+      if (nacht !== letzteNacht) {
+        letzteNacht = nacht;
+        section.style.setProperty("--nacht", nacht.toFixed(3));
+      }
     }
 
     /* Geladen wird in drei Wellen: erst jedes vierte Bild, dann die Hälften,

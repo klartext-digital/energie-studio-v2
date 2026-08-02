@@ -24,6 +24,11 @@
   --deep:       #080d0b;   /* dunkle Kapitel nach Vorlage */
   --deep-2:     #0e1613;
   --deep-3:     #141d1a;
+  /* Fertige Flaeche fuer die dunklen Kapitel. Ein sehr leichter Verlauf,
+     damit die grosse Flaeche nicht tot wirkt — der Grundton bleibt aber
+     das Schwarz von --deep. */
+  --tiefe: radial-gradient(120% 90% at 78% 12%,
+             var(--deep-3) 0%, var(--deep-2) 38%, var(--deep) 100%);
 
   --line-dark:  rgba(255,255,255,.12);
   --body-dark:  rgba(255,255,255,.6);
@@ -399,9 +404,32 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
      überhaupt gelesen hat. Zweieinhalb statt zwei: die Kamerafahrt soll
      sich Zeit lassen, man muss jedes Gewerk in Ruhe ansehen können. */
   height: 1200svh;
-  background: var(--off);
   --lst-t: calc(900ms * var(--motion));
+
+  /* --nacht laeuft im vierten Gewerk von 0 auf 1 (gesetzt in site.js).
+     Alles Farbige hier mischt sich daran entlang — die Seite faehrt mit
+     dem Bild in die Nacht, statt dass ein Nachtbild auf Weiss schwebt. */
+  --nacht: 0;
+  background: var(--off);
 }
+/* Der dunkle Verlauf liegt als eigene Schicht darueber und wird
+   eingeblendet — so geht die helle Flaeche wirklich in die Nacht ueber. */
+.lst::before {
+  content: ""; position: absolute; inset: 0; z-index: 0;
+  background: var(--tiefe);
+  opacity: var(--nacht);
+  pointer-events: none;
+}
+/* Texte und Linien wandern mit. color-mix mischt die helle und die dunkle
+   Farbe im Verhaeltnis --nacht. */
+.lst .lst__h,
+.lst .lst__count strong { color: color-mix(in oklab, var(--ink), var(--white) calc(var(--nacht) * 100%)) }
+.lst .lst__slide p,
+.lst .lst__count,
+.lst .lst__step { color: color-mix(in oklab, var(--body), var(--body-dark) calc(var(--nacht) * 100%)) }
+.lst .lst__step:hover { color: color-mix(in oklab, var(--ink), var(--white) calc(var(--nacht) * 100%)) }
+.lst hr, .lst .lst__rail::before,
+.lst .lst__punkte li { border-color: color-mix(in oklab, var(--linie), var(--line-dark) calc(var(--nacht) * 100%)) }
 .lst__pin {
   position: sticky; top: 0;
   height: 100svh; overflow: hidden;
@@ -798,21 +826,28 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
   position: absolute; inset: 0; overflow: hidden;
   pointer-events: none; z-index: 0;
 }
+/* Das E stand vorher in #1a1a1a auf schwarzem Grund und mit 5 % Deckkraft —
+   also schwarz auf schwarz und damit unsichtbar. Jetzt eine helle Fassung
+   des Zeichens, groesser und mit einer Deckkraft, bei der man es wirklich
+   sieht, ohne dass es den Text stoert. */
 .footer__mark {
-  position: absolute; right: -4%; bottom: -12%;
-  width: clamp(20rem, 34vw, 40rem); height: auto;
-  opacity: .05; pointer-events: none; user-select: none; z-index: 0;
+  position: absolute; right: -6%; bottom: -14%;
+  width: clamp(26rem, 46vw, 56rem); height: auto;
+  opacity: .12; pointer-events: none; user-select: none; z-index: 0;
 }
 .footer > .wrap { position: relative; z-index: 1 }
 /* Foto über die ganze Breite, oben im Footer. Der Verlauf nach unten
    führt ins Dunkel des Abschlusses, damit keine harte Kante entsteht. */
 /* Höhe getrennt setzen, nicht über aspect-ratio mit max-height — das
    würde die Breite mitschrumpfen und das Bild säße nur halb so breit da. */
+/* Das Band zeigt einen groesseren Ausschnitt als frueher — sonst schneidet
+   es bei breiten Fenstern genau die Koepfe ab. Der Bildausschnitt sitzt
+   bewusst weit oben (30 %), weil die Gesichter im oberen Drittel liegen. */
 .footer__foto {
   position: relative; margin: 0 0 clamp(2.5rem, 5vw, 4.5rem);
-  width: 100%; height: clamp(13rem, 34svh, 25rem); overflow: hidden;
+  width: 100%; height: clamp(17rem, 46svh, 34rem); overflow: hidden;
 }
-.footer__foto img { width: 100%; height: 100%; object-fit: cover; object-position: center 42% }
+.footer__foto img { width: 100%; height: 100%; object-fit: cover; object-position: center 30% }
 .footer__foto::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(to bottom, rgba(8,13,11,.28) 0%, rgba(8,13,11,0) 34%, rgba(8,13,11,.85) 100%);
