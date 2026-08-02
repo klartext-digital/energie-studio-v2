@@ -1494,3 +1494,9 @@ html.capture .slider__track { overflow: visible }
 .nach-oben:hover { color: var(--teal); gap: .9rem }
 .nach-oben:hover svg { transform: translateY(-3px) }
 .nach-oben:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px }
+
+/* Start-Eintrag ganz oben in der Seitenleiste: statt einer Kapitelnummer
+   steht dort der Pfeil nach oben. */
+.sidebar__item--start .n { display: inline-flex; align-items: center; justify-content: center }
+.sidebar__item--start .n svg { transition: transform var(--t-base) var(--ease) }
+.sidebar__item--start:hover .n svg { transform: translateY(-2px) }

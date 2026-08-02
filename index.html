@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Overpass+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.css">
-<link rel="stylesheet" href="assets/style.css?v=1785676978">
+<link rel="stylesheet" href="assets/style.css?v=1785678050">
 </head>
 <body>
 
@@ -57,6 +57,13 @@
     <img class="onLight" src="assets/logo/logo-h.svg" alt="Energie Studio">
   </a>
   <nav class="sidebar__nav" aria-label="Kapitel">
+    <!-- Zurueck an den Anfang. Steht ueber der Kapitelnummerierung, weil der
+         Start kein Kapitel ist, sondern der Ausgangspunkt. -->
+    <a class="sidebar__item sidebar__item--start" href="#main" data-nach-oben>
+      <span class="n" aria-hidden="true">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 13.5V2.5M3.5 7 8 2.5 12.5 7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </span><span class="t">Start</span>
+    </a>
     <a class="sidebar__item" href="#leistungen" data-rail="leistungen"><span class="n">01</span><span class="t">Leistungen</span></a>
     <!-- Die vier Gewerke klappen hier auf, sobald das Kapitel läuft —
          so gibt es nur eine Navigation statt zwei nebeneinander. -->
@@ -673,6 +680,6 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="assets/site.js?v=1785676978"></script>
+<script src="assets/site.js?v=1785678050"></script>
 </body>
 </html>
