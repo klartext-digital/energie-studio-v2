@@ -55,6 +55,7 @@
       while (e) {
         var c = getComputedStyle(e);
         if (/hidden|clip|auto|scroll/.test(c.overflowX + " " + c.overflowY)) return e;
+        if (c.clipPath && c.clipPath !== "none") return e;
         e = e.parentElement;
       }
       return null;
@@ -75,14 +76,29 @@
         var r = rg.getBoundingClientRect();
         if (!r.width || !r.height) continue;
         gezaehlt++;
+        /* Zeilen, die noch auf ihre Einblendung warten, stehen absichtlich
+           unter ihrer Maske. Sie sind verschoben — daran erkennt man sie,
+           und sie zaehlen nicht als Fehler. */
+        var verschoben = false;
+        var q = p;
+        while (q && q !== document.body) {
+          var tr = getComputedStyle(q).transform;
+          if (tr && tr !== "none" && !/matrix\(1, 0, 0, 1, 0, 0\)/.test(tr)) { verschoben = true; break; }
+          q = q.parentElement;
+        }
+
         var grund = null;
         if (r.left < -0.5 || r.right > B + 0.5) grund = "Fensterrand";
         else {
           var c = clipper(p);
           if (c) {
             var cr = c.getBoundingClientRect();
-            if (cr.left - r.left > 0.5) grund = "links " + Math.round(cr.left - r.left) + "px";
+            /* Waagerecht UND senkrecht: die Punkte auf Ä, Ö, Ü sitzen ueber
+               der Versalhoehe und werden als Erstes oben abgeschnitten. */
+            if (cr.left - r.left > 0.5)        grund = "links "  + Math.round(cr.left - r.left) + "px";
             else if (r.right - cr.right > 0.5) grund = "rechts " + Math.round(r.right - cr.right) + "px";
+            else if (!verschoben && cr.top - r.top > 0.5)       grund = "OBEN "  + Math.round(cr.top - r.top) + "px";
+            else if (!verschoben && r.bottom - cr.bottom > 0.5) grund = "unten " + Math.round(r.bottom - cr.bottom) + "px";
           }
         }
         if (!grund) continue;

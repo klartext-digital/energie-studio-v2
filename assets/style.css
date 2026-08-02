@@ -320,7 +320,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
 .fact p {
   font-size: .9rem; line-height: 1.5; max-width: 26ch;
   padding-left: 1.1rem; border-left: 1px solid var(--linie);
-  min-width: 0; hyphens: auto; overflow-wrap: normal;
+  min-width: 0; overflow-wrap: normal; hyphens: manual;
 }
 
 .hero__scroll { position: absolute; right: var(--hero-rechts); bottom: 1.75rem; display: flex; align-items: center; gap: .7rem; color: var(--body) }
@@ -384,9 +384,10 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
   max-width: 38ch;
   margin-inline: auto;
   text-align: justify;
-  /* Silbentrennung, sonst reisst der Blocksatz bei grosser Schrift Löcher */
-  hyphens: auto;
-  -webkit-hyphens: auto;
+  /* Keine automatische Silbentrennung: die eingefuegten Striche sehen
+     nach Maschine aus. Der Blocksatz darf dafuer etwas luftiger sein. */
+  hyphens: manual;
+  -webkit-hyphens: manual;
   font-size: clamp(1.3rem, 2.5vw, 2.3rem);
   font-weight: 500;
   line-height: 1.32;
@@ -531,7 +532,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
 .lst__h {
   font-size: clamp(1.85rem, 2.9vw, 2.95rem);
   font-weight: 800; line-height: 1.08; letter-spacing: -.03em;
-  text-transform: uppercase; overflow-wrap: normal; hyphens: auto;
+  text-transform: uppercase; overflow-wrap: normal; hyphens: manual;
   margin-bottom: clamp(.9rem, 2vh, 1.5rem);
 }
 .lst__slide p { font-size: clamp(.92rem, 1.05vw, 1.02rem); line-height: 1.66; max-width: 42ch }
@@ -1336,7 +1337,9 @@ body.menu-open .sidebar__menu .bars span:nth-child(3) { transform: translateY(-6
 /* break-word war der Fehler: es zerlegt Woerter mitten drin ("GEBÄUDETECHNI /
    K"). Woerter duerfen nur noch an echten Silbenstellen getrennt werden —
    das erledigt die Silbentrennung anhand von lang="de-CH". */
-.display, .h2, .hero__line, .split-line { overflow-wrap: normal; hyphens: auto }
+/* hyphens: manual — es werden KEINE Trennstriche eingefuegt. Die Titel
+   passen ueber ihre Schriftgroesse in die Spalte, nicht ueber Trennung. */
+.display, .h2, .hero__line, .split-line { overflow-wrap: normal; hyphens: manual }
 .split-line { display: block; will-change: transform }
 
 /* --- Unterseite ----------------------------------------------------------- */
@@ -1377,8 +1380,20 @@ html.capture .slider__track { overflow: visible }
 }
 
 @media (max-width: 1180px) {
-  .hero__inner { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) }
-  .hero__visual { position: relative; left: auto; right: auto; top: auto; bottom: auto; grid-column: 1 / -1 }
+  /* .hero ist ein Flex-Streifen. Sobald das Gebaeudebild hier aus der
+     absoluten Lage geloest wird, steht es als zweites Flex-Element NEBEN
+     dem Textblock und drueckt ihn zusammen — bei 1024 px blieben der
+     Textspalte 88 statt 455 Punkte, und der Titel lief aus dem Bild.
+     Deshalb wird der Kopfbereich hier zu einem normalen Block: Text oben,
+     Bild darunter. ("grid-column" wirkte nie, .hero ist kein Raster.) */
+  .hero { display: block; padding-bottom: clamp(2rem, 5vh, 4rem) }
+  .hero__inner { width: 100%; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) }
+  .hero__visual {
+    position: relative; left: auto; right: auto; top: auto; bottom: auto;
+    width: 100%; max-width: 46rem; margin: clamp(1rem, 3vh, 2rem) auto 0;
+    height: auto;
+  }
+  .hero__visual img { height: auto }
   .hero__spacer { display: none }
   .hero__facts { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; gap: 2rem; padding-top: 1rem; border-top: 1px solid var(--linie) }
   .fact { flex: 1 1 14rem }
@@ -1410,6 +1425,17 @@ html.capture .slider__track { overflow: visible }
   .hero__facts { flex-direction: column; gap: 1.6rem }
   .fact { flex: none }
   .hero__scroll { display: none }
+  /* Auf dem Handy laeuft die Bildfolge nicht — der Abschnitt darf also
+     normal mitwachsen. Blieb er auf Fensterhoehe festgenagelt, wurden
+     die unteren Leistungspunkte einfach abgeschnitten. */
+  .lst { height: auto }
+  .lst__pin { position: static; height: auto; overflow: visible; grid-template-columns: 1fr }
+  .lst__panel { padding-inline: var(--pad) }
+  .lst__slides { display: block }
+  .lst__slide { position: static; opacity: 1; visibility: visible; transform: none;
+                padding-block: clamp(2rem, 6vh, 3.5rem); border-top: 1px solid var(--linie) }
+  .lst__slide:first-child { border-top: 0 }
+  .lst__visual { display: none }
   /* Auf schmalen Schirmen steht alles untereinander — die feste
      Zeilen- und Spaltenzuteilung muss dafür wieder aufgehoben werden,
      sonst hängt der Fliesstext in einer zweiten, unsichtbaren Spalte. */
@@ -1453,6 +1479,12 @@ html.capture .slider__track { overflow: visible }
    Punkte ueber den Rand, die Gewerk-Titel 6 Punkte. Hier wird nur noch
    enger gesetzt — nichts umgebaut. */
 @media (max-width: 360px) {
+  /* "Gebäudetechnik" ist bei 2.1rem rund 302 Punkte breit und passt bei
+     320 px nicht mehr in die Spalte. Hier darf die Schrift kleiner. */
+  .display { font-size: clamp(1.6rem, 9.6cqw, 2.1rem) }
+  /* "Frischwasserversorgung" braucht bei 320 px etwas weniger Raum. */
+  .lst__punkte li, .lst__slide li { font-size: .82rem }
+  .lst__panel { padding-inline: .9rem }
   .hero__actions { flex-direction: column; align-items: stretch }
   .hero__actions .btn { justify-content: center; padding: .8rem .7rem; font-size: .7rem; letter-spacing: .05em; gap: .4rem }
   .lst__h { font-size: 1.55rem; letter-spacing: -.02em }
