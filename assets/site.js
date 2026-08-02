@@ -41,6 +41,76 @@
     window.addEventListener("scroll", function () { ScrollTrigger.update(); }, { passive: true });
   }
 
+  /* ── Prueflauf: abgeschnittene Buchstaben sichtbar machen ────────────────
+     Aufruf: die Seite mit ?pruef=1 oeffnen. Dann wird JEDER Textknoten
+     gemessen — nicht der Kasten des Elements, sondern die Buchstaben
+     selbst — und gegen zwei Dinge geprueft: gegen jedes Element, das
+     beschneidet, und gegen den Fensterrand. Was heraussteht, wird rot
+     umrandet, und oben links steht das Ergebnis.                        */
+  function initPruefung() {
+    if (!params.has("pruef")) return;
+
+    function clipper(el) {
+      var e = el.parentElement;
+      while (e) {
+        var c = getComputedStyle(e);
+        if (/hidden|clip|auto|scroll/.test(c.overflowX + " " + c.overflowY)) return e;
+        e = e.parentElement;
+      }
+      return null;
+    }
+
+    function lauf() {
+      document.querySelectorAll(".pruef-marke").forEach(function (m) { m.remove(); });
+      var B = window.innerWidth, treffer = [], gezaehlt = 0;
+      var geh = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      var n;
+      while ((n = geh.nextNode())) {
+        if (!n.nodeValue.trim()) continue;
+        var p = n.parentElement;
+        if (!p || p.closest(".sr-only") || p.closest("#pruef-tafel")) continue;
+        var cs = getComputedStyle(p);
+        if (cs.visibility === "hidden" || cs.display === "none" || parseFloat(cs.opacity) === 0) continue;
+        var rg = document.createRange(); rg.selectNodeContents(n);
+        var r = rg.getBoundingClientRect();
+        if (!r.width || !r.height) continue;
+        gezaehlt++;
+        var grund = null;
+        if (r.left < -0.5 || r.right > B + 0.5) grund = "Fensterrand";
+        else {
+          var c = clipper(p);
+          if (c) {
+            var cr = c.getBoundingClientRect();
+            if (cr.left - r.left > 0.5) grund = "links " + Math.round(cr.left - r.left) + "px";
+            else if (r.right - cr.right > 0.5) grund = "rechts " + Math.round(r.right - cr.right) + "px";
+          }
+        }
+        if (!grund) continue;
+        treffer.push({ txt: n.nodeValue.trim().slice(0, 40), grund: grund });
+        var m = document.createElement("div");
+        m.className = "pruef-marke";
+        m.style.cssText = "position:fixed;z-index:99999;pointer-events:none;border:2px solid #e11;" +
+          "left:" + r.left + "px;top:" + r.top + "px;width:" + r.width + "px;height:" + r.height + "px";
+        document.body.appendChild(m);
+      }
+      var t = document.getElementById("pruef-tafel");
+      if (!t) {
+        t = document.createElement("div"); t.id = "pruef-tafel";
+        t.style.cssText = "position:fixed;left:8px;top:8px;z-index:100000;background:#111;color:#fff;" +
+          "font:12px/1.5 monospace;padding:8px 12px;max-width:46ch;white-space:pre-wrap";
+        document.body.appendChild(t);
+      }
+      t.textContent = "Breite " + B + "px  ·  " + gezaehlt + " Textstellen geprueft\n" +
+        (treffer.length ? "ABGESCHNITTEN: " + treffer.length + "\n" +
+          treffer.slice(0, 8).map(function (x) { return "· " + x.txt + "  (" + x.grund + ")"; }).join("\n")
+          : "kein Buchstabe abgeschnitten");
+    }
+
+    window.addEventListener("resize", lauf);
+    window.addEventListener("scroll", lauf, { passive: true });
+    setTimeout(lauf, 1200);
+  }
+
   /* ── Barrierefreiheit: unversehrte Textkopie vor jedem Split ─────────── */
   function makeAccessible(el) {
     if (el.getAttribute("aria-hidden") === "true") return;
@@ -836,6 +906,7 @@
   /* ── Start, genau einmal ─────────────────────────────────────────────── */
   var booted = false;
   function boot() {
+    initPruefung();
     if (booted) return;
     booted = true;
     initNav();
