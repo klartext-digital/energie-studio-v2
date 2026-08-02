@@ -270,7 +270,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
      dahinter in der rechten Haelfte. Die Merkmale sitzen jetzt unter den
      Knoepfen und laufen dem Gebaeude nicht mehr ins Bild. */
   display: grid;
-  grid-template-columns: minmax(0, 42rem) minmax(0, 1fr) 17rem;
+  grid-template-columns: minmax(0, 42rem) minmax(0, 1fr) minmax(0, 17rem);
   align-items: center; gap: clamp(1.25rem, 2.4vw, 2.5rem);
 }
 .hero__kicker { color: var(--teal-ink); margin-bottom: 1.3rem }
@@ -309,12 +309,16 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
    Aufbau je Zeile: Sinnbild — feiner senkrechter Strich — Aussage.
    Der Strich ist der Rahmen der Textspalte, kein eigenes Element. */
 .hero__facts { display: flex; flex-direction: column; gap: clamp(1.5rem, 2.4vw, 2.1rem) }
-.fact { display: grid; grid-template-columns: 2.6rem 1fr; align-items: center; gap: 1.1rem }
+/* minmax(0, 1fr) statt 1fr: ein 1fr-Feld wird nie schmaler als sein
+   laengstes Wort. "Entscheidungsgrundlage" hat die Spalte deshalb
+   aufgesprengt und wurde rechts abgeschnitten. */
+.fact { display: grid; grid-template-columns: 2.6rem minmax(0, 1fr); align-items: center; gap: 1.1rem }
 .fact__icon { width: 2.6rem; height: 2.6rem; display: grid; place-items: center; color: var(--teal-ink) }
 .fact__icon svg { width: 100%; height: 100% }
 .fact p {
   font-size: .9rem; line-height: 1.5; max-width: 26ch;
   padding-left: 1.1rem; border-left: 1px solid var(--linie);
+  min-width: 0; hyphens: auto; overflow-wrap: normal;
 }
 
 .hero__scroll { position: absolute; right: var(--hero-rechts); bottom: 1.75rem; display: flex; align-items: center; gap: .7rem; color: var(--body) }
@@ -1440,4 +1444,15 @@ html.capture .slider__track { overflow: visible }
   .ablauf { grid-template-columns: 1fr }
   .slider__track { grid-auto-columns: 84% }
   .footer__in { flex-direction: column; align-items: flex-start }
+}
+
+/* --- Sehr schmale Geraete (ab iPhone SE) --------------------------------- */
+/* Gemessen bei 320 px: die beiden Knoepfe im Kopfbereich ragten 11 bzw. 2
+   Punkte ueber den Rand, die Gewerk-Titel 6 Punkte. Hier wird nur noch
+   enger gesetzt — nichts umgebaut. */
+@media (max-width: 360px) {
+  .hero__actions { flex-direction: column; align-items: stretch }
+  .hero__actions .btn { justify-content: center; padding: .8rem .7rem; font-size: .7rem; letter-spacing: .05em; gap: .4rem }
+  .lst__h { font-size: 1.55rem; letter-spacing: -.02em }
+  .lst__pin { padding-inline: 0 }
 }
