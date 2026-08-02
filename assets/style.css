@@ -1055,13 +1055,21 @@ html.curtain #wissen { position: sticky; z-index: 6 }
 /* Helle Kapitel: Leiste kippt mit */
 .sidebar.is-light { background: var(--off); color: var(--ink); border-right-color: var(--linie) }
 
-.sidebar__logo { display: block; margin-bottom: auto }
+.sidebar__logo { display: block; margin-bottom: auto; position: relative }
 /* Nutzt die Spaltenbreite jetzt voll aus statt nur zwei Drittel. */
 .sidebar__logo img { display: block; width: 100%; height: auto }
-.sidebar__logo .onDark { display: block }
-.sidebar__logo .onLight { display: none }
-.sidebar.is-light .sidebar__logo .onDark { display: none }
-.sidebar.is-light .sidebar__logo .onLight { display: block }
+/* Die beiden Logofassungen liegen uebereinander und BLENDEN um — mit
+   derselben Dauer wie der Hintergrund der Leiste. Vorher sprang das Logo
+   hart per display, waehrend der Hintergrund noch langsam umfaerbte:
+   in dieser Zwischenzeit stand die falsche Fassung auf halb umgefaerbtem
+   Grund und wirkte grau. */
+.sidebar__logo .onLight { position: absolute; left: 0; top: 0; right: 0 }
+.sidebar__logo .onDark,
+.sidebar__logo .onLight { transition: opacity var(--t-slow) var(--ease-io) }
+.sidebar__logo .onDark  { opacity: 1 }
+.sidebar__logo .onLight { opacity: 0 }
+.sidebar.is-light .sidebar__logo .onDark  { opacity: 0 }
+.sidebar.is-light .sidebar__logo .onLight { opacity: 1 }
 
 /* Kapitelzähler rechts aussen, wie in der Team-Vorlage */
 .counter {

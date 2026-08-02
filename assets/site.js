@@ -408,19 +408,18 @@
   var FILME = {
     0: { ordner: "assets/film/heizung/",  anzahl: 80, endung: ".webp" },
     1: { ordner: "assets/film/lueftung/", anzahl: 80, endung: ".webp" },
-    2: { ordner: "assets/film/sanitaer/", anzahl: 127, endung: ".webp" }
-    /* Gebaeude-Automation kommt hierher, sobald das Endbild freigegeben und
-       der Clip gebaut ist:
-       3: { ordner: "assets/film/automation/", anzahl: N, endung: ".webp" }
-       Er ist der einzige Clip, der die Tageszeit wechselt — er beginnt dort,
-       wo Sanitaer aufhoert, faehrt in die Nacht und zuendet dann das Netz an.
+    2: { ordner: "assets/film/sanitaer/", anzahl: 127, endung: ".webp" },
+    /* Der einzige Clip, der die Tageszeit wechselt: er beginnt dort, wo
+       Sanitaer aufhoert, loescht die Markierung, faehrt in die Nacht und
+       zuendet dann das Netz aus Fuehlern, Reglern und Leitzentrale an.
        Die Sektion faehrt ueber --nacht farblich mit (siehe unten). */
+    3: { ordner: "assets/film/automation/", anzahl: 124, endung: ".webp" }
   };
 
   /* Die Einzelbilder heissen bei jeder Neufassung gleich. Ohne diese Kennung
      bliebe der Browser beim alten Satz — die Seite sähe unverändert aus.
      Beim Neubauen der Bildfolgen mit hochzählen. */
-  var FILM_STAND = "13";
+  var FILM_STAND = "14";
 
   function initFilm(section, fortschritt, N) {
     var leinwand = section.querySelector("[data-lst-film]");
