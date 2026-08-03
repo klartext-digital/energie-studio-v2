@@ -834,9 +834,14 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
   position: relative; z-index: 420;
   background: var(--nebel); color: var(--ink);
   padding-block: 0 2.5rem;
+}
+/* Die Trennlinie nur dort, wo KEIN Foto oben sitzt. Ueber dem Foto waere
+   sie ein harter Strich quer durchs Bild — der Uebergang soll aber
+   ausschliesslich ueber den Verlauf laufen. */
+.footer:not(:has(.footer__foto)) {
+  padding-top: clamp(3.5rem, 7vw, 6rem);
   border-top: 1px solid var(--linie);
 }
-.footer:not(:has(.footer__foto)) { padding-top: clamp(3.5rem, 7vw, 6rem) }
 
 /* Grosse Bildmarke als ruhiger Hintergrund, unten rechts angeschnitten.
    Sie bekommt einen eigenen Rahmen zum Beschneiden — waere es der Footer
@@ -869,9 +874,21 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
   width: 100%; height: clamp(17rem, 46svh, 34rem); overflow: hidden;
 }
 .footer__foto img { width: 100%; height: 100%; object-fit: cover; object-position: center 30% }
+/* Weicher Auslauf nur nach UNTEN, und bis zur vollen Deckung. Vorher lag
+   oben ein 30-prozentiger Weissschleier ueber dem Foto — es wirkte
+   ausgewaschen — und unten endete der Verlauf bei 92 %: genau dort blieb
+   eine sichtbare Kante zum Footer stehen. Jetzt oben nichts, unten 100 %,
+   und der Uebergang beginnt frueh genug, um weich zu wirken. */
 .footer__foto::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(to bottom, rgba(237,240,239,.30) 0%, rgba(237,240,239,0) 30%, rgba(237,240,239,.92) 100%);
+  background: linear-gradient(to bottom,
+    rgba(237,240,239,0)    0%,
+    rgba(237,240,239,0)   42%,
+    rgba(237,240,239,.18) 60%,
+    rgba(237,240,239,.48) 74%,
+    rgba(237,240,239,.78) 87%,
+    rgba(237,240,239,.95) 96%,
+    rgba(237,240,239,1)  100%);
 }
 
 .footer-space { display: none }
