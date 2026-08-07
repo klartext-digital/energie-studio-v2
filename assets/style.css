@@ -874,21 +874,13 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
   width: 100%; height: clamp(17rem, 46svh, 34rem); overflow: hidden;
 }
 .footer__foto img { width: 100%; height: 100%; object-fit: cover; object-position: center 30% }
-/* Weicher Auslauf nur nach UNTEN, und bis zur vollen Deckung. Vorher lag
-   oben ein 30-prozentiger Weissschleier ueber dem Foto — es wirkte
-   ausgewaschen — und unten endete der Verlauf bei 92 %: genau dort blieb
-   eine sichtbare Kante zum Footer stehen. Jetzt oben nichts, unten 100 %,
-   und der Uebergang beginnt frueh genug, um weich zu wirken. */
+/* Kein Verlauf mehr: das Foto endet an einem feinen Strich in der
+   Markenfarbe. Der Verlauf hellte das Bild auf, der Strich laesst es
+   unberuehrt und setzt den Schnitt klar. */
 .footer__foto::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(to bottom,
-    rgba(237,240,239,0)    0%,
-    rgba(237,240,239,0)   72%,
-    rgba(237,240,239,.10) 80%,
-    rgba(237,240,239,.30) 87%,
-    rgba(237,240,239,.62) 93%,
-    rgba(237,240,239,.88) 97%,
-    rgba(237,240,239,1)  100%);
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 2px; background: var(--teal);
+  pointer-events: none;
 }
 
 .footer-space { display: none }
