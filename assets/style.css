@@ -1548,3 +1548,86 @@ html.capture .slider__track { overflow: visible }
 .sidebar__item--start .n { display: inline-flex; align-items: center; justify-content: center }
 .sidebar__item--start .n svg { transition: transform var(--t-base) var(--ease) }
 .sidebar__item--start:hover .n svg { transform: translateY(-2px) }
+
+/* ==========================================================================
+   Wissen — Uebersicht und Einzelbeitrag
+   ========================================================================== */
+
+/* Die Uebersicht zeigt alle Beitraege, deshalb drei Spalten mit Umbruch
+   statt der festen Dreierreihe der Startseite. */
+.news__cards--alle {
+  grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr));
+  row-gap: clamp(1.4rem, 2.4vw, 2.2rem);
+}
+.news__cards--zwei { grid-template-columns: repeat(auto-fill, minmax(19rem, 1fr)) }
+
+.beitrag__kopf { border-bottom: 0; padding-bottom: clamp(1.6rem, 3vw, 2.4rem) }
+.beitrag__meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .6rem;
+  color: var(--body); margin-bottom: 1.4rem;
+}
+.beitrag__meta a { color: var(--teal-ink); border-bottom: 1px solid currentColor; padding-bottom: 1px }
+.beitrag__meta a:hover { color: var(--teal) }
+
+/* Der Titel eines Beitrags ist eine Stufe kleiner als ein Seitentitel —
+   er steht im Fliesstext-Zusammenhang, nicht als Plakat. */
+.beitrag__titel { max-width: 22ch }
+.beitrag__lead {
+  margin-top: 1.3rem; max-width: 54ch;
+  font-size: clamp(1.05rem, 1.35vw, 1.25rem); color: var(--body);
+}
+
+.beitrag__bild {
+  margin: 0 0 clamp(2.5rem, 5vw, 4rem);
+  width: 100%; height: clamp(15rem, 42svh, 30rem); overflow: hidden;
+  position: relative;
+}
+.beitrag__bild img { width: 100%; height: 100%; object-fit: cover }
+.beitrag__bild::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 2px; background: var(--teal);
+}
+
+/* Lesespalte: 62 bis 68 Zeichen sind die Breite, bei der Augen die
+   naechste Zeile zuverlaessig finden. */
+.beitrag__text { max-width: 66ch }
+.beitrag__text h2 {
+  font-size: clamp(1.35rem, 2vw, 1.75rem); font-weight: 700;
+  line-height: 1.22; letter-spacing: -.015em;
+  margin: clamp(2.4rem, 4vw, 3.2rem) 0 .9rem;
+  text-wrap: balance;
+}
+.beitrag__text h2:first-child { margin-top: 0 }
+.beitrag__text p { font-size: 1.02rem; line-height: 1.72; margin-bottom: 1.1rem }
+.beitrag__text ul { margin: 0 0 1.4rem; display: flex; flex-direction: column; gap: .65rem }
+.beitrag__text li {
+  position: relative; padding-left: 1.6rem;
+  font-size: 1.02rem; line-height: 1.6; color: var(--body);
+}
+.beitrag__text li::before {
+  content: ""; position: absolute; left: 0; top: .72em;
+  width: .7rem; height: 1px; background: var(--teal);
+}
+
+/* Kernsatz: kein Zitat, sondern die eine Aussage, die haengen bleiben soll. */
+.beitrag__merk {
+  margin: clamp(1.8rem, 3vw, 2.4rem) 0;
+  padding: 1.2rem 0 1.2rem 1.4rem;
+  border-left: 2px solid var(--teal);
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  font-weight: 500; line-height: 1.45; color: var(--ink);
+}
+
+.beitrag__hinweis {
+  max-width: 66ch; margin: clamp(2.5rem, 5vw, 3.5rem) 0 0;
+  padding-top: 1.4rem; border-top: 1px solid var(--linie);
+  font-size: .88rem; line-height: 1.6; color: var(--body);
+}
+
+.beitrag__weiter { margin-top: clamp(3rem, 6vw, 5rem) }
+.beitrag__weiter .kicker { margin-bottom: clamp(1.2rem, 2vw, 1.8rem) }
+
+@media (max-width: 700px) {
+  .beitrag__bild { height: clamp(12rem, 32svh, 18rem) }
+  .beitrag__text p, .beitrag__text li { font-size: .98rem }
+}

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
+<title>Gebäudeautomation im laufenden Betrieb erweitern — Energie Studio</title>
+<meta name="description" content="Offene Schnittstellen, Datenpunktlisten und Migrationspfade — wie man eine Leittechnik erneuert, ohne das Gebäude anzuhalten.">
+<link rel="icon" type="image/svg+xml" href="../assets/logo/icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Overpass+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.css">
+<link rel="stylesheet" href="../assets/style.css?v=1786465585">
+</head>
+<body>
+
+<a class="sr-only" href="#main">Zum Inhalt springen</a>
+
+<header class="nav is--stuck" id="nav">
+  <div class="nav__inner">
+    <a class="nav__logo" href="../index.html" aria-label="Energie Studio, zur Startseite">
+      <img src="../assets/logo/logo-h.svg" alt="Energie Studio">
+    </a>
+    <nav aria-label="Hauptnavigation">
+      <ul class="nav__links">
+        <li><a href="../index.html#leistungen">Leistungen</a></li>
+        <li><a href="../projekte.html">Projekte</a></li>
+        <li><a href="../index.html#team">Über uns</a></li>
+        <li><a href="../wissen.html" aria-current="page">Wissen</a></li>
+        <li><a href="../index.html#kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn--primary nav__cta" href="../index.html#kontakt">Beratung anfragen
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6"/></svg>
+    </a>
+    <button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="../index.html#leistungen">Leistungen</a>
+  <a href="../projekte.html">Projekte</a>
+  <a href="../index.html#team">Über uns</a>
+  <a href="../wissen.html">Wissen</a>
+  <a href="../index.html#kontakt">Kontakt</a>
+</div>
+
+<main id="main">
+
+<article class="beitrag">
+
+  <header class="page-head beitrag__kopf">
+    <div class="wrap">
+      <p class="kenn beitrag__meta">
+        <a href="../wissen.html">Wissen</a>
+        <span aria-hidden="true">·</span> Automation
+        <span aria-hidden="true">·</span> 5 Min. Lesezeit
+      </p>
+      <h1 class="h2 beitrag__titel" data-reveal>Gebäudeautomation im laufenden Betrieb erweitern</h1>
+      <p class="lead beitrag__lead">Die Steuerung eines Gebäudes zu erneuern ist heikler, als die Erzeugung zu tauschen. Man ersetzt nicht ein Gerät, sondern das Nervensystem.</p>
+    </div>
+  </header>
+
+  <figure class="beitrag__bild">
+    <img src="../assets/img/technik-3.jpg" alt="Schaltschrank der Gebäudeleittechnik" fetchpriority="high">
+  </figure>
+
+  <div class="wrap">
+    <div class="beitrag__text">
+      <p>Bei einer Erzeugersanierung gibt es einen Umschaltpunkt: alte Anlage aus, neue Anlage ein. Bei der Gebäudeautomation gibt es Hunderte — jeder Fühler, jeder Antrieb, jede Verriegelung. Deshalb ist bei diesen Projekten die Reihenfolge wichtiger als die Technik.</p>
+      <h2>Zuerst die Datenpunktliste, dann alles andere</h2>
+      <p>Die Datenpunktliste ist das eigentliche Bauwerk einer Gebäudeautomation. Sie hält fest, welcher Wert wo gemessen wird, welcher Antrieb wie angesteuert wird und welche Verriegelung zwingend eingehalten werden muss. Ohne sie ist jede Migration ein Blindflug — und in Bestandsanlagen ist sie fast nie aktuell.</p>
+      <p class="beitrag__merk">Der erste Schritt jeder GA-Sanierung ist eine Bestandsaufnahme, kein Angebot.</p>
+      <ul>
+        <li>Welche Datenpunkte existieren physisch, und welche stehen nur im alten Schema?</li>
+        <li>Welche sind aufgeschaltet, welche nur verdrahtet und nie in Betrieb genommen?</li>
+        <li>Welche Verriegelungen sind sicherheitsrelevant — Brandschutz, Frostschutz, Not-Aus?</li>
+        <li>Welche Regelstrategien laufen tatsächlich, und welche stehen nur in der Dokumentation?</li>
+        <li>Welche Handeingriffe hat der Betrieb über die Jahre eingebaut, und warum?</li>
+      </ul>
+      <p>Der letzte Punkt liefert oft die wichtigsten Erkenntnisse. Jeder überbrückte Fühler und jeder auf Hand gestellte Antrieb ist die Antwort auf ein Problem, das jemand hatte. Wer diese Eingriffe bei der Migration einfach wegräumt, holt sich das ursprüngliche Problem zurück.</p>
+      <h2>Offene Schnittstellen sind kein Luxus</h2>
+      <p>Eine Leittechnik lebt fünfzehn bis zwanzig Jahre, die Geräte darunter oft nur zehn. Wer sich auf ein geschlossenes System festlegt, bindet sich für die gesamte Restlaufzeit an einen Anbieter — bei jeder Erweiterung, jedem Ersatzteil und jeder Programmänderung.</p>
+      <p>Offene Protokolle kosten in der Beschaffung wenig und halten die Tür für den nächsten Schritt offen. Auf der Automationsebene hat sich BACnet etabliert, auf der Feldebene KNX oder Modbus. Entscheidend ist dabei weniger das Protokoll selbst als die Frage, wem die Datenpunkte gehören und wer sie exportieren darf. Das gehört in den Vertrag, nicht ins Datenblatt.</p>
+      <ul>
+        <li>Wem gehören die Programmquellen der Automationsstationen?</li>
+        <li>Darf ein Dritter Änderungen vornehmen, ohne Gewährleistung zu verlieren?</li>
+        <li>Sind die Datenpunkte ohne Zusatzlizenz auslesbar?</li>
+        <li>Was kostet eine Erweiterung um zehn Prozent der Datenpunkte?</li>
+      </ul>
+      <p>Diese vier Fragen in der Ausschreibung ersparen später viel Geld. Sie werden selten gestellt.</p>
+      <h2>Migration in Abschnitten</h2>
+      <p>Im laufenden Betrieb wird nie das ganze Gebäude auf einmal umgeschaltet. Bewährt hat sich der Weg über Zonen: Ein Bereich bekommt die neue Automationsstation, läuft parallel, wird beobachtet und erst dann übernommen. Die alte und die neue Ebene sprechen währenddessen über eine Übergangs-Schnittstelle miteinander.</p>
+      <ul>
+        <li>Pilotzone wählen, die unkritisch ist — das Lager, nicht der Operationssaal.</li>
+        <li>Parallelbetrieb mit Vergleichsmessung über mindestens zwei Wochen.</li>
+        <li>Rückfallebene definieren und testen, bevor umgeschaltet wird.</li>
+        <li>Umschaltung in der Schwachlastzeit, nicht am Montagmorgen.</li>
+        <li>Nach jeder Zone eine kurze Auswertung, bevor die nächste beginnt.</li>
+      </ul>
+      <p>Der letzte Punkt verhindert, dass sich ein Fehler durch alle Zonen zieht. Wer alle Zonen nach demselben Muster baut, bevor die erste überprüft ist, vervielfacht jeden Denkfehler.</p>
+      <h2>Was in kritischen Bauten zusätzlich gilt</h2>
+      <p>In Kliniken, Rechenzentren und der Produktion entscheidet nicht die Automation über den Zeitplan, sondern der Betrieb. Jede Umschaltung braucht ein abgestimmtes Zeitfenster, eine schriftliche Rückfallanweisung und eine Person auf Seite des Betreibers, die im Moment der Umschaltung entscheiden darf. Ohne diese Person steht die Baustelle — nicht wegen der Technik, sondern weil niemand die Freigabe erteilen kann.</p>
+      <p>Diese Person muss vor Projektbeginn benannt sein, nicht während der ersten Umschaltung gesucht werden.</p>
+      <h2>Der häufigste Fehler nach der Inbetriebnahme</h2>
+      <p>Die Anlage läuft, die Abnahme ist unterschrieben, und niemand schaut wieder hin. Regelparameter, die für den Sommerbetrieb gesetzt wurden, bleiben im Winter stehen. Sollwerte werden von Nutzern verstellt und nie zurückgesetzt. Störmeldungen werden quittiert statt bearbeitet. Nach zwei Jahren läuft die neue Automation schlechter als die alte, die man ersetzt hat.</p>
+      <p>Deshalb gehört zu jeder GA-Sanierung eine vereinbarte Nachschau nach einer vollen Heiz- und einer vollen Kühlperiode. Das ist keine Garantieleistung und keine Kulanz, sondern der letzte Teil der Inbetriebnahme — und er gehört von Anfang an in den Vertrag und ins Budget.</p>
+      <h2>Störmeldungen, die niemand mehr liest</h2>
+      <p>In vielen Bestandsanlagen laufen dauerhaft Dutzende Störmeldungen auf. Sie werden quittiert, weil die Anlage trotzdem funktioniert, und irgendwann schaut niemand mehr hin. Eine echte Störung geht in diesem Rauschen unter.</p>
+      <p>Die Bereinigung der Meldungen gehört deshalb zu jeder GA-Sanierung: Jede Meldung braucht eine Priorität, einen Empfänger und eine definierte Reaktion. Meldungen ohne diese drei Angaben gehören abgeschaltet — eine Meldung, auf die niemand reagiert, ist schlimmer als keine.</p>
+      <h2>Fernzugriff und Sicherheit</h2>
+      <p>Fernzugriff spart Wege und verkürzt Reaktionszeiten. Er öffnet aber auch einen Weg ins Gebäude. Eine Automationsanlage, die ohne Absicherung am Internet hängt, ist ein reales Risiko — und zwar nicht nur für die Anlage, sondern über das Netzwerk auch für alles andere im Haus.</p>
+      <ul>
+        <li>Getrenntes Netz für die Gebäudeautomation, nicht dasselbe wie für die Büro-IT.</li>
+        <li>Zugriff nur über gesicherte Verbindung, mit persönlichen Konten statt Sammelpasswort.</li>
+        <li>Dokumentierte Liste aller Zugänge, inklusive der Fernwartung von Lieferanten.</li>
+        <li>Regelung, was beim Ausscheiden eines Dienstleisters mit dessen Zugang geschieht.</li>
+      </ul>
+      <p>Der letzte Punkt wird fast immer vergessen. In vielen Gebäuden haben ehemalige Lieferanten noch Jahre nach Vertragsende funktionierende Zugänge.</p>
+      <h2>Zusammengefasst</h2>
+      <ul>
+        <li>Die Bestandsaufnahme der Datenpunkte steht vor jedem Angebot.</li>
+        <li>Offene Protokolle und der Zugriff auf die eigenen Daten gehören in den Vertrag.</li>
+        <li>Migration zonenweise, mit getesteter Rückfallebene.</li>
+        <li>Störmeldungen bereinigen, sonst bleibt das System blind.</li>
+        <li>Nachschau nach der ersten Heiz- und Kühlperiode vertraglich sichern.</li>
+      </ul>
+    </div>
+
+    <p class="beitrag__hinweis">
+      Dieser Beitrag ordnet ein und ersetzt keine Planung am konkreten Objekt.
+      Normen, Förderbedingungen und kantonale Vorgaben ändern sich — prüfen Sie
+      den aktuellen Stand bei der zuständigen Stelle.
+    </p>
+
+    <div class="beitrag__weiter">
+      <p class="kicker" style="color:var(--teal-ink)">Weiterlesen</p>
+      <div class="news__cards news__cards--zwei">
+        <a class="news__card" href="betriebsoptimierung.html">
+          <div class="news__media"><img src="../assets/img/bau-2.jpg" alt="Techniker bei der Kontrolle einer Anlage" loading="lazy"></div>
+          <div class="news__body">
+            <span class="kenn news__date">Betrieb · 4 Min.</span>
+            <h3>Betriebsoptimierung: die ersten zwei Jahre entscheiden</h3>
+            <p>Warum neue Anlagen im zweiten Winter oft mehr verbrauchen als im ersten — und was dagegen hilft.</p>
+            <span class="news__go" aria-hidden="true">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M0 6h16M11 1l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a class="news__card" href="free-cooling.html">
+          <div class="news__media"><img src="../assets/img/technik-4.jpg" alt="Rückkühler auf einem Flachdach" loading="lazy"></div>
+          <div class="news__body">
+            <span class="kenn news__date">Kälte · 5 Min.</span>
+            <h3>Free Cooling: wann sich freie Kühlung wirklich rechnet</h3>
+            <p>Die Grenztemperatur entscheidet, nicht die Technik. Wo freie Kühlung viel bringt und wo sie nur Anlagentechnik hinzufügt.</p>
+            <span class="news__go" aria-hidden="true">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="none"><path d="M0 6h16M11 1l5 5-5 5" stroke="currentColor" stroke-width="1.5"/></svg>
+            </span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</article>
+
+<section class="sec" style="background:var(--nebel)">
+  <div class="wrap">
+    <div class="kontakt">
+      <div>
+        <p class="kicker" style="color:var(--teal-ink);margin-bottom:1.1rem">Kontakt</p>
+        <h2 class="h2" data-reveal>Eine Frage zu Ihrem<br>Gebäude?</h2>
+        <p class="lead" style="margin-top:1.5rem">Schildern Sie uns kurz die Ausgangslage. Wir melden uns innerhalb von zwei Arbeitstagen.</p>
+        <div style="margin-top:2.25rem">
+          <a class="btn btn--primary" href="../index.html#kontakt">Beratung anfragen
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6"/></svg>
+          </a>
+        </div>
+      </div>
+      <dl class="kontakt__list">
+        <div class="kontakt__row"><dt class="kenn">E-Mail</dt><dd><a href="mailto:info@energie-studio.ch">info@energie-studio.ch</a></dd></div>
+        <div class="kontakt__row" style="border:0"><dt class="kenn">Standort</dt><dd>Windisch, Kanton Aargau</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__in">
+    <ul class="footer__links">
+      <li><a href="../index.html#leistungen">Leistungen</a></li>
+      <li><a href="../projekte.html">Projekte</a></li>
+      <li><a href="../index.html#team">Team</a></li>
+      <li><a href="../wissen.html">Wissen</a></li>
+      <li><a href="../index.html#kontakt">Kontakt</a></li>
+      <li><a href="https://energie-studio.ch/impressum-datenschutz/">Impressum &amp; Datenschutz</a></li>
+    </ul>
+    <a class="nach-oben" href="#main" data-nach-oben>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M8 13.5V2.5M3.5 7 8 2.5 12.5 7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Nach oben
+    </a>
+    <span class="footer__base">© 2026 Energie Studio AG · Windisch, Kanton Aargau</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="../assets/site.js?v=1786465585"></script>
+</body>
+</html>
