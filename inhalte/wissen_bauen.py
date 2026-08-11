@@ -8,6 +8,7 @@ beitraege.py dazu, dann dieses Skript nochmal laufen lassen.
 import os, re, math, html
 from beitraege import BEITRAEGE
 from ergaenzungen import ERGAENZUNG
+from formular import formular
 
 # Zusatzabschnitte anhaengen
 for _b in BEITRAEGE:
@@ -131,29 +132,24 @@ def fuss(tiefe):
 
 
 def kontaktblock(tiefe):
-    p = "../" if tiefe else ""
-    return '''
+    return ("""
 <section class="sec" style="background:var(--nebel)">
   <div class="wrap">
     <div class="kontakt">
       <div>
         <p class="kicker" style="color:var(--teal-ink);margin-bottom:1.1rem">Kontakt</p>
-        <h2 class="h2" data-reveal>Eine Frage zu Ihrem<br>Gebäude?</h2>
+        <h2 class="h2" data-reveal>Eine Frage zu Ihrem<br>Geb\u00e4ude?</h2>
         <p class="lead" style="margin-top:1.5rem">Schildern Sie uns kurz die Ausgangslage. Wir melden uns innerhalb von zwei Arbeitstagen.</p>
-        <div style="margin-top:2.25rem">
-          <a class="btn btn--primary" href="%sindex.html#kontakt">Beratung anfragen
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6"/></svg>
-          </a>
-        </div>
+        <dl class="kontakt__list">
+          <div class="kontakt__row"><dt class="kenn">E-Mail</dt><dd><a href="mailto:info@energie-studio.ch">info@energie-studio.ch</a></dd></div>
+          <div class="kontakt__row" style="border:0"><dt class="kenn">Standort</dt><dd>Windisch, Kanton Aargau</dd></div>
+        </dl>
       </div>
-      <dl class="kontakt__list">
-        <div class="kontakt__row"><dt class="kenn">E-Mail</dt><dd><a href="mailto:info@energie-studio.ch">info@energie-studio.ch</a></dd></div>
-        <div class="kontakt__row" style="border:0"><dt class="kenn">Standort</dt><dd>Windisch, Kanton Aargau</dd></div>
-      </dl>
+""" + formular("      ") + """
     </div>
   </div>
 </section>
-''' % p
+""")
 
 
 # ── Uebersichtsseite ─────────────────────────────────────────────────────

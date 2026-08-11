@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Overpass+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.css">
-<link rel="stylesheet" href="../assets/style.css?v=1786465585">
+<link rel="stylesheet" href="../assets/style.css?v=1786466622">
 </head>
 <body>
 
@@ -166,16 +166,58 @@
         <p class="kicker" style="color:var(--teal-ink);margin-bottom:1.1rem">Kontakt</p>
         <h2 class="h2" data-reveal>Eine Frage zu Ihrem<br>Gebäude?</h2>
         <p class="lead" style="margin-top:1.5rem">Schildern Sie uns kurz die Ausgangslage. Wir melden uns innerhalb von zwei Arbeitstagen.</p>
-        <div style="margin-top:2.25rem">
-          <a class="btn btn--primary" href="../index.html#kontakt">Beratung anfragen
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6"/></svg>
-          </a>
-        </div>
+        <dl class="kontakt__list">
+          <div class="kontakt__row"><dt class="kenn">E-Mail</dt><dd><a href="mailto:info@energie-studio.ch">info@energie-studio.ch</a></dd></div>
+          <div class="kontakt__row" style="border:0"><dt class="kenn">Standort</dt><dd>Windisch, Kanton Aargau</dd></div>
+        </dl>
       </div>
-      <dl class="kontakt__list">
-        <div class="kontakt__row"><dt class="kenn">E-Mail</dt><dd><a href="mailto:info@energie-studio.ch">info@energie-studio.ch</a></dd></div>
-        <div class="kontakt__row" style="border:0"><dt class="kenn">Standort</dt><dd>Windisch, Kanton Aargau</dd></div>
-      </dl>
+      <form class="kform" data-kontakt-form novalidate>
+        <fieldset class="kform__thema">
+          <legend class="kenn">Worum geht es?</legend>
+          <div class="kform__chips">
+            <label class="chip"><input type="radio" name="thema" value="Heizung &amp; Kühlung"><span>Heizung &amp; Kühlung</span></label>
+            <label class="chip"><input type="radio" name="thema" value="Lüftung &amp; Klima"><span>Lüftung &amp; Klima</span></label>
+            <label class="chip"><input type="radio" name="thema" value="Sanitär"><span>Sanitär</span></label>
+            <label class="chip"><input type="radio" name="thema" value="Gebäudeautomation"><span>Gebäudeautomation</span></label>
+            <label class="chip"><input type="radio" name="thema" value="Sanierung"><span>Sanierung</span></label>
+            <label class="chip"><input type="radio" name="thema" value="Anderes"><span>Anderes</span></label>
+          </div>
+        </fieldset>
+
+        <div class="kform__reihe">
+          <label class="kform__feld">
+            <span class="kenn">Name</span>
+            <input type="text" name="name" autocomplete="name" required>
+          </label>
+          <label class="kform__feld">
+            <span class="kenn">E-Mail</span>
+            <input type="email" name="mail" autocomplete="email" required>
+          </label>
+        </div>
+
+        <div class="kform__reihe">
+          <label class="kform__feld">
+            <span class="kenn">Telefon <em>optional</em></span>
+            <input type="tel" name="tel" autocomplete="tel">
+          </label>
+          <label class="kform__feld">
+            <span class="kenn">Ort oder Objekt <em>optional</em></span>
+            <input type="text" name="ort" autocomplete="address-level2">
+          </label>
+        </div>
+
+        <label class="kform__feld">
+          <span class="kenn">Ihr Vorhaben</span>
+          <textarea name="text" rows="4" required></textarea>
+        </label>
+
+        <div class="kform__fuss">
+          <button class="btn btn--primary kform__ab" type="submit">Anfrage senden
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6"/></svg>
+          </button>
+          <p class="kform__hinweis" data-kontakt-hinweis role="status"></p>
+        </div>
+      </form>
     </div>
   </div>
 </section>
@@ -206,6 +248,6 @@
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="../assets/site.js?v=1786465585"></script>
+<script src="../assets/site.js?v=1786466622"></script>
 </body>
 </html>

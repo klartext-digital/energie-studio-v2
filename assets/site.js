@@ -61,6 +61,26 @@
       return null;
     }
 
+    /* Der wirksame Beschneidungsrahmen. Bei clip-path: inset(...) zaehlt
+       nicht der Kasten des Elements, sondern der um die Einrueckungen
+       verschobene Bereich — negative Werte machen ihn GROESSER. Ohne diese
+       Korrektur meldet die Pruefung Zeilen als abgeschnitten, die in
+       Wahrheit vollstaendig sichtbar sind. */
+    function rahmen(el) {
+      var r = el.getBoundingClientRect();
+      var c = getComputedStyle(el).clipPath || "";
+      var m = c.match(/inset\(([^)]+)\)/);
+      if (!m) return r;
+      var w = m[1].split("round")[0].trim().split(/\s+/).map(parseFloat);
+      if (w.some(isNaN)) return r;
+      var o = w.length === 1 ? [w[0], w[0], w[0], w[0]]
+            : w.length === 2 ? [w[0], w[1], w[0], w[1]]
+            : w.length === 3 ? [w[0], w[1], w[2], w[1]]
+            : w;
+      return { top: r.top + o[0], right: r.right - o[1],
+               bottom: r.bottom - o[2], left: r.left + o[3] };
+    }
+
     function lauf() {
       document.querySelectorAll(".pruef-marke").forEach(function (m) { m.remove(); });
       var B = window.innerWidth, treffer = [], gezaehlt = 0;
@@ -92,7 +112,7 @@
         else {
           var c = clipper(p);
           if (c) {
-            var cr = c.getBoundingClientRect();
+            var cr = rahmen(c);
             /* Waagerecht UND senkrecht: die Punkte auf Ä, Ö, Ü sitzen ueber
                der Versalhoehe und werden als Erstes oben abgeschnitten. */
             if (cr.left - r.left > 0.5)        grund = "links "  + Math.round(cr.left - r.left) + "px";
@@ -903,39 +923,50 @@
      Formular vorzutäuschen, das ins Leere läuft, stellt das Skript die
      Nachricht zusammen und übergibt sie ans Mailprogramm. */
   function initKontaktForm() {
-    var form = document.querySelector("[data-kontakt-form]");
-    if (!form) return;
-    var hinweis = form.querySelector("[data-kontakt-hinweis]");
     var ADRESSE = "info@energie-studio.ch";
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      var d = new FormData(form);
-      var name = (d.get("name") || "").trim();
-      var mail = (d.get("mail") || "").trim();
-      var tel  = (d.get("tel")  || "").trim();
-      var text = (d.get("text") || "").trim();
+    /* querySelectorAll statt querySelector: das Formular steht inzwischen
+       auf jeder Seite, nicht nur auf der Startseite. */
+    document.querySelectorAll("[data-kontakt-form]").forEach(function (form) {
+      var hinweis = form.querySelector("[data-kontakt-hinweis]");
 
-      if (!name || !mail || !text) {
-        hinweis.textContent = "Bitte Name, E-Mail und Ihr Vorhaben ausfüllen.";
-        hinweis.setAttribute("data-fehler", "");
-        return;
-      }
-      hinweis.removeAttribute("data-fehler");
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        var d = new FormData(form);
+        var thema = (d.get("thema") || "").trim();
+        var name  = (d.get("name")  || "").trim();
+        var mail  = (d.get("mail")  || "").trim();
+        var tel   = (d.get("tel")   || "").trim();
+        var ort   = (d.get("ort")   || "").trim();
+        var text  = (d.get("text")  || "").trim();
 
-      var betreff = "Anfrage von " + name;
-      var koerper = [
-        text, "",
-        "— — —",
-        "Name: " + name,
-        "E-Mail: " + mail,
-        tel ? "Telefon: " + tel : null
-      ].filter(Boolean).join("\n");
+        if (!name || !mail || !text) {
+          hinweis.textContent = "Bitte Name, E-Mail und Ihr Vorhaben ausfüllen.";
+          hinweis.setAttribute("data-fehler", "");
+          var fehlt = !name ? "name" : (!mail ? "mail" : "text");
+          var feld = form.querySelector('[name="' + fehlt + '"]');
+          if (feld) feld.focus();
+          return;
+        }
+        hinweis.removeAttribute("data-fehler");
 
-      window.location.href = "mailto:" + ADRESSE +
-        "?subject=" + encodeURIComponent(betreff) +
-        "&body="    + encodeURIComponent(koerper);
-      hinweis.textContent = "Ihr Mailprogramm öffnet sich mit der fertigen Anfrage.";
+        var betreff = thema ? thema + " — Anfrage von " + name
+                            : "Anfrage von " + name;
+        var koerper = [
+          text, "",
+          "— — —",
+          thema ? "Thema: " + thema : null,
+          "Name: " + name,
+          "E-Mail: " + mail,
+          tel ? "Telefon: " + tel : null,
+          ort ? "Ort / Objekt: " + ort : null
+        ].filter(Boolean).join("\n");
+
+        window.location.href = "mailto:" + ADRESSE +
+          "?subject=" + encodeURIComponent(betreff) +
+          "&body="    + encodeURIComponent(koerper);
+        hinweis.textContent = "Ihr Mailprogramm öffnet sich mit der fertigen Anfrage.";
+      });
     });
   }
 

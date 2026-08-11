@@ -793,25 +793,95 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
 /* --- Kontaktformular ------------------------------------------------------
    Schlichte Felder auf Dunkel: nur eine Linie unten, die beim Tippen in
    der Markenfarbe aufleuchtet. */
-.kform { display: flex; flex-direction: column; gap: 1.4rem }
+/* --- Kontaktformular ------------------------------------------------------
+   Eigene helle Flaeche auf dem grauen Grund. Kein Karten-Look mit Schatten,
+   sondern eine ruhige Platte mit feiner Kante — das passt zur uebrigen
+   Seite, die mit Linien statt mit Ebenen arbeitet. */
+.kform {
+  display: flex; flex-direction: column; gap: 1.5rem;
+  background: var(--white);
+  border: 1px solid var(--linie);
+  border-radius: var(--radius);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  position: relative;
+}
+/* Feiner Akzent an der Oberkante — greift den Strich unter dem Foto auf. */
+.kform::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0;
+  height: 2px; background: var(--teal);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+
 .kform__reihe { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem }
-.kform__feld { display: flex; flex-direction: column; gap: .5rem }
-.kform__feld .kenn { color: var(--teal-ink); font-size: .72rem }
+
+/* Themenauswahl: gibt der Anfrage sofort eine Richtung und dem Formular
+   die einzige farbige Flaeche. */
+.kform__thema { border: 0; padding: 0; margin: 0 }
+.kform__thema legend { padding: 0; margin-bottom: .8rem; color: var(--teal-ink); font-size: .72rem }
+.kform__chips { display: flex; flex-wrap: wrap; gap: .5rem }
+.chip { position: relative; display: inline-flex }
+.chip input {
+  position: absolute; inset: 0; opacity: 0; margin: 0;
+  width: 100%; height: 100%; cursor: pointer;
+}
+.chip span {
+  display: inline-flex; align-items: center;
+  padding: .5rem .9rem; border-radius: 999px;
+  border: 1px solid var(--linie); background: var(--off);
+  font-size: .82rem; line-height: 1.2; color: var(--body);
+  transition: background var(--t-fast) var(--ease),
+              border-color var(--t-fast) var(--ease),
+              color var(--t-fast) var(--ease);
+}
+.chip input:hover + span { border-color: var(--teal); color: var(--ink) }
+.chip input:checked + span {
+  background: var(--teal); border-color: var(--teal); color: var(--ink); font-weight: 500;
+}
+.chip input:focus-visible + span { outline: 2px solid var(--teal-ink); outline-offset: 2px }
+
+.kform__feld { display: flex; flex-direction: column; gap: .45rem }
+.kform__feld .kenn {
+  color: var(--teal-ink); font-size: .72rem;
+  transition: color var(--t-fast) var(--ease);
+}
 .kform__feld .kenn em { font-style: normal; color: var(--body); opacity: .7; text-transform: none; letter-spacing: .02em }
+
 .kform input, .kform textarea {
   width: 100%; background: transparent; color: var(--ink);
   border: 0; border-bottom: 1px solid var(--linie);
-  padding: .6rem 0; font: inherit; font-size: .95rem;
-  transition: border-color var(--t-fast) var(--ease);
+  padding: .65rem 0; font: inherit; font-size: .98rem;
+  border-radius: 0;
+  transition: border-color var(--t-fast) var(--ease),
+              background var(--t-fast) var(--ease);
 }
-.kform textarea { resize: vertical; min-height: 5.5rem; line-height: 1.5 }
-.kform input:focus, .kform textarea:focus { outline: none; border-bottom-color: var(--teal) }
-.kform input:user-invalid, .kform textarea:user-invalid { border-bottom-color: #d9614f }
-.kform__ab { align-self: start; margin-top: .4rem }
-.kform__hinweis { font-size: .85rem; color: var(--teal-ink); margin: 0; min-height: 1.2em }
+.kform textarea { resize: vertical; min-height: 6.5rem; line-height: 1.55 }
+.kform input:hover, .kform textarea:hover { border-bottom-color: var(--body) }
+/* Beim Tippen wird der Strich kraeftig und farbig, das Feld bekommt einen
+   Hauch Flaeche. So sieht man ohne Suchen, wo man gerade schreibt. */
+.kform input:focus, .kform textarea:focus {
+  outline: none;
+  border-bottom-color: var(--teal);
+  border-bottom-width: 2px;
+  padding-bottom: calc(.65rem - 1px);
+  background: linear-gradient(to bottom, rgba(80,186,160,0) 40%, rgba(80,186,160,.07) 100%);
+}
+.kform__feld:focus-within .kenn { color: var(--teal) }
+.kform input:user-invalid, .kform textarea:user-invalid { border-bottom-color: #b23a26 }
+
+.kform__fuss { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem }
+.kform__ab { align-self: start }
+.kform__hinweis {
+  font-size: .85rem; line-height: 1.5; color: var(--body); margin: 0;
+  min-height: 1.2em; flex: 1 1 14rem;
+}
+.kform__hinweis:not(:empty) { color: var(--teal-ink) }
 .kform__hinweis[data-fehler] { color: #b23a26 }
 
-@media (max-width: 640px) { .kform__reihe { grid-template-columns: 1fr } }
+@media (max-width: 640px) {
+  .kform__reihe { grid-template-columns: 1fr }
+  .kform__ab { align-self: stretch; justify-content: center }
+  .kform__fuss { flex-direction: column-reverse; align-items: stretch }
+}
 
 .kontakt__list { display: flex; flex-direction: column; margin-top: 2.5rem }
 .kontakt__row { display: grid; grid-template-columns: 8rem 1fr; gap: 1rem; padding-block: 1.3rem; border-bottom: 1px solid var(--linie) }
@@ -1364,7 +1434,10 @@ body.menu-open .sidebar__menu .bars span:nth-child(3) { transform: translateY(-6
    unten beschneiden und laesst waagrecht alles stehen. */
 .line-mask {
   display: block;
-  clip-path: inset(0 -100vw -.06em -100vw);
+  /* Oben mit Luft beschneiden: die Zeilen fahren beim Einblenden von UNTEN
+     herein, verdeckt werden muss also nur der untere Rand. Mit 0 oben
+     wurden Versal-Umlaute und hohe Buchstaben um 2 bis 4 Punkte gekappt. */
+  clip-path: inset(-.35em -100vw -.06em -100vw);
 }
 /* Notbremse: kein Titel darf je ueber seinen Kasten hinauslaufen. */
 /* break-word war der Fehler: es zerlegt Woerter mitten drin ("GEBÄUDETECHNI /
