@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Overpass+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.css">
-<link rel="stylesheet" href="assets/style.css?v=1786466622">
+<link rel="stylesheet" href="assets/style.css?v=1786468376">
 </head>
 <body>
 
@@ -131,8 +131,8 @@
         <p>Ganzheitliche Gebäudeautomation zur integralen Steuerung der Gebäudetechnik</p>
       </div>
       <div class="fact">
-        <span class="fact__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19.5h18"/><path d="m6 16 1-3.6 8.3-8.3a1.6 1.6 0 0 1 2.3 0l1.3 1.3a1.6 1.6 0 0 1 0 2.3L10.6 16H6Z"/><path d="m14.2 5.8 3 3"/></svg></span>
-        <p>Entscheidungsgrundlagen durch strukturierte Dokumentation</p>
+        <span class="fact__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 21 7.2v9.6L12 21.5 3 16.8V7.2Z"/><path d="m3 7.2 9 4.7 9-4.7"/><path d="M12 11.9v9.6"/></svg></span>
+        <p>Integrierte Projektplanung durch die Anwendung von BIM-, VDC- und Lean-Methoden für eine effiziente und transparente Zusammenarbeit</p>
       </div>
     </div>
   </div>
@@ -429,38 +429,40 @@
 
   <div class="slider" data-slider>
     <div class="slider__track" data-slider-track>
-      <article class="person">
+      <!-- Ruhe: nur der Name. Beim Zeigen (oder Tab-Fokus) taucht der Rufname
+           im Bild auf und die Taetigkeit faehrt in der Leiste auf. -->
+      <article class="person" tabindex="0">
         <img src="assets/img/team-manuel.webp" width="1000" height="1133" alt="Manuel Leitner" loading="lazy">
         <div class="person__bar">
-          <div><span class="kenn nm">Manuel Leitner</span><span class="rl">Gesamtprojektleiter · MAS VDC</span></div>
+          <div><span class="person__ruf" aria-hidden="true"><span>«Manu»</span></span><span class="kenn nm">Manuel Leitner</span><span class="rl"><span>Gesamtprojektleiter · Master Virtual Design and Construction</span></span></div>
           <span class="person__plus" aria-hidden="true"></span>
         </div>
       </article>
-      <article class="person">
-        <img src="assets/img/team-tino.webp" width="1000" height="1133" alt="Tino Vogelgesang" loading="lazy">
-        <div class="person__bar">
-          <div><span class="kenn nm">Tino Vogelgesang</span><span class="rl">Gebäudetechnikplaner</span></div>
-          <span class="person__plus" aria-hidden="true"></span>
-        </div>
-      </article>
-      <article class="person">
+      <article class="person" tabindex="0">
         <div class="person__ph" aria-hidden="true">VA</div>
         <div class="person__bar">
-          <div><span class="kenn nm">Vesa Ademi</span><span class="rl">Projektleiterin HLK</span></div>
+          <div><span class="person__ruf" aria-hidden="true"><span>«Vesa»</span></span><span class="kenn nm">Vesa Ademi</span><span class="rl"><span>Projektleiterin Heizung Kälte</span></span></div>
           <span class="person__plus" aria-hidden="true"></span>
         </div>
       </article>
-      <article class="person">
-        <img src="assets/img/team-hasi.webp" width="1000" height="1133" alt="Hazi" loading="lazy">
+      <article class="person" tabindex="0">
+        <img src="assets/img/team-hasi.webp" width="1000" height="1133" alt="Aliji Haziriljas" loading="lazy">
         <div class="person__bar">
-          <div><span class="kenn nm">Hazi</span><span class="rl">Team Energie Studio</span></div>
+          <div><span class="person__ruf" aria-hidden="true"><span>«Hazi»</span></span><span class="kenn nm">Aliji Haziriljas</span><span class="rl"><span>Projektleiter Lüftung</span></span></div>
           <span class="person__plus" aria-hidden="true"></span>
         </div>
       </article>
-      <article class="person">
+      <article class="person" tabindex="0">
+        <img src="assets/img/team-tino.webp" width="1000" height="1133" alt="Tino Vogelgesang" loading="lazy">
+        <div class="person__bar">
+          <div><span class="person__ruf" aria-hidden="true"><span>«Tino»</span></span><span class="kenn nm">Tino Vogelgesang</span><span class="rl"><span>Gebäudetechnikplaner</span></span></div>
+          <span class="person__plus" aria-hidden="true"></span>
+        </div>
+      </article>
+      <article class="person" tabindex="0">
         <img src="assets/img/team-severin.webp" width="1000" height="1133" alt="Severin Mustone" loading="lazy">
         <div class="person__bar">
-          <div><span class="kenn nm">Severin Mustone</span><span class="rl">Backoffice</span></div>
+          <div><span class="person__ruf" aria-hidden="true"><span>«Sevi»</span></span><span class="kenn nm">Severin Mustone</span><span class="rl"><span>Backoffice</span></span></div>
           <span class="person__plus" aria-hidden="true"></span>
         </div>
       </article>

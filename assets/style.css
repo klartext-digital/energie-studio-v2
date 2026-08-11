@@ -1404,14 +1404,58 @@ body.menu-open .sidebar__menu .bars span:nth-child(3) { transform: translateY(-6
   letter-spacing: .16em; text-transform: uppercase; color: rgba(80,186,160,.5);
 }
 
+/* Zweite Verdunklung, die nur beim Zeigen dazukommt: der Rufname braucht
+   mehr Ruhe im Bild als der blosse Name. Liegt unter der Leiste (z 1 zu 2). */
+.person::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(to top, rgba(8,13,11,.6) 0%, rgba(8,13,11,0) 50%);
+  opacity: 0; transition: opacity var(--t-slow) var(--ease);
+}
+.person:hover::after, .person:focus-within::after { opacity: 1 }
+.person:focus-visible { outline: 2px solid var(--teal); outline-offset: -2px }
+
 .person__bar {
-  position: absolute; left: 0; right: 0; bottom: 0;
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
   padding: 1.6rem 1.4rem 1.3rem;
   background: linear-gradient(to top, rgba(8,13,11,.94) 0%, rgba(8,13,11,.72) 55%, rgba(8,13,11,0) 100%);
   display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 1rem;
 }
-.person__bar .nm { color: var(--teal); display: block; margin-bottom: .35rem }
-.person__bar .rl { font-size: .92rem; color: var(--white); line-height: 1.3 }
+/* Der Abstand um den Namen waechst mit auf. Er darf nicht am zugeklappten
+   Feld haengen: dessen Innenabstand bliebe sonst als Luecke stehen. */
+.person__bar .nm {
+  color: var(--teal); display: block; margin: 0;
+  transition: margin var(--t-slow) var(--ease);
+}
+.person:hover .person__bar .nm, .person:focus-within .person__bar .nm { margin: .5rem 0 .35rem }
+
+/* Rufname und Taetigkeit sind in Ruhe zugeklappt und fahren beim Zeigen auf.
+   0fr auf 1fr ist der Weg, auf dem eine unbekannte Hoehe weich waechst —
+   deshalb steckt der Text jeweils in einem eigenen inneren Feld. */
+.person__ruf, .person__bar .rl {
+  display: grid; grid-template-rows: 0fr; opacity: 0;
+  transition: grid-template-rows var(--t-slow) var(--ease), opacity var(--t-base) var(--ease);
+}
+.person__ruf > span, .person__bar .rl > span { overflow: hidden; min-height: 0 }
+.person__ruf {
+  font-size: clamp(1.35rem, 2vw, 1.8rem); font-weight: 300;
+  letter-spacing: -.01em; line-height: 1.2; color: var(--white);
+}
+.person__bar .rl { font-size: .92rem; color: var(--white); line-height: 1.35 }
+.person:hover .person__ruf, .person:focus-within .person__ruf,
+.person:hover .rl, .person:focus-within .rl { grid-template-rows: 1fr; opacity: 1 }
+
+/* Ohne Zeigegeraet gibt es kein Hover — dort steht alles offen. Hier ist
+   max-content richtig: 1fr braucht einen Uebergang, der aufgeht, und der
+   Rufname darf auf dem kleinen Bild nicht das halbe Portrait verdecken. */
+@media (hover: none) {
+  .person__ruf, .person__bar .rl { grid-template-rows: max-content; opacity: 1 }
+  .person__ruf { font-size: 1.15rem }
+  .person__bar .nm { margin: .35rem 0 .3rem }
+  .person::after { opacity: 1 }
+}
+@media (prefers-reduced-motion: reduce) {
+  .person__ruf, .person__bar .rl { transition: opacity 1ms linear }
+}
 .person__plus { width: 1.5rem; height: 1.5rem; position: relative; color: var(--white); flex: none; transition: transform var(--t-base) var(--ease), color var(--t-base) var(--ease) }
 .person__plus::before, .person__plus::after { content: ""; position: absolute; left: 50%; top: 50%; background: currentColor }
 .person__plus::before { width: 1px; height: 100%; transform: translate(-50%,-50%) }
