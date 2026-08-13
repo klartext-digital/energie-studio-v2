@@ -109,7 +109,7 @@ def fuss(tiefe):
       <li><a href="%sindex.html#team">Team</a></li>
       <li><a href="%swissen.html">Wissen</a></li>
       <li><a href="%sindex.html#kontakt">Kontakt</a></li>
-      <li><a href="https://energie-studio.ch/impressum-datenschutz/">Impressum &amp; Datenschutz</a></li>
+      <li><a href="../impressum.html">Impressum &amp; Datenschutz</a></li>
     </ul>
     <a class="nach-oben" href="#main" data-nach-oben>
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -141,7 +141,7 @@ def kontaktblock(tiefe):
         <h2 class="h2" data-reveal>Eine Frage zu Ihrem<br>Geb\u00e4ude?</h2>
         <p class="lead" style="margin-top:1.5rem">Schildern Sie uns kurz die Ausgangslage. Wir melden uns innerhalb von zwei Arbeitstagen.</p>
         <dl class="kontakt__list">
-          <div class="kontakt__row"><dt class="kenn">E-Mail</dt><dd><a href="mailto:info@energie-studio.ch">info@energie-studio.ch</a></dd></div>
+          <div class="kontakt__row"><dt class="kenn">E-Mail</dt><dd><a href="mailto:hello@energie-studio.ch">hello@energie-studio.ch</a></dd></div>
           <div class="kontakt__row" style="border:0"><dt class="kenn">Standort</dt><dd>Windisch, Kanton Aargau</dd></div>
         </dl>
       </div>

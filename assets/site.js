@@ -923,7 +923,7 @@
      Formular vorzutäuschen, das ins Leere läuft, stellt das Skript die
      Nachricht zusammen und übergibt sie ans Mailprogramm. */
   function initKontaktForm() {
-    var ADRESSE = "info@energie-studio.ch";
+    var ADRESSE = "hello@energie-studio.ch";
 
     /* querySelectorAll statt querySelector: das Formular steht inzwischen
        auf jeder Seite, nicht nur auf der Startseite. */
@@ -933,12 +933,10 @@
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         var d = new FormData(form);
-        var thema = (d.get("thema") || "").trim();
-        var name  = (d.get("name")  || "").trim();
-        var mail  = (d.get("mail")  || "").trim();
-        var tel   = (d.get("tel")   || "").trim();
-        var ort   = (d.get("ort")   || "").trim();
-        var text  = (d.get("text")  || "").trim();
+        var name = (d.get("name") || "").trim();
+        var mail = (d.get("mail") || "").trim();
+        var tel  = (d.get("tel")  || "").trim();
+        var text = (d.get("text") || "").trim();
 
         if (!name || !mail || !text) {
           hinweis.textContent = "Bitte Name, E-Mail und Ihr Vorhaben ausfüllen.";
@@ -950,16 +948,13 @@
         }
         hinweis.removeAttribute("data-fehler");
 
-        var betreff = thema ? thema + " — Anfrage von " + name
-                            : "Anfrage von " + name;
+        var betreff = "Anfrage von " + name;
         var koerper = [
           text, "",
           "— — —",
-          thema ? "Thema: " + thema : null,
           "Name: " + name,
           "E-Mail: " + mail,
-          tel ? "Telefon: " + tel : null,
-          ort ? "Ort / Objekt: " + ort : null
+          tel ? "Telefon: " + tel : null
         ].filter(Boolean).join("\n");
 
         window.location.href = "mailto:" + ADRESSE +

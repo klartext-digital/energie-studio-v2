@@ -1,21 +1,14 @@
 # -*- coding: utf-8 -*-
-"""Das Kontaktformular, an einer Stelle gepflegt."""
+"""Das Kontaktformular, an einer Stelle gepflegt.
 
-THEMEN = ["Heizung & Kühlung", "Lüftung & Klima", "Sanitär",
-          "Gebäudeautomation", "Sanierung", "Anderes"]
+Vier Felder, mehr braucht eine Anfrage nicht: Name, E-Mail, Telefon,
+Vorhaben. Die Themenauswahl ist bewusst wieder raus — sie hat die
+Anfrage sortiert, bevor der Besucher ueberhaupt geschrieben hat.
+"""
+
 
 def formular(einzug="      "):
-    chips = "\n".join(
-        '%s      <label class="chip"><input type="radio" name="thema" value="%s"><span>%s</span></label>'
-        % (einzug, t.replace('&', '&amp;'), t.replace('&', '&amp;')) for t in THEMEN)
     return '''%(e)s<form class="kform" data-kontakt-form novalidate>
-%(e)s  <fieldset class="kform__thema">
-%(e)s    <legend class="kenn">Worum geht es?</legend>
-%(e)s    <div class="kform__chips">
-%(chips)s
-%(e)s    </div>
-%(e)s  </fieldset>
-
 %(e)s  <div class="kform__reihe">
 %(e)s    <label class="kform__feld">
 %(e)s      <span class="kenn">Name</span>
@@ -27,20 +20,14 @@ def formular(einzug="      "):
 %(e)s    </label>
 %(e)s  </div>
 
-%(e)s  <div class="kform__reihe">
-%(e)s    <label class="kform__feld">
-%(e)s      <span class="kenn">Telefon <em>optional</em></span>
-%(e)s      <input type="tel" name="tel" autocomplete="tel">
-%(e)s    </label>
-%(e)s    <label class="kform__feld">
-%(e)s      <span class="kenn">Ort oder Objekt <em>optional</em></span>
-%(e)s      <input type="text" name="ort" autocomplete="address-level2">
-%(e)s    </label>
-%(e)s  </div>
+%(e)s  <label class="kform__feld">
+%(e)s    <span class="kenn">Telefon <em>optional</em></span>
+%(e)s    <input type="tel" name="tel" autocomplete="tel">
+%(e)s  </label>
 
 %(e)s  <label class="kform__feld">
 %(e)s    <span class="kenn">Ihr Vorhaben</span>
-%(e)s    <textarea name="text" rows="4" required></textarea>
+%(e)s    <textarea name="text" rows="5" required></textarea>
 %(e)s  </label>
 
 %(e)s  <div class="kform__fuss">
@@ -49,4 +36,4 @@ def formular(einzug="      "):
 %(e)s    </button>
 %(e)s    <p class="kform__hinweis" data-kontakt-hinweis role="status"></p>
 %(e)s  </div>
-%(e)s</form>''' % {"e": einzug, "chips": chips}
+%(e)s</form>''' % {"e": einzug}

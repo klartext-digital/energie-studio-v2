@@ -791,96 +791,71 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
 /* --- Kontakt -------------------------------------------------------------- */
 .kontakt { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start }
 /* --- Kontaktformular ------------------------------------------------------
-   Schlichte Felder auf Dunkel: nur eine Linie unten, die beim Tippen in
-   der Markenfarbe aufleuchtet. */
-/* --- Kontaktformular ------------------------------------------------------
-   Eigene helle Flaeche auf dem grauen Grund. Kein Karten-Look mit Schatten,
-   sondern eine ruhige Platte mit feiner Kante — das passt zur uebrigen
-   Seite, die mit Linien statt mit Ebenen arbeitet. */
+   Eine eigene dunkle Flaeche auf dem hellen Grund. Das Formular ist der
+   Zielpunkt der Seite und darf das auch zeigen — als heller Kasten ging es
+   im Grau unter. Auf Dunkel traegt die Markenfarbe, ohne laut zu werden. */
 .kform {
-  display: flex; flex-direction: column; gap: 1.5rem;
-  background: var(--white);
-  border: 1px solid var(--linie);
+  display: flex; flex-direction: column; gap: clamp(1.4rem, 2.4vw, 1.9rem);
+  background: var(--tiefe);
   border-radius: var(--radius);
-  padding: clamp(1.5rem, 3vw, 2.5rem);
-  position: relative;
-}
-/* Feiner Akzent an der Oberkante — greift den Strich unter dem Foto auf. */
-.kform::before {
-  content: ""; position: absolute; left: 0; right: 0; top: 0;
-  height: 2px; background: var(--teal);
-  border-radius: var(--radius) var(--radius) 0 0;
+  padding: clamp(1.6rem, 3.2vw, 2.6rem);
+  color: var(--white);
 }
 
-.kform__reihe { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem }
+.kform__reihe { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.4rem, 2.4vw, 1.9rem) }
 
-/* Themenauswahl: gibt der Anfrage sofort eine Richtung und dem Formular
-   die einzige farbige Flaeche. */
-.kform__thema { border: 0; padding: 0; margin: 0 }
-.kform__thema legend { padding: 0; margin-bottom: .8rem; color: var(--teal-ink); font-size: .72rem }
-.kform__chips { display: flex; flex-wrap: wrap; gap: .5rem }
-.chip { position: relative; display: inline-flex }
-.chip input {
-  position: absolute; inset: 0; opacity: 0; margin: 0;
-  width: 100%; height: 100%; cursor: pointer;
+/* Ein Feld ist eine Zeile mit Ruhelinie darunter. Beim Tippen waechst
+   darueber ein farbiger Strich von links ein — die einzige Bewegung im
+   Formular, dafuer eine, die man wirklich spuert. */
+.kform__feld { position: relative; display: flex; flex-direction: column; gap: .5rem }
+.kform__feld::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px;
+  background: var(--teal); transform: scaleX(0); transform-origin: left;
+  transition: transform var(--t-base) var(--ease);
 }
-.chip span {
-  display: inline-flex; align-items: center;
-  padding: .5rem .9rem; border-radius: 999px;
-  border: 1px solid var(--linie); background: var(--off);
-  font-size: .82rem; line-height: 1.2; color: var(--body);
-  transition: background var(--t-fast) var(--ease),
-              border-color var(--t-fast) var(--ease),
-              color var(--t-fast) var(--ease);
-}
-.chip input:hover + span { border-color: var(--teal); color: var(--ink) }
-.chip input:checked + span {
-  background: var(--teal); border-color: var(--teal); color: var(--ink); font-weight: 500;
-}
-.chip input:focus-visible + span { outline: 2px solid var(--teal-ink); outline-offset: 2px }
-
-.kform__feld { display: flex; flex-direction: column; gap: .45rem }
+.kform__feld:focus-within::after { transform: scaleX(1) }
 .kform__feld .kenn {
-  color: var(--teal-ink); font-size: .72rem;
+  color: var(--teal); font-size: .72rem;
   transition: color var(--t-fast) var(--ease);
 }
-.kform__feld .kenn em { font-style: normal; color: var(--body); opacity: .7; text-transform: none; letter-spacing: .02em }
+.kform__feld .kenn em {
+  font-style: normal; color: var(--body-dark);
+  text-transform: none; letter-spacing: .02em;
+}
 
 .kform input, .kform textarea {
-  width: 100%; background: transparent; color: var(--ink);
-  border: 0; border-bottom: 1px solid var(--linie);
-  padding: .65rem 0; font: inherit; font-size: .98rem;
+  width: 100%; background: transparent; color: var(--white);
+  border: 0; border-bottom: 1px solid rgba(255,255,255,.22);
+  padding: .7rem 0; font: inherit; font-size: 1.05rem;
   border-radius: 0;
-  transition: border-color var(--t-fast) var(--ease),
-              background var(--t-fast) var(--ease);
+  transition: border-color var(--t-fast) var(--ease);
 }
-.kform textarea { resize: vertical; min-height: 6.5rem; line-height: 1.55 }
-.kform input:hover, .kform textarea:hover { border-bottom-color: var(--body) }
-/* Beim Tippen wird der Strich kraeftig und farbig, das Feld bekommt einen
-   Hauch Flaeche. So sieht man ohne Suchen, wo man gerade schreibt. */
-.kform input:focus, .kform textarea:focus {
-  outline: none;
-  border-bottom-color: var(--teal);
-  border-bottom-width: 2px;
-  padding-bottom: calc(.65rem - 1px);
-  background: linear-gradient(to bottom, rgba(80,186,160,0) 40%, rgba(80,186,160,.07) 100%);
+.kform textarea { resize: vertical; min-height: 8rem; line-height: 1.55 }
+.kform input:hover, .kform textarea:hover { border-bottom-color: rgba(255,255,255,.32) }
+.kform input:focus, .kform textarea:focus { outline: none }
+.kform input:user-invalid, .kform textarea:user-invalid { border-bottom-color: #e0705a }
+.kform__feld:has(:user-invalid)::after { background: #e0705a; transform: scaleX(1) }
+/* Die Selbstausfuellung von Chrome malt sonst ein weisses Feld ins Dunkle. */
+.kform input:-webkit-autofill {
+  -webkit-text-fill-color: #fff;
+  transition: background-color 100000s;
 }
-.kform__feld:focus-within .kenn { color: var(--teal) }
-.kform input:user-invalid, .kform textarea:user-invalid { border-bottom-color: #b23a26 }
 
-.kform__fuss { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem }
-.kform__ab { align-self: start }
+.kform__fuss { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem; margin-top: .4rem }
+.kform__ab { flex: none; justify-content: center; min-width: 14rem }
 .kform__hinweis {
-  font-size: .85rem; line-height: 1.5; color: var(--body); margin: 0;
-  min-height: 1.2em; flex: 1 1 14rem;
+  font-size: .85rem; line-height: 1.5; color: var(--body-dark); margin: 0;
+  min-height: 1.2em; flex: 1 1 12rem;
 }
-.kform__hinweis:not(:empty) { color: var(--teal-ink) }
-.kform__hinweis[data-fehler] { color: #b23a26 }
+.kform__hinweis:not(:empty) { color: var(--teal) }
+.kform__hinweis[data-fehler] { color: #e0705a }
 
 @media (max-width: 640px) {
   .kform__reihe { grid-template-columns: 1fr }
-  .kform__ab { align-self: stretch; justify-content: center }
   .kform__fuss { flex-direction: column-reverse; align-items: stretch }
+  /* In der Spalte wuerde "flex: 1 1 ..." die HOEHE dehnen — der Knopf wurde
+     dadurch fingerhoch. Breite kommt hier von align-items: stretch. */
+  .kform__ab, .kform__hinweis { flex: none; min-width: 0 }
 }
 
 .kontakt__list { display: flex; flex-direction: column; margin-top: 2.5rem }
@@ -993,11 +968,15 @@ html.curtain #wissen { position: sticky; z-index: 6 }
 /* Kontakt und Abschluss bilden einen Block */
 .footer__contact {
   display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: clamp(2.5rem, 5vw, 5.5rem); align-items: start;
+  gap: clamp(2.5rem, 5vw, 5.5rem); align-items: stretch;
   padding-bottom: clamp(3rem, 5vw, 4.5rem);
   margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
   border-bottom: 1px solid var(--linie);
 }
+.footer__contact > div:first-child { display: flex; flex-direction: column }
+/* Die Kontaktzeilen sinken auf die Unterkante des Formulars — so schliessen
+   beide Spalten auf gleicher Hoehe ab statt links ins Leere zu laufen. */
+.footer__contact .kontakt__list { margin-top: auto }
 .footer__contact .kicker { color: var(--teal-ink) }
 .footer__contact .kicker::before { background: currentColor }
 .footer__contact .h2 { font-weight: 800; line-height: 1.08; letter-spacing: -.025em }
@@ -1382,8 +1361,17 @@ body.menu-open .sidebar__menu .bars span:nth-child(3) { transform: translateY(-6
 
 .person { position: relative; scroll-snap-align: start; overflow: hidden; aspect-ratio: 3 / 3.4; background: var(--deep-2) }
 .person + .person { border-left: 1px solid var(--off) }
-.person > img { width: 100%; height: 100%; object-fit: cover; object-position: center 18%; transition: transform 800ms var(--ease-out) }
-.person:hover > img { transform: scale(1.045) }
+/* Ausschnitt und Naehe werden am Element gesetzt (--zoom, --bildpos), nicht
+   durch einen neuen Zuschnitt der Datei — so bleibt das Portrait ungeschnitten
+   und laesst sich jederzeit nachjustieren. */
+.person > img {
+  width: 100%; height: 100%; object-fit: cover;
+  object-position: var(--bildpos, center 18%);
+  transform: scale(var(--zoom, 1));
+  transform-origin: var(--zoompunkt, 50% 50%);
+  transition: transform 800ms var(--ease-out);
+}
+.person:hover > img { transform: scale(calc(var(--zoom, 1) * 1.045)) }
 
 /* Platzhalter für noch fehlende Portraits: Konstruktionsraster statt leerer
    Fläche, damit die Lücke gewollt aussieht und nicht wie ein Ladefehler. */
@@ -1724,6 +1712,31 @@ html.capture .slider__track { overflow: visible }
 .beitrag__text li::before {
   content: ""; position: absolute; left: 0; top: .72em;
   width: .7rem; height: 1px; background: var(--teal);
+}
+
+/* --- Rechtstexte (Impressum, Datenschutz) --------------------------------
+   Lange Gliederung, deshalb eine dritte Ebene und nummerierte Listen. Die
+   Lesespalte ist etwas breiter als beim Beitrag: Rechtstexte werden
+   ueberflogen, nicht gelesen. */
+.beitrag__text h3 {
+  font-size: 1.02rem; font-weight: 600; color: var(--ink);
+  line-height: 1.35; margin: 1.9rem 0 .6rem;
+}
+.beitrag__text h2 + h3 { margin-top: 1.1rem }
+.beitrag__text ol {
+  margin: 0 0 1.4rem 1.2rem; padding: 0;
+  display: flex; flex-direction: column; gap: .55rem;
+}
+.beitrag__text ol li { padding-left: .4rem; list-style: decimal }
+.beitrag__text ol li::before { content: none }
+.beitrag__text a { color: var(--teal-ink); text-decoration: underline; text-underline-offset: .18em }
+.beitrag__text a:hover { color: var(--ink) }
+.beitrag__text strong { color: var(--ink); font-weight: 600 }
+
+.recht__adresse {
+  font-style: normal; line-height: 1.75; color: var(--ink);
+  margin: 0 0 1.6rem; padding-left: 1.2rem;
+  border-left: 2px solid var(--teal);
 }
 
 /* Kernsatz: kein Zitat, sondern die eine Aussage, die haengen bleiben soll. */
