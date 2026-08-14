@@ -8,11 +8,22 @@
 <title>Projekte — Energie Studio</title>
 <meta name="description" content="Referenzprojekte von Energie Studio: Variantenstudie Lengg, Kinderklinik Männedorf, PUK Rheinau, TE Connectivity, DHL Erlensee und Flughafen Frankfurt.">
 <link rel="icon" type="image/svg+xml" href="assets/logo/icon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Overpass+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.css">
-<link rel="stylesheet" href="assets/style.css?v=1786710599">
+<link rel="preload" href="assets/schrift/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="assets/schrift/schrift.css">
+<link rel="stylesheet" href="assets/lib/lenis.css">
+<link rel="stylesheet" href="assets/style.css?v=1786711605">
+<link rel="canonical" href="https://energie-studio.ch/projekte.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Energie Studio">
+<meta property="og:locale" content="de_CH">
+<meta property="og:title" content="Projekte — Energie Studio">
+<meta property="og:description" content="Referenzprojekte von Energie Studio: Variantenstudie Lengg, Kinderklinik Männedorf, PUK Rheinau, TE Connectivity, DHL Erlensee und Flughafen Frankfurt.">
+<meta property="og:url" content="https://energie-studio.ch/projekte.html">
+<meta property="og:image" content="https://energie-studio.ch/assets/img/teilen.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Projekte","description":"Referenzprojekte von Energie Studio: Variantenstudie Lengg, Kinderklinik Männedorf, PUK Rheinau, TE Connectivity, DHL Erlensee und Flughafen Frankfurt.","url":"https://energie-studio.ch/projekte.html","inLanguage":"de-CH","isPartOf":{"@id":"https://energie-studio.ch/#firma"}}</script>
 </head>
 <body>
 
@@ -68,7 +79,7 @@
   <div class="wrap">
 
     <article class="case">
-      <div class="case__media"><img src="assets/img/technik-1.jpg" alt="Technikzentrale mit Verteilern und Rohrleitungen" loading="lazy"></div>
+      <div class="case__media"><img src="assets/img/technik-1.webp" alt="Technikzentrale mit Verteilern und Rohrleitungen" loading="lazy"></div>
       <div>
         <span class="kenn" style="color:var(--teal-ink);display:block;margin-bottom:.7rem">Areal &amp; Versorgung</span>
         <h2>Variantenstudie Lengg</h2>
@@ -82,7 +93,7 @@
     </article>
 
     <article class="case">
-      <div class="case__media"><img src="assets/img/bau-3.jpg" alt="Montagearbeiten an einer Umwälzpumpe" loading="lazy"></div>
+      <div class="case__media"><img src="assets/img/bau-3.webp" alt="Montagearbeiten an einer Umwälzpumpe" loading="lazy"></div>
       <div>
         <span class="kenn" style="color:var(--teal-ink);display:block;margin-bottom:.7rem">Klinik</span>
         <h2>Kinderklinik Männedorf</h2>
@@ -96,7 +107,7 @@
     </article>
 
     <article class="case">
-      <div class="case__media"><img src="assets/img/technik-2.jpg" alt="Rohrleitungen einer Arealversorgung" loading="lazy"></div>
+      <div class="case__media"><img src="assets/img/technik-2.webp" alt="Rohrleitungen einer Arealversorgung" loading="lazy"></div>
       <div>
         <span class="kenn" style="color:var(--teal-ink);display:block;margin-bottom:.7rem">Areal &amp; Versorgung</span>
         <h2>PUK Rheinau</h2>
@@ -109,7 +120,7 @@
     </article>
 
     <article class="case">
-      <div class="case__media"><img src="assets/img/technik-3.jpg" alt="Technikraum mit Wärmeerzeugung" loading="lazy"></div>
+      <div class="case__media"><img src="assets/img/technik-3.webp" alt="Technikraum mit Wärmeerzeugung" loading="lazy"></div>
       <div>
         <span class="kenn" style="color:var(--teal-ink);display:block;margin-bottom:.7rem">Industrie</span>
         <h2>TE Connectivity Ltd.</h2>
@@ -122,7 +133,7 @@
     </article>
 
     <article class="case">
-      <div class="case__media"><img src="assets/img/bau-1.jpg" alt="Installationsarbeiten an der Gebäudetechnik" loading="lazy"></div>
+      <div class="case__media"><img src="assets/img/bau-1.webp" alt="Installationsarbeiten an der Gebäudetechnik" loading="lazy"></div>
       <div>
         <span class="kenn" style="color:var(--teal-ink);display:block;margin-bottom:.7rem">Logistik</span>
         <h2>DHL Erlensee</h2>
@@ -135,7 +146,7 @@
     </article>
 
     <article class="case">
-      <div class="case__media"><img src="assets/img/bau-4.jpg" alt="Anlageninspektion an einer haustechnischen Anlage" loading="lazy"></div>
+      <div class="case__media"><img src="assets/img/bau-4.webp" alt="Anlageninspektion an einer haustechnischen Anlage" loading="lazy"></div>
       <div>
         <span class="kenn" style="color:var(--teal-ink);display:block;margin-bottom:.7rem">Infrastruktur</span>
         <h2>Flughafen Frankfurt</h2>
@@ -230,6 +241,11 @@
           <textarea name="text" rows="5" required></textarea>
         </label>
 
+        <!-- Falle fuer Automaten: unsichtbar, Menschen lassen sie leer. -->
+        <div class="kform__topf" aria-hidden="true">
+          <label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+        </div>
+
         <div class="kform__fuss">
           <button class="btn btn--primary kform__ab" type="submit">Anfrage senden
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6"/></svg>
@@ -263,10 +279,10 @@
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="assets/site.js?v=1786710599"></script>
+<script src="assets/lib/gsap.min.js"></script>
+<script src="assets/lib/ScrollTrigger.min.js"></script>
+<script src="assets/lib/SplitText.min.js"></script>
+<script src="assets/lib/lenis.min.js"></script>
+<script src="assets/site.js?v=1786711895"></script>
 </body>
 </html>

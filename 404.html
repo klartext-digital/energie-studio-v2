@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
+<title>Seite nicht gefunden — Energie Studio</title>
+<meta name="description" content="Diese Adresse gibt es nicht mehr. Hier geht es zurück zur Übersicht.">
+<meta name="robots" content="noindex, follow">
+<link rel="icon" type="image/svg+xml" href="/assets/logo/icon.svg">
+<link rel="preload" href="/assets/schrift/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/schrift/schrift.css">
+<link rel="stylesheet" href="/assets/style.css">
+<style>
+  /* Eigenständige Seite ohne Bewegungslogik: nur was sie braucht. */
+  .weg { min-height: 100svh; display: grid; align-content: center;
+         padding-block: clamp(4rem, 12vh, 8rem) }
+  .weg__zahl { font-family: "Overpass Mono", monospace; font-size: .78rem;
+               letter-spacing: .16em; text-transform: uppercase; color: var(--teal-ink);
+               display: flex; align-items: center; gap: .9rem; margin-bottom: 1.6rem }
+  .weg__zahl::before { content: ""; width: 2.25rem; height: 1px; background: currentColor }
+  .weg__titel { font-weight: 800; line-height: 1.08; letter-spacing: -.025em;
+                font-size: clamp(2rem, 5vw, 3.6rem); margin: 0 0 1.4rem; max-width: 18ch }
+  .weg__text { max-width: 46ch; color: var(--body); font-size: 1.05rem; line-height: 1.65 }
+  .weg__wege { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2.4rem }
+</style>
+</head>
+<body>
+
+<header class="nav is--stuck" id="nav">
+  <div class="nav__inner">
+    <a class="nav__logo" href="/" aria-label="Energie Studio, zur Startseite">
+      <img src="/assets/logo/logo-h.svg" alt="Energie Studio">
+    </a>
+    <nav aria-label="Hauptnavigation">
+      <ul class="nav__links">
+        <li><a href="/#leistungen">Leistungen</a></li>
+        <li><a href="/projekte.html">Projekte</a></li>
+        <li><a href="/#team">Über uns</a></li>
+        <li><a href="/wissen.html">Wissen</a></li>
+        <li><a href="/#kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn--primary nav__cta" href="/#kontakt">Beratung anfragen
+      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6"/></svg>
+    </a>
+  </div>
+</header>
+
+<main class="weg">
+  <div class="wrap">
+    <p class="weg__zahl">Fehler 404</p>
+    <h1 class="weg__titel">Diese Seite gibt es nicht.</h1>
+    <p class="weg__text">Vielleicht hat sich die Adresse geändert, vielleicht ein Tippfehler.
+      Über die Wege unten finden Sie zurück — oder schreiben Sie uns kurz, wonach Sie gesucht haben.</p>
+    <div class="weg__wege">
+      <a class="btn btn--primary" href="/">Zur Startseite
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6"/></svg>
+      </a>
+      <a class="btn btn--ghost" href="/wissen.html">Zum Wissensbereich
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6"/></svg>
+      </a>
+      <a class="btn btn--ghost" href="mailto:hello@energie-studio.ch">hello@energie-studio.ch</a>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

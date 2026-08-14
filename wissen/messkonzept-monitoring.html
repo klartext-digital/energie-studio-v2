@@ -8,11 +8,20 @@
 <title>Messkonzept: ohne Zähler keine Steuerung — Energie Studio</title>
 <meta name="description" content="Welche Messpunkte man wirklich braucht, welche Kennzahlen etwas aussagen und warum ein Zähler zu wenig schlimmer ist als zehn zu viel.">
 <link rel="icon" type="image/svg+xml" href="../assets/logo/icon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Overpass+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.css">
-<link rel="stylesheet" href="../assets/style.css?v=1786710599">
+<link rel="preload" href="../assets/schrift/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/schrift/schrift.css">
+<link rel="stylesheet" href="../assets/lib/lenis.css">
+<link rel="stylesheet" href="../assets/style.css?v=1786711605">
+<link rel="canonical" href="https://energie-studio.ch/wissen/messkonzept-monitoring.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Energie Studio">
+<meta property="og:locale" content="de_CH">
+<meta property="og:title" content="Messkonzept: ohne Zähler keine Steuerung — Energie Studio">
+<meta property="og:description" content="Welche Messpunkte man wirklich braucht, welche Kennzahlen etwas aussagen und warum ein Zähler zu wenig schlimmer ist als zehn zu viel.">
+<meta property="og:url" content="https://energie-studio.ch/wissen/messkonzept-monitoring.html">
+<meta property="og:image" content="https://energie-studio.ch/assets/img/technik-1.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Messkonzept: ohne Zähler keine Steuerung","description":"Welche Messpunkte man wirklich braucht, welche Kennzahlen etwas aussagen und warum ein Zähler zu wenig schlimmer ist als zehn zu viel.","image":"https://energie-studio.ch/assets/img/technik-1.webp","url":"https://energie-studio.ch/wissen/messkonzept-monitoring.html","publisher":{"@type":"Organization","name":"Energie Studio AG","url":"https://energie-studio.ch/"},"inLanguage":"de-CH","isPartOf":{"@type":"Blog","name":"Wissen","url":"https://energie-studio.ch/wissen.html"}}</script>
 </head>
 <body>
 
@@ -66,7 +75,7 @@
   </header>
 
   <figure class="beitrag__bild">
-    <img src="../assets/img/technik-1.jpg" alt="Zählerinstallation mit Wärmezählern" fetchpriority="high">
+    <img src="../assets/img/technik-1.webp" alt="Zählerinstallation mit Wärmezählern" fetchpriority="high">
   </figure>
 
   <div class="wrap">
@@ -136,7 +145,7 @@
       <p class="kicker" style="color:var(--teal-ink)">Weiterlesen</p>
       <div class="news__cards news__cards--zwei">
         <a class="news__card" href="hydraulischer-abgleich.html">
-          <div class="news__media"><img src="../assets/img/technik-1.jpg" alt="Verteiler mit Strangregulierventilen in einer Technikzentrale" loading="lazy"></div>
+          <div class="news__media"><img src="../assets/img/technik-1.webp" alt="Verteiler mit Strangregulierventilen in einer Technikzentrale" loading="lazy"></div>
           <div class="news__body">
             <span class="kenn news__date">Heizung · 7 Min.</span>
             <h3>Hydraulischer Abgleich: der kleinste Eingriff mit der grössten Wirkung</h3>
@@ -148,7 +157,7 @@
         </a>
 
         <a class="news__card" href="waermepumpe-im-bestand.html">
-          <div class="news__media"><img src="../assets/img/bau-4.jpg" alt="Wärmepumpe in einem bestehenden Technikraum" loading="lazy"></div>
+          <div class="news__media"><img src="../assets/img/bau-4.webp" alt="Wärmepumpe in einem bestehenden Technikraum" loading="lazy"></div>
           <div class="news__body">
             <span class="kenn news__date">Sanierung · 6 Min.</span>
             <h3>Wärmepumpe im Bestand: wann sie funktioniert und wann nicht</h3>
@@ -197,6 +206,11 @@
           <textarea name="text" rows="5" required></textarea>
         </label>
 
+        <!-- Falle fuer Automaten: unsichtbar, Menschen lassen sie leer. -->
+        <div class="kform__topf" aria-hidden="true">
+          <label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+        </div>
+
         <div class="kform__fuss">
           <button class="btn btn--primary kform__ab" type="submit">Anfrage senden
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6"/></svg>
@@ -230,10 +244,10 @@
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="../assets/site.js?v=1786710599"></script>
+<script src="../assets/lib/gsap.min.js"></script>
+<script src="../assets/lib/ScrollTrigger.min.js"></script>
+<script src="../assets/lib/SplitText.min.js"></script>
+<script src="../assets/lib/lenis.min.js"></script>
+<script src="../assets/site.js?v=1786711895"></script>
 </body>
 </html>

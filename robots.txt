@@ -1,0 +1,5 @@
+# Energie Studio — alles offen, nichts zu verbergen.
+User-agent: *
+Allow: /
+
+Sitemap: https://energie-studio.ch/sitemap.xml

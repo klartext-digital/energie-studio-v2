@@ -1,0 +1,66 @@
+# Energie Studio — Serverregeln
+# Gilt auf Apache. Laeuft die Seite hinter reinem nginx, greift diese Datei
+# nicht; dann muessen Ablaufzeiten und Weiterleitung dort gesetzt werden.
+
+# ── Eigene Fehlerseite ───────────────────────────────────────────────────
+ErrorDocument 404 /404.html
+
+# ── Adressen der alten WordPress-Seite ───────────────────────────────────
+# Dauerhafte Weiterleitung (301), damit Google den Umzug uebernimmt.
+Redirect 301 /impressum-datenschutz/ /impressum.html
+Redirect 301 /impressum-datenschutz /impressum.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Immer verschluesselt und ohne www — eine Adresse, nicht vier.
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+  # Reste der alten Installation laufen ins Leere statt in Fehlerseiten.
+  RewriteRule ^(wp-content|wp-includes|wp-json|feed|comments)(/.*)?$ / [R=301,L]
+</IfModule>
+
+# ── Ablaufzeiten ─────────────────────────────────────────────────────────
+# Bilder, Schriften und Filmbilder aendern sich nie — sie tragen bei
+# Aenderungen einen neuen Namen. HTML bleibt kurz, damit Korrekturen
+# schnell ankommen.
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html                 "access plus 10 minutes"
+  ExpiresByType text/css                  "access plus 1 year"
+  ExpiresByType application/javascript    "access plus 1 year"
+  ExpiresByType image/webp                "access plus 1 year"
+  ExpiresByType image/jpeg                "access plus 1 year"
+  ExpiresByType image/png                 "access plus 1 year"
+  ExpiresByType image/svg+xml             "access plus 1 year"
+  ExpiresByType font/woff2                "access plus 1 year"
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "\.(webp|jpe?g|png|svg|woff2|css|js)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "public, max-age=600"
+  </FilesMatch>
+  # Grundlegender Schutz, ohne die Seite einzuschraenken
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# ── Kompression ──────────────────────────────────────────────────────────
+<IfModule mod_deflate.c>
+  # "text/javascript" nicht vergessen: die meisten Server melden Skripte so,
+  # und ohne diesen Eintrag gehen sie unkomprimiert raus — das waren hier
+  # 120 KB zu viel.
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+  AddOutputFilterByType DEFLATE text/javascript application/javascript application/x-javascript
+  AddOutputFilterByType DEFLATE application/json image/svg+xml application/xml
+</IfModule>
+
+# ── Verzeichnisse nicht auflisten ────────────────────────────────────────
+Options -Indexes

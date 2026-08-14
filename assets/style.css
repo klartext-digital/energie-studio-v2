@@ -841,6 +841,12 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
   transition: background-color 100000s;
 }
 
+/* Die Falle liegt ausserhalb des Bildes statt auf display:none — manche
+   Automaten ueberspringen versteckte Felder gezielt. */
+.kform__topf {
+  position: absolute; left: -9999px; top: auto;
+  width: 1px; height: 1px; overflow: hidden;
+}
 .kform__fuss { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.4rem; margin-top: .4rem }
 .kform__ab { flex: none; justify-content: center; min-width: 14rem }
 .kform__hinweis {

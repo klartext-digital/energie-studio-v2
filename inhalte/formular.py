@@ -30,6 +30,11 @@ def formular(einzug="      "):
 %(e)s    <textarea name="text" rows="5" required></textarea>
 %(e)s  </label>
 
+%(e)s  <!-- Falle fuer Automaten: unsichtbar, Menschen lassen sie leer. -->
+%(e)s  <div class="kform__topf" aria-hidden="true">
+%(e)s    <label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+%(e)s  </div>
+
 %(e)s  <div class="kform__fuss">
 %(e)s    <button class="btn btn--primary kform__ab" type="submit">Anfrage senden
 %(e)s      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6"/></svg>

@@ -89,7 +89,7 @@
       while ((n = geh.nextNode())) {
         if (!n.nodeValue.trim()) continue;
         var p = n.parentElement;
-        if (!p || p.closest(".sr-only") || p.closest("#pruef-tafel")) continue;
+        if (!p || p.closest(".sr-only") || p.closest(".kform__topf") || p.closest("#pruef-tafel")) continue;
         var cs = getComputedStyle(p);
         if (cs.visibility === "hidden" || cs.display === "none" || parseFloat(cs.opacity) === 0) continue;
         var rg = document.createRange(); rg.selectNodeContents(n);
@@ -145,6 +145,48 @@
     window.addEventListener("resize", lauf);
     window.addEventListener("scroll", lauf, { passive: true });
     setTimeout(lauf, 1200);
+  }
+
+  /* ── Portraits rechtzeitig holen ─────────────────────────────────────────
+     Die Karten liegen in einem waagerechten Schieber innerhalb eines
+     Abschnitts, den der Browser beim Berechnen des Sichtfelds falsch
+     einschaetzt — mit "loading=lazy" allein blieben sie schwarz. Statt sie
+     deshalb sofort mitzuladen (das kostete eine halbe Megabyte auf der
+     Startseite), holen wir sie, sobald der Abschnitt in die Naehe kommt.
+     Faellt JavaScript aus, greift weiterhin das normale Nachladen.      */
+  function initPortraits() {
+    var sek = document.getElementById("team");
+    if (!sek) return;
+    var erledigt = false, beob = null;
+
+    function holen() {
+      if (erledigt) return;
+      erledigt = true;
+      sek.querySelectorAll('img[loading="lazy"]').forEach(function (b) {
+        b.loading = "eager";
+        if (b.decode) b.decode().catch(function () {});
+      });
+      window.removeEventListener("scroll", beimScrollen);
+      if (beob) beob.disconnect();
+    }
+
+    /* Zwei Ausloeser, weil keiner allein ueberall greift: der Beobachter
+       ist der schonende Weg, die Abstandspruefung beim Scrollen faengt
+       Umgebungen ab, in denen er stumm bleibt. */
+    function nah() {
+      var r = sek.getBoundingClientRect();
+      return r.top < window.innerHeight + 1200 && r.bottom > -1200;
+    }
+    function beimScrollen() { if (nah()) holen(); }
+
+    if ("IntersectionObserver" in window) {
+      beob = new IntersectionObserver(function (e) {
+        if (e.some(function (x) { return x.isIntersecting; })) holen();
+      }, { rootMargin: "1200px 0px" });
+      beob.observe(sek);
+    }
+    window.addEventListener("scroll", beimScrollen, { passive: true });
+    beimScrollen();
   }
 
   /* ── Zurueck nach oben ───────────────────────────────────────────────────
@@ -938,42 +980,71 @@
   function initKontaktForm() {
     var ADRESSE = "hello@energie-studio.ch";
 
-    /* querySelectorAll statt querySelector: das Formular steht inzwischen
-       auf jeder Seite, nicht nur auf der Startseite. */
     document.querySelectorAll("[data-kontakt-form]").forEach(function (form) {
       var hinweis = form.querySelector("[data-kontakt-hinweis]");
+      var knopf   = form.querySelector("[type=submit]");
+
+      /* Zeitstempel beim Aufbau: wer in unter drei Sekunden absendet, ist
+         kein Mensch. Wird serverseitig geprueft. */
+      var zeit = document.createElement("input");
+      zeit.type = "hidden"; zeit.name = "zeit";
+      zeit.value = String(Math.floor(Date.now() / 1000));
+      form.appendChild(zeit);
+
+      function sagen(text, fehler) {
+        hinweis.textContent = text;
+        if (fehler) hinweis.setAttribute("data-fehler", "");
+        else hinweis.removeAttribute("data-fehler");
+      }
+
+      /* Ohne Server im Hintergrund (etwa in der Vorschau) uebergeben wir die
+         Nachricht ans Mailprogramm — besser als eine Anfrage, die verfaellt. */
+      function ueberMailprogramm(d) {
+        var koerper = [
+          d.get("text"), "",
+          "— — —",
+          "Name: " + d.get("name"),
+          "E-Mail: " + d.get("mail"),
+          d.get("tel") ? "Telefon: " + d.get("tel") : null
+        ].filter(Boolean).join("\n");
+        window.location.href = "mailto:" + ADRESSE +
+          "?subject=" + encodeURIComponent("Anfrage von " + d.get("name")) +
+          "&body="    + encodeURIComponent(koerper);
+        sagen("Ihr Mailprogramm öffnet sich mit der fertigen Anfrage.", false);
+      }
 
       form.addEventListener("submit", function (e) {
         e.preventDefault();
         var d = new FormData(form);
         var name = (d.get("name") || "").trim();
         var mail = (d.get("mail") || "").trim();
-        var tel  = (d.get("tel")  || "").trim();
         var text = (d.get("text") || "").trim();
 
         if (!name || !mail || !text) {
-          hinweis.textContent = "Bitte Name, E-Mail und Ihr Vorhaben ausfüllen.";
-          hinweis.setAttribute("data-fehler", "");
+          sagen("Bitte Name, E-Mail und Ihr Vorhaben ausfüllen.", true);
           var fehlt = !name ? "name" : (!mail ? "mail" : "text");
           var feld = form.querySelector('[name="' + fehlt + '"]');
           if (feld) feld.focus();
           return;
         }
-        hinweis.removeAttribute("data-fehler");
 
-        var betreff = "Anfrage von " + name;
-        var koerper = [
-          text, "",
-          "— — —",
-          "Name: " + name,
-          "E-Mail: " + mail,
-          tel ? "Telefon: " + tel : null
-        ].filter(Boolean).join("\n");
+        if (knopf) { knopf.disabled = true; }
+        sagen("Wird gesendet …", false);
 
-        window.location.href = "mailto:" + ADRESSE +
-          "?subject=" + encodeURIComponent(betreff) +
-          "&body="    + encodeURIComponent(koerper);
-        hinweis.textContent = "Ihr Mailprogramm öffnet sich mit der fertigen Anfrage.";
+        fetch("senden.php", { method: "POST", body: d })
+          .then(function (r) {
+            /* Kein PHP am Ziel: die Anfrage kommt als HTML-Fehlerseite
+               zurueck. Dann der Weg ueber das Mailprogramm. */
+            var typ = r.headers.get("content-type") || "";
+            if (typ.indexOf("json") < 0) throw new Error("kein Server");
+            return r.json().then(function (a) { return { status: r.status, a: a }; });
+          })
+          .then(function (e2) {
+            sagen(e2.a.text, !e2.a.ok);
+            if (e2.a.ok) form.reset();
+          })
+          .catch(function () { ueberMailprogramm(d); })
+          .then(function () { if (knopf) knopf.disabled = false; });
       });
     });
   }
@@ -981,6 +1052,7 @@
   /* ── Start, genau einmal ─────────────────────────────────────────────── */
   var booted = false;
   function boot() {
+    initPortraits();
     initNachOben();
     initPruefung();
     if (booted) return;

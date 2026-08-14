@@ -8,11 +8,20 @@
 <title>Gebäudeautomation im laufenden Betrieb erweitern — Energie Studio</title>
 <meta name="description" content="Offene Schnittstellen, Datenpunktlisten und Migrationspfade — wie man eine Leittechnik erneuert, ohne das Gebäude anzuhalten.">
 <link rel="icon" type="image/svg+xml" href="../assets/logo/icon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Overpass+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.css">
-<link rel="stylesheet" href="../assets/style.css?v=1786710599">
+<link rel="preload" href="../assets/schrift/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/schrift/schrift.css">
+<link rel="stylesheet" href="../assets/lib/lenis.css">
+<link rel="stylesheet" href="../assets/style.css?v=1786711605">
+<link rel="canonical" href="https://energie-studio.ch/wissen/gebaeudeautomation-nachruesten.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Energie Studio">
+<meta property="og:locale" content="de_CH">
+<meta property="og:title" content="Gebäudeautomation im laufenden Betrieb erweitern — Energie Studio">
+<meta property="og:description" content="Offene Schnittstellen, Datenpunktlisten und Migrationspfade — wie man eine Leittechnik erneuert, ohne das Gebäude anzuhalten.">
+<meta property="og:url" content="https://energie-studio.ch/wissen/gebaeudeautomation-nachruesten.html">
+<meta property="og:image" content="https://energie-studio.ch/assets/img/technik-3.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Gebäudeautomation im laufenden Betrieb erweitern","description":"Offene Schnittstellen, Datenpunktlisten und Migrationspfade — wie man eine Leittechnik erneuert, ohne das Gebäude anzuhalten.","image":"https://energie-studio.ch/assets/img/technik-3.webp","url":"https://energie-studio.ch/wissen/gebaeudeautomation-nachruesten.html","publisher":{"@type":"Organization","name":"Energie Studio AG","url":"https://energie-studio.ch/"},"inLanguage":"de-CH","isPartOf":{"@type":"Blog","name":"Wissen","url":"https://energie-studio.ch/wissen.html"}}</script>
 </head>
 <body>
 
@@ -66,7 +75,7 @@
   </header>
 
   <figure class="beitrag__bild">
-    <img src="../assets/img/technik-3.jpg" alt="Schaltschrank der Gebäudeleittechnik" fetchpriority="high">
+    <img src="../assets/img/technik-3.webp" alt="Schaltschrank der Gebäudeleittechnik" fetchpriority="high">
   </figure>
 
   <div class="wrap">
@@ -141,7 +150,7 @@
       <p class="kicker" style="color:var(--teal-ink)">Weiterlesen</p>
       <div class="news__cards news__cards--zwei">
         <a class="news__card" href="betriebsoptimierung.html">
-          <div class="news__media"><img src="../assets/img/bau-2.jpg" alt="Techniker bei der Kontrolle einer Anlage" loading="lazy"></div>
+          <div class="news__media"><img src="../assets/img/bau-2.webp" alt="Techniker bei der Kontrolle einer Anlage" loading="lazy"></div>
           <div class="news__body">
             <span class="kenn news__date">Betrieb · 4 Min.</span>
             <h3>Betriebsoptimierung: die ersten zwei Jahre entscheiden</h3>
@@ -153,7 +162,7 @@
         </a>
 
         <a class="news__card" href="free-cooling.html">
-          <div class="news__media"><img src="../assets/img/technik-4.jpg" alt="Rückkühler auf einem Flachdach" loading="lazy"></div>
+          <div class="news__media"><img src="../assets/img/technik-4.webp" alt="Rückkühler auf einem Flachdach" loading="lazy"></div>
           <div class="news__body">
             <span class="kenn news__date">Kälte · 5 Min.</span>
             <h3>Free Cooling: wann sich freie Kühlung wirklich rechnet</h3>
@@ -202,6 +211,11 @@
           <textarea name="text" rows="5" required></textarea>
         </label>
 
+        <!-- Falle fuer Automaten: unsichtbar, Menschen lassen sie leer. -->
+        <div class="kform__topf" aria-hidden="true">
+          <label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+        </div>
+
         <div class="kform__fuss">
           <button class="btn btn--primary kform__ab" type="submit">Anfrage senden
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5" stroke="currentColor" stroke-width="1.6"/></svg>
@@ -235,10 +249,10 @@
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
-<script src="../assets/site.js?v=1786710599"></script>
+<script src="../assets/lib/gsap.min.js"></script>
+<script src="../assets/lib/ScrollTrigger.min.js"></script>
+<script src="../assets/lib/SplitText.min.js"></script>
+<script src="../assets/lib/lenis.min.js"></script>
+<script src="../assets/site.js?v=1786711895"></script>
 </body>
 </html>
