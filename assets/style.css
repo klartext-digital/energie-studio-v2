@@ -1124,6 +1124,12 @@ html.curtain #wissen { position: sticky; z-index: 6 }
               border-color var(--t-slow) var(--ease-io);
 }
 .sidebar.is-visible { opacity: 1; visibility: visible }
+/* Erster Farbanstrich ohne Fahrt: Ein- und Ausblenden bleibt weich, nur
+   Hintergrund, Schrift und Logo sitzen sofort richtig. */
+.sidebar.ohne-farbfahrt {
+  transition: opacity var(--t-base) var(--ease-io), visibility var(--t-base);
+}
+.sidebar.ohne-farbfahrt .sidebar__logo img { transition: none }
 /* Helle Kapitel: Leiste kippt mit */
 .sidebar.is-light { background: var(--off); color: var(--ink); border-right-color: var(--linie) }
 

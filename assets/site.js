@@ -683,6 +683,27 @@
         if (r.top <= focus && r.bottom > focus) active = s;
       });
 
+      /* Erst die Farbe, dann das Einblenden. Andersherum erscheint die
+         Leiste in ihrer Grundfarbe (dunkel) und faehrt waehrend des
+         Einblendens nach hell — das sah beim allerersten Scrollen wie ein
+         Aufblitzen aus. Beim ersten Mal wird die Farbe deshalb ohne
+         Uebergang gesetzt; spaetere Kapitelwechsel fahren wie gehabt. */
+      if (active) {
+        var theme = active.getAttribute("data-theme");
+        if (theme !== themeNow) {
+          var erstesMal = themeNow === null;
+          themeNow = theme;
+          if (erstesMal) bar.classList.add("ohne-farbfahrt");
+          bar.classList.toggle("is-light", theme === "light");
+          if (erstesMal) {
+            void bar.offsetWidth;          // Farbe sofort uebernehmen
+            bar.classList.remove("ohne-farbfahrt");
+          }
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute("content", theme === "light" ? "#f7f8f8" : "#080d0b");
+        }
+      }
+
       // Sichtbar, sobald ein Kapitel den Fokuspunkt erreicht hat
       var shown = !!active;
       if (shown !== shownNow) {
@@ -692,14 +713,6 @@
         if (nav) nav.classList.toggle("is--replaced", shown);
       }
       if (!active) return;
-
-      var theme = active.getAttribute("data-theme");
-      if (theme !== themeNow) {
-        themeNow = theme;
-        bar.classList.toggle("is-light", theme === "light");
-        var meta = document.querySelector('meta[name="theme-color"]');
-        if (meta) meta.setAttribute("content", theme === "light" ? "#f7f8f8" : "#080d0b");
-      }
 
       var chapter = active.getAttribute("data-chapter");
       if (chapter !== chapterNow) {
