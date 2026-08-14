@@ -908,9 +908,12 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
 .footer__mark {
   position: absolute; right: -6%; bottom: -14%;
   width: clamp(26rem, 46vw, 56rem); height: auto;
-  /* Auf hellem Grund braucht es die dunkle Fassung des Zeichens und
-     weniger Deckkraft, sonst wird es zur Flaeche statt zum Hintergrund. */
-  opacity: .07; pointer-events: none; user-select: none; z-index: 0;
+  /* Einfarbig und zurueckhaltend: Das Zeichen enthaelt einen tuerkisen
+     Balken — bei dieser Groesse wurde daraus ein gruenlicher Fleck neben
+     den Fusszeilen. Als Hintergrund darf es nur eine Tonstufe sein, nicht
+     eine zweite Farbe. Und kleiner, damit man das E als Zeichen erkennt
+     statt einzelner Rechtecke. */
+  opacity: .06; pointer-events: none; user-select: none; z-index: 0;
 }
 .footer > .wrap { position: relative; z-index: 1 }
 /* Foto über die ganze Breite, oben im Footer. Der Verlauf nach unten
