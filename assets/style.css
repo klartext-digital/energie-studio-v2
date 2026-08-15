@@ -982,13 +982,34 @@ html.curtain #wissen { position: sticky; z-index: 6 }
   margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
   border-bottom: 1px solid var(--linie);
 }
-.footer__contact > div:first-child { display: flex; flex-direction: column }
+/* Die Textspalte ist der Bezugsrahmen fuer die Titelgroesse. Ohne diese
+   Zeile misst cqw gegen den ganzen Kontaktblock (1120 statt 549 Pixel) —
+   die Schrift blieb dann gross und lief aus der Spalte heraus. */
+.footer__contact > div:first-child {
+  display: flex; flex-direction: column;
+  container-type: inline-size;
+}
 /* Die Kontaktzeilen sinken auf die Unterkante des Formulars — so schliessen
    beide Spalten auf gleicher Hoehe ab statt links ins Leere zu laufen. */
 .footer__contact .kontakt__list { margin-top: auto }
 .footer__contact .kicker { color: var(--teal-ink) }
 .footer__contact .kicker::before { background: currentColor }
-.footer__contact .h2 { font-weight: 800; line-height: 1.08; letter-spacing: -.025em }
+/* Der Titel steht hier in einer schmalen Spalte neben dem Formular und
+   traegt einen festen Umbruch. Bleibt die Schrift zu gross, bricht jede der
+   beiden Zeilen noch einmal um — zwischen 1180 und 1600 Pixel wurden aus
+   zwei Zeilen vier. Deshalb an die Spaltenbreite gekoppelt (cqw) statt an
+   die Fensterbreite. "von Ihrem Vorhaben" ist die laengere der beiden
+   Zeilen und gibt das Mass vor. */
+.footer__contact .h2 {
+  font-weight: 800; line-height: 1.08; letter-spacing: -.025em;
+  font-size: clamp(1.9rem, 4.2vw, 4.3rem);      /* Rueckfallebene */
+  font-size: clamp(1.9rem, 8.6cqw, 4.3rem);
+  text-wrap: normal;
+}
+/* Unter der Umbruchgrenze steht der Titel wieder ueber der vollen Breite. */
+@media (max-width: 960px) {
+  .footer__contact .h2 { font-size: clamp(1.9rem, 7.4cqw, 4.3rem) }
+}
 .footer__contact .lead, .footer__contact p { color: var(--body) }
 
 /* --- Footer-Inhalt -------------------------------------------------------- */
