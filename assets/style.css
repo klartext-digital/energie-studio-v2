@@ -4,6 +4,18 @@
    wie "Gebäudetechnik" ueber seine Spalte und wird abgeschnitten. Mit
    size-adjust bekommt die Ersatzschrift dieselbe Laufweite; die Zeile ist
    damit vor UND nach dem Laden gleich breit, und der Sprung entfaellt. */
+/* Josefin hat eine ungewoehnlich kleine x-Hoehe (26 statt 35 Punkte bei
+   64er-Schrift). Ohne Anpassung wirkt die Ersatzschrift deutlich groesser
+   und die Titel springen beim Laden. */
+@font-face {
+  font-family: "Josefin Ersatz";
+  src: local("Helvetica Neue"), local("Helvetica"), local("Arial");
+  size-adjust: 78%;
+  ascent-override: 118%;
+  descent-override: 28%;
+  line-gap-override: 0%;
+  font-display: swap;
+}
 @font-face {
   font-family: "Inter Ersatz";
   src: local("Helvetica Neue"), local("Helvetica"), local("Arial");
@@ -56,6 +68,10 @@
   --ease:      cubic-bezier(.2, 0, 0, 1);
   --ease-io:   cubic-bezier(.4, 0, .2, 1);
   --ease-out:  cubic-bezier(.16, 1, .3, 1);
+
+  /* Titelschrift: Josefin Sans fuer alles Kurze und Grosse, Inter fuer
+     Lesetexte. Ueber eine Variable, damit ein Wechsel eine Zeile bleibt. */
+  --titel: "Josefin Sans", "Josefin Ersatz", system-ui, sans-serif;
 
   --wrap: 1320px;
   --pad:  clamp(1.25rem, 4vw, 3.5rem);
@@ -133,15 +149,17 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
    ist. 10,4 % der Spalte x 9,0 = 94 % der Spalte. Damit bricht kein Wort
    mehr in der Mitte auseinander. */
 .display {
+  font-family: var(--titel);
   font-size: clamp(2.1rem, 4.6vw, 4.8rem);          /* Rueckfallebene */
-  font-size: clamp(2.1rem, 10cqw, 4.8rem);
-  font-weight: 600; line-height: 1.12; letter-spacing: -.02em;
+  font-size: clamp(2.1rem, 10.6cqw, 4.8rem);
+  font-weight: 600; line-height: 1.16; letter-spacing: -.005em;
   text-transform: uppercase; text-wrap: balance;
 }
 .h2 {
+  font-family: var(--titel);
   font-size: clamp(1.9rem, 4.2vw, 4.3rem);          /* Rueckfallebene */
-  font-size: clamp(1.9rem, 7.4cqw, 4.3rem);
-  font-weight: 600; line-height: 1.12; letter-spacing: -.015em;
+  font-size: clamp(1.9rem, 7.8cqw, 4.3rem);
+  font-weight: 600; line-height: 1.16; letter-spacing: 0;
   text-transform: uppercase; text-wrap: balance;
 }
 .lead {
@@ -537,7 +555,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
 
 .lst__h {
   font-size: clamp(1.85rem, 2.9vw, 2.95rem);
-  font-weight: 800; line-height: 1.08; letter-spacing: -.03em;
+  font-weight: 700; line-height: 1.16; letter-spacing: -.005em;
   text-transform: uppercase; overflow-wrap: normal; hyphens: manual;
   margin-bottom: clamp(.9rem, 2vh, 1.5rem);
 }
@@ -755,7 +773,7 @@ html.capture .lst__pin { position: static; height: auto; min-height: 100svh }
 .news__wrap { position: relative; z-index: 1 }
 .news .sec__head .kicker { color: var(--teal-ink) }
 .news .sec__head .kicker::before { background: currentColor }
-.news .sec__head .h2 { font-weight: 800; line-height: 1.08; letter-spacing: -.025em }
+.news .sec__head .h2 { font-weight: 700; line-height: 1.16; letter-spacing: 0 }
 
 .news__cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 1.6vw, 1.5rem) }
 
@@ -1001,7 +1019,7 @@ html.curtain #wissen { position: sticky; z-index: 6 }
    die Fensterbreite. "von Ihrem Vorhaben" ist die laengere der beiden
    Zeilen und gibt das Mass vor. */
 .footer__contact .h2 {
-  font-weight: 800; line-height: 1.08; letter-spacing: -.025em;
+  font-weight: 700; line-height: 1.16; letter-spacing: 0;
   font-size: clamp(1.9rem, 4.2vw, 4.3rem);      /* Rueckfallebene */
   font-size: clamp(1.9rem, 8.6cqw, 4.3rem);
   text-wrap: normal;
@@ -1044,7 +1062,7 @@ html.curtain #wissen { position: sticky; z-index: 6 }
 }
 /* Grosse Wortmarke gibt dem Vorhang Fläche und einen Abschluss */
 .footer__word {
-  font-size: clamp(3rem, 11vw, 10rem); font-weight: 800;
+  font-family: var(--titel); font-size: clamp(3rem, 11vw, 10rem); font-weight: 700;
   line-height: .85; letter-spacing: -.04em; text-transform: uppercase;
   color: rgba(26,26,26,.05);
   margin-bottom: clamp(2rem, 4vw, 3.5rem);
@@ -1072,7 +1090,7 @@ html.curtain #wissen { position: sticky; z-index: 6 }
 .v2--light .kicker, .lst .kicker { color: var(--teal-ink) }
 
 /* Fettere Headline mit Teal-Punkt als Signatur */
-.v2 .h2 { font-weight: 800; line-height: 1.08; letter-spacing: -.025em }
+.v2 .h2 { font-weight: 700; line-height: 1.16; letter-spacing: 0 }
 
 /* Nur die Spaltenteilung weicht in den Kapiteln leicht ab — das Muster
    selbst (Kicker, Titel, Text rechts daneben) kommt aus .sec__head. */
@@ -1797,3 +1815,20 @@ html.capture .slider__track { overflow: visible }
   .beitrag__bild { height: clamp(12rem, 32svh, 18rem) }
   .beitrag__text p, .beitrag__text li { font-size: .98rem }
 }
+
+/* --- Titelschrift ueberall dort, wo sie traegt ---------------------------
+   Kurze, grosse oder ausgezeichnete Texte: Ueberschriften jeder Ebene,
+   Kartentitel, Navigation, Knoepfe, Zahlen. Lange Lesetexte bleiben Inter —
+   Josefins kleine Kleinbuchstaben ermueden ueber tausend Woerter. */
+h1, h2, h3, h4,
+.karte h3, .case h2, .person__ruf, .beitrag__titel,
+.lst__titel, .gewerk__titel, .schritt h3, .news__titel,
+.nav__links a, .mobile-menu a, .sidebar__item .t,
+.btn, .link, .counter, .footer__claim {
+  font-family: var(--titel);
+}
+h3, h4, .karte h3, .case h2, .news__titel { letter-spacing: 0 }
+/* Josefin laeuft schmaler als Inter — in Knoepfen und Navigation braucht sie
+   eine Spur mehr Gewicht und Abstand, sonst wirkt sie duenn. */
+.btn { font-weight: 600; letter-spacing: .04em }
+.nav__links a, .mobile-menu a, .sidebar__item .t { font-weight: 600; letter-spacing: .05em }
