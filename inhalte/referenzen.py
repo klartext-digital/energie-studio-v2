@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Referenzliste — die einzige Quelle für Projekte auf beiden Seiten.
 
-Stand: Liste von Auftraggeber vom 14.08.2026. Alle früheren Einträge sind ersetzt.
+Stand: Referenzliste vom 14.08.2026. Alle früheren Einträge sind ersetzt.
 Es stehen ausschliesslich die gelieferten Angaben darin: keine erfundenen
 Beschreibungen, keine geschätzten Zahlen, keine ausgeschriebenen Kürzel.
 Wer eine Referenz ergänzt, trägt sie hier ein und lässt die Seiten neu bauen.

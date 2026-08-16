@@ -14,7 +14,8 @@ from formular import formular
 for _b in BEITRAEGE:
     _b["inhalt"] = _b["inhalt"] + ERGAENZUNG.get(_b["slug"], [])
 
-ZIEL = "/Users/klartext/Desktop/energie-studio-v2"
+import os
+ZIEL = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 STAND = os.environ.get("STAND", "1")
 
 # Woerter pro Minute beim stillen Lesen deutscher Sachtexte.
