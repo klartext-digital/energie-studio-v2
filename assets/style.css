@@ -177,8 +177,15 @@ p { max-width: 68ch; color: var(--body); text-wrap: pretty }
 
 /* --- Buttons -------------------------------------------------------------- */
 .btn {
+  /* Josefin reserviert in jeder Zeile Platz fuer Unterlaengen. Versalien
+     haben keine — die Zeilenbox reserviert ihn trotzdem, und der sichtbare
+     Text sass dadurch drei Punkte zu HOCH in der Flaeche. Der Ausgleich
+     steht hier einmal zentral; Varianten setzen nur noch --polster-y,
+     sonst haetten sich zwei Polster-Regeln gegenseitig ueberschrieben. */
+  --polster-y: 1rem;
+  --versatz: .12em;
   display: inline-flex; align-items: center; gap: .7rem;
-  padding: 1rem 1.6rem;
+  padding: calc(var(--polster-y) + var(--versatz)) 1.6rem calc(var(--polster-y) - var(--versatz));
   font-size: .82rem; font-weight: 600;
   letter-spacing: .08em; text-transform: uppercase;
   border: 1px solid transparent;
@@ -256,7 +263,7 @@ p { max-width: 68ch; color: var(--body); text-wrap: pretty }
 }
 .nav__links a:hover { color: var(--teal-ink) }
 .nav__links a:hover::after, .nav__links a[aria-current="page"]::after { transform: scaleX(1); transform-origin: left }
-.nav__cta { padding: .85rem 1.3rem; font-size: .74rem }
+.nav__cta { --polster-y: .85rem; padding-inline: 1.3rem; font-size: .74rem }
 
 .burger { display: none; width: 2.75rem; height: 2.75rem; margin-left: auto; flex-direction: column; justify-content: center; gap: 5px }
 .burger span { display: block; height: 2px; width: 24px; background: var(--ink); transition: transform var(--t-base) var(--ease), opacity var(--t-fast) var(--ease) }
@@ -318,7 +325,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
 .hero__title .hero__line { display: block }
 .hero__lead { margin-bottom: 1.9rem; font-size: 1.02rem; max-width: 40ch }
 .hero__actions { display: flex; flex-wrap: wrap; gap: .8rem }
-.hero__actions .btn { padding: .9rem 1.25rem; font-size: .78rem; gap: .55rem }
+.hero__actions .btn { --polster-y: .9rem; padding-inline: 1.25rem; font-size: .78rem; gap: .55rem }
 /* Das Gebäude ist eine eigene Ebene über der ganzen rechten Hälfte und
    steht auf der Unterkante des Bildschirms auf — wie in der Vorlage.
    Es liegt nicht mehr im Raster, darum der Platzhalter in der Mitte. */
@@ -1571,7 +1578,7 @@ html.capture .slider__track { overflow: visible }
   .hero__inner { grid-template-columns: 34% minmax(0, 1fr) minmax(15rem, 17rem) }
   .hero__visual { left: 39%; right: 20% }
   /* etwas kompakter, damit beide Buttons nebeneinander bleiben */
-  .hero__actions .btn { padding: .85rem 1rem; font-size: .74rem; gap: .45rem }
+  .hero__actions .btn { --polster-y: .85rem; padding-inline: 1rem; font-size: .74rem; gap: .45rem }
 }
 
 @media (max-width: 1180px) {
@@ -1681,7 +1688,7 @@ html.capture .slider__track { overflow: visible }
   .lst__punkte li, .lst__slide li { font-size: .82rem }
   .lst__panel { padding-inline: .9rem }
   .hero__actions { flex-direction: column; align-items: stretch }
-  .hero__actions .btn { justify-content: center; padding: .8rem .7rem; font-size: .7rem; letter-spacing: .05em; gap: .4rem }
+  .hero__actions .btn { justify-content: center; --polster-y: .8rem; padding-inline: .7rem; font-size: .7rem; letter-spacing: .05em; gap: .4rem }
   .lst__h { font-size: 1.55rem; letter-spacing: -.02em }
   .lst__pin { padding-inline: 0 }
 }
