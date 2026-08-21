@@ -4,7 +4,17 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
+  # Eine einzige Adresse: die Vorschau-Adresse cozureso.myhostpoint.ch/energie
+  # fuehrt auf die echte Domain. Sonst steht dieselbe Seite unter zwei Adressen
+  # und Google wertet beide ab. Pfade der Zertifikatspruefung bleiben ausgenommen.
+  RewriteCond %{REQUEST_URI} !^/\.well-known/ [NC]
+  RewriteCond %{HTTP_HOST} !^(www\.)?energie-studio\.ch$ [NC]
+  RewriteRule ^(.*)$ https://energie-studio.ch/$1 [R=301,L]
+
   # Immer verschluesselt, immer ohne www — eine Adresse, nicht vier.
+  # Ausnahme fuer .well-known: darueber prueft die Zertifikatsstelle den Besitz
+  # der Domain. Wird das umgeleitet, kann das Zertifikat nicht ausgestellt werden.
+  RewriteCond %{REQUEST_URI} !^/\.well-known/ [NC]
   RewriteCond %{HTTPS} !=on
   RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
   RewriteCond %{HTTP_HOST} ^www\.energie-studio\.ch$ [NC]
