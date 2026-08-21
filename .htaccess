@@ -1,27 +1,32 @@
-# Energie Studio — Serverregeln
-# Gilt auf Apache. Laeuft die Seite hinter reinem nginx, greift diese Datei
-# nicht; dann muessen Ablaufzeiten und Weiterleitung dort gesetzt werden.
-
-# ── Eigene Fehlerseite ───────────────────────────────────────────────────
-ErrorDocument 404 /404.html
-
-# ── Adressen der alten WordPress-Seite ───────────────────────────────────
-# Dauerhafte Weiterleitung (301), damit Google den Umzug uebernimmt.
-Redirect 301 /impressum-datenschutz/ /impressum.html
-Redirect 301 /impressum-datenschutz /impressum.html
-
+# ── Weiterleitungen und Fehlerseite ──────────────────────────────────────
+# Reihenfolge ist entscheidend: erst die bekannten Umzuege, dann erst die
+# Auffangregel. Andersherum verschluckt die Fehlerseite jede Weiterleitung.
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # Immer verschluesselt und ohne www — eine Adresse, nicht vier.
+  # Immer verschluesselt, immer ohne www — eine Adresse, nicht vier.
   RewriteCond %{HTTPS} !=on
   RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
-  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-  RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+  RewriteCond %{HTTP_HOST} ^www\.energie-studio\.ch$ [NC]
+  RewriteRule ^(.*)$ https://energie-studio.ch/$1 [R=301,L]
 
-  # Reste der alten Installation laufen ins Leere statt in Fehlerseiten.
+  # Die einzige Adresse der alten WordPress-Seite, die Google kennt.
+  # Fuehrender Schraegstrich: zeigt auf die Domainwurzel. Greift deshalb
+  # erst, wenn die Seite dort liegt — im Vorschau-Unterordner nicht.
+  RewriteRule ^impressum-datenschutz/?$ /impressum.html [R=301,L]
+
+  # Reste der alten Installation laufen auf die Startseite statt ins Leere.
   RewriteRule ^(wp-content|wp-includes|wp-json|feed|comments)(/.*)?$ / [R=301,L]
 </IfModule>
+
+# Keine Auffangregel per Umschreibung: die wuerde die Fehlerseite mit dem
+# Status 200 ausliefern ("weiche 404"), und Suchmaschinen werten das ab.
+# ErrorDocument liefert korrekt 404 mit.
+ErrorDocument 404 /404.html
+
+# Energie Studio — Serverregeln
+# Gilt auf Apache. Laeuft die Seite hinter reinem nginx, greift diese Datei
+# nicht; dann muessen Ablaufzeiten und Weiterleitung dort gesetzt werden.
 
 # ── Ablaufzeiten ─────────────────────────────────────────────────────────
 # Bilder, Schriften und Filmbilder aendern sich nie — sie tragen bei
