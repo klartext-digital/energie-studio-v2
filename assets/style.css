@@ -1631,7 +1631,18 @@ html.capture .slider__track { overflow: visible }
      normal mitwachsen. Blieb er auf Fensterhoehe festgenagelt, wurden
      die unteren Leistungspunkte einfach abgeschnitten. */
   .lst { height: auto }
-  .lst__pin { position: static; height: auto; overflow: visible; grid-template-columns: 1fr }
+  /* Die Zeilenhoehe von 34svh/30svh weiter oben war fuer die Grafik gedacht,
+     die hier darunter auf display:none steht. Uebrig blieb ein leerer Streifen
+     von rund einem Drittel Bildschirmhoehe am Anfang des Abschnitts. */
+  .lst__pin { position: static; height: auto; overflow: visible;
+              grid-template-columns: 1fr; grid-template-rows: auto }
+  /* Die 1100er-Regel weiter oben stellt das Panel auf zwei Spalten
+     (Schrittleiste + Text). Sie steht spaeter in der Datei als der
+     900er-Block und gewinnt deshalb auch auf dem Handy — der Fliesstext
+     landete in einer 221px schmalen Spalte am rechten Rand und der
+     Abschnitt sah leer aus. Hier ausdruecklich zurueckgesetzt. */
+  .lst__panel { grid-template-columns: minmax(0, 1fr) }
+  .lst__count, .lst__rail, .lst__copy { grid-column: 1 }
   .lst__panel { padding-inline: var(--pad) }
   .lst__slides { display: block }
   .lst__slide { position: static; opacity: 1; visibility: visible; transform: none;
