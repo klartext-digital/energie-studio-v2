@@ -27,12 +27,23 @@
 
   # Reste der alten Installation laufen auf die Startseite statt ins Leere.
   RewriteRule ^(wp-content|wp-includes|wp-json|feed|comments)(/.*)?$ / [R=301,L]
+
+  # Demo-Seiten der alten WordPress-Installation (Softy, ETF und ETZ, Cela ...).
+  # Sie sind schon weg, liefern aber nur 404 — und ein 404 heisst fuer Google
+  # "vielleicht spaeter wieder da". [G] liefert 410 Gone: endgueltig weg.
+  # Damit fliegen die Eintraege beim naechsten Besuch des Google-Robots raus.
+  RewriteRule ^(softy|omi|cela|marie|holandria|made-for-kids-2022)/?$ - [G,L]
+
+  # Archiv-, Schlagwort- und Autorenseiten der alten Installation, ebenso.
+  RewriteRule ^(category|tag|author)(/.*)?$ - [G,L]
 </IfModule>
 
 # Keine Auffangregel per Umschreibung: die wuerde die Fehlerseite mit dem
 # Status 200 ausliefern ("weiche 404"), und Suchmaschinen werten das ab.
 # ErrorDocument liefert korrekt 404 mit.
 ErrorDocument 404 /404.html
+# 410 zeigt dieselbe Fehlerseite, meldet dem Robot aber "endgueltig entfernt".
+ErrorDocument 410 /404.html
 
 # Energie Studio — Serverregeln
 # Gilt auf Apache. Laeuft die Seite hinter reinem nginx, greift diese Datei
