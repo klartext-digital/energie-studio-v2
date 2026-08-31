@@ -437,6 +437,20 @@
       if (label) label.textContent = MARKEN[i];
     }
 
+    /* Auf dem Handy stehen die vier Gewerke untereinander statt hintereinander.
+       Der Anteil "wie weit ist die Sektion durchgescrollt" ergibt dort den
+       falschen Schritt — er stand auf 04, waehrend man noch bei 01 las.
+       Stattdessen gewinnt hier das Gewerk, dessen Oberkante zuletzt ueber
+       dem Lesepunkt (40 % Bildschirmhoehe) vorbeigelaufen ist. */
+    function istHandy() { return window.matchMedia("(max-width: 900px)").matches; }
+    function stufeAusSlides() {
+      var fokus = window.innerHeight * 0.4, i = 0;
+      slides.forEach(function (s, k) {
+        if (s.getBoundingClientRect().top <= fokus) i = k;
+      });
+      return i;
+    }
+
     function travel() { return Math.max(1, section.offsetHeight - window.innerHeight); }
     /* Die letzte Bildschirmlänge gehört dem Vorhang: dort steht das vierte
        Gewerk schon fertig, während die dunkle Fläche hochkommt. */
@@ -445,6 +459,7 @@
     var offenNow = null;
     function update() {
       var r = section.getBoundingClientRect();
+      if (istHandy()) { setStep(stufeAusSlides()); return; }
       var p = -r.top / stufenweg();
       p = Math.max(0, Math.min(0.9999, p));
       setStep(Math.floor(p * N));
@@ -464,6 +479,11 @@
     steps.forEach(function (b) {
       b.addEventListener("click", function () {
         var i = parseInt(b.getAttribute("data-lst-step"), 10);
+        if (istHandy()) {
+          var ziel = slides[i];
+          if (ziel) scrollToY(Math.round(window.scrollY + ziel.getBoundingClientRect().top - 80));
+          return;
+        }
         var top = window.scrollY + section.getBoundingClientRect().top;
         scrollToY(Math.round(top + stufenweg() * (i + 0.5) / N));
       });
