@@ -1666,37 +1666,42 @@ html.capture .slider__track { overflow: visible }
   .lst__slide:first-child { border-top: 0 }
   .lst__visual { display: none }
   /* Statt der ausgeblendeten Bildfolge: das Gewerkfoto im Textblock. */
-  /* Gewerk auf dem Handy: das Foto steht rechts oben und der Text laeuft
-     daran vorbei. Mit einem Raster (Titel | Bild) klaffte zwischen
-     Ueberschrift und Fliesstext eine Luecke, weil die Zeile so hoch wurde
-     wie das Bild. Im Fluss gibt es diese Luecke nicht — der Text beginnt
-     direkt unter dem Titel und fuellt unterhalb des Bildes die volle
-     Breite. Das Bild steht im Quelltext deshalb vor der Ueberschrift. */
-  .lst__slide { padding-block: clamp(1.7rem, 4.5vh, 2.6rem) }
-  .lst__slide::after { content: ""; display: block; clear: both }
+  /* Gewerk auf dem Handy: Ueberschrift, darunter das Foto ueber die ganze
+     Breite, darunter Text und Liste. Das Foto NEBEN den Text zu stellen war
+     zweimal falsch: es blieb briefmarkengross, und der Fliesstext bekam zwei
+     verschiedene Zeilenbreiten (schmal neben dem Bild, breit darunter). So
+     ist das Bild so gross wie die Spalte und jede Zeile gleich lang.
+     Das Bild steht im Quelltext vor der Ueberschrift — deshalb hier die
+     Reihenfolge ueber die Spalte setzen. */
+  .lst__slide {
+    display: flex; flex-direction: column;
+    padding-block: clamp(1.8rem, 4.5vh, 2.8rem);
+  }
+  .lst__slide .lst__h {
+    order: 1; margin-bottom: .9rem;
+    font-size: clamp(1.6rem, 7.4vw, 2.3rem);
+    overflow-wrap: break-word;
+  }
   .lst__foto {
-    /* margin: 0 ist Pflicht — <figure> bringt im Browser 40px Rand mit;
-       davon blieb in der schmalen Spalte ein 47px-Briefmarkenbild uebrig. */
-    display: block;   /* global steht .lst__foto auf display:none */
-    float: right; margin: .3rem 0 .8rem 1rem;
-    /* 34 %: bei 42 % blieben neben dem Bild nur noch rund 20 Zeichen pro
-       Zeile uebrig — der Fliesstext war zerhackt. */
-    width: 34%; max-width: 10rem;
-    /* 4:3 wie die Bilder selbst — quadratisch hiess: einpassen, und das
-       ergab graue Balken oben und unten. */
-    aspect-ratio: 4 / 3; overflow: hidden;
+    /* margin: 0 ist Pflicht — <figure> bringt im Browser 40px Rand mit. */
+    display: block; order: 2; margin: 0 0 1.1rem;
+    width: 100%; aspect-ratio: 16 / 10; overflow: hidden;
     border-radius: var(--radius);
   }
   .lst__foto img { display: block; width: 100%; height: 100%; object-fit: cover }
-  .lst__slide .lst__h {
-    /* Neben dem Foto bleibt nur rund die Haelfte der Breite. "AUTOMATION"
-       lief bei 8vw ueber die Spalte hinaus und schob sich unter das Bild —
-       hier eine Stufe kleiner, plus Umbruch als Sicherheitsnetz. */
-    font-size: clamp(1.45rem, 6.6vw, 2rem);
-    margin-bottom: .75rem;
-    overflow-wrap: break-word;
-  }
-  .lst__slide p { margin-top: 0 }
+  .lst__slide p { order: 3; margin-top: 0 }
+  .lst__liste   { order: 4 }
+
+  /* Tippziele: mit dem Finger braucht es rund 44 Punkte Hoehe. Gemessen
+     waren es 20 Punkte (Footer-Links), 22 (Nach oben), 32 (Zaehlerpunkte
+     und "Alle Projekte ansehen"). Die Optik bleibt, es kommt nur Luft
+     um die Beschriftung herum dazu. */
+  .footer__col ul li a,
+  .kontakt__row dd a { display: inline-block; padding-block: .7rem }
+  .footer__col ul li { margin: 0 }
+  .sec__more .link,
+  .footer__base .nach-oben { display: inline-flex; align-items: center; min-height: 44px }
+  .lst__step { min-height: 44px }
   /* Auf schmalen Schirmen steht alles untereinander — die feste
      Zeilen- und Spaltenzuteilung muss dafür wieder aufgehoben werden,
      sonst hängt der Fliesstext in einer zweiten, unsichtbaren Spalte. */
@@ -1727,6 +1732,26 @@ html.capture .slider__track { overflow: visible }
   .news__cards { grid-template-columns: 1fr }
 }
 
+/* Tablet-Hochformat (640–900 px): hier ist neben dem Bild noch eine
+   ordentliche Textspalte uebrig, also darf das Foto rechts stehen. Unter
+   640 px waere das der Zeilensalat von vorher. */
+@media (min-width: 640px) and (max-width: 900px) {
+  /* Zwei echte Spalten statt Umfluss: der Fliesstext behaelt ueber den
+     ganzen Block EINE Breite. Beim Umfliessen waren die Zeilen neben dem
+     Bild kurz und darunter lang — genau das soll nicht sein. */
+  .lst__slide {
+    display: grid; grid-template-columns: minmax(0, 1fr) 34%;
+    column-gap: clamp(1.2rem, 2.5vw, 2rem); align-items: start;
+  }
+  .lst__slide .lst__h { grid-column: 1; grid-row: 1 }
+  .lst__slide p       { grid-column: 1; grid-row: 2 }
+  .lst__liste         { grid-column: 1; grid-row: 3 }
+  .lst__foto {
+    grid-column: 2; grid-row: 1 / span 3;
+    width: 100%; margin: .4rem 0 0; aspect-ratio: 4 / 3;
+  }
+}
+
 @media (max-width: 640px) {
   .footer__grid { grid-template-columns: 1fr; gap: 2rem }
   .zahlen { grid-template-columns: 1fr }
@@ -1745,16 +1770,6 @@ html.capture .slider__track { overflow: visible }
   .display { font-size: clamp(1.6rem, 9.6cqw, 2.1rem) }
   /* "Frischwasserversorgung" braucht bei 320 px etwas weniger Raum. */
   .lst__punkte li, .lst__slide li { font-size: .82rem }
-  /* Bei dieser Breite bleibt neben einem umflossenen Bild keine lesbare
-     Spalte mehr uebrig — Foto deshalb quer unter die Ueberschrift. Das Bild
-     steht im Quelltext vor dem Titel (das braucht der Umfluss weiter oben),
-     deshalb hier die Reihenfolge ueber die Spalte umsortieren. */
-  .lst__slide { display: flex; flex-direction: column }
-  .lst__slide .lst__h { order: 1 }
-  .lst__foto  { order: 2; float: none; width: 100%; max-width: none;
-                margin: 0 0 1rem; aspect-ratio: 16 / 10 }
-  .lst__slide p { order: 3 }
-  .lst__liste   { order: 4 }
   .lst__panel { padding-inline: .9rem }
   .hero__actions { flex-direction: column; align-items: stretch }
   .hero__actions .btn { justify-content: center; --polster-y: .8rem; padding-inline: .7rem; font-size: .7rem; letter-spacing: .05em; gap: .4rem }
