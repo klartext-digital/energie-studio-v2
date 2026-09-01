@@ -46,7 +46,7 @@
   --nebel:      #edf0ef;
   --linie:      #dde3e1;
   --body:       #5a6764;
-  --teal-ink:   #2b8067;   /* Teal als Textfarbe auf Hell — 4.79:1, erfüllt AA */
+  --teal-ink:   #26745d;   /* Teal als Textfarbe auf Hell — 5.28:1 auf Off, 4.90:1 auf Nebel, 5.62:1 auf Weiss */
   --teal-dark:  #43a68e;
 
   --deep:       #080d0b;   /* dunkle Kapitel nach Vorlage */
@@ -498,7 +498,7 @@ body.menu-open .burger span:nth-child(3) { transform: translateY(-7px) rotate(-4
   font-size: .8rem; letter-spacing: .16em; font-variant-numeric: tabular-nums;
   color: var(--teal-ink);
 }
-.lst__count-t { color: var(--body); opacity: .7; margin-left: .35rem }
+.lst__count-t { color: var(--body); opacity: 1; margin-left: .35rem }
 
 /* Balken 01–04: Punkt, Linie, zwei Zeilen Text */
 /* Auf grossen Bildschirmen stehen die Gewerke in der Seitenleiste — hier
@@ -1054,7 +1054,7 @@ html.curtain #wissen { position: sticky; z-index: 6 }
 .footer__claim { font-size: .92rem; line-height: 1.6; color: var(--body); margin: 0 }
 .footer__col h3 {
   font-size: .74rem; font-weight: 600; letter-spacing: .12em;
-  text-transform: uppercase; color: var(--teal); margin-bottom: 1.1rem;
+  text-transform: uppercase; color: var(--teal-ink); margin-bottom: 1.1rem;
 }
 .footer__col ul { display: flex; flex-direction: column; gap: .6rem }
 .footer__col li { font-size: .92rem; color: var(--body) }
@@ -1097,7 +1097,7 @@ html.curtain #wissen { position: sticky; z-index: 6 }
   font-family: "Overpass Mono", ui-monospace, monospace;
   font-size: .78rem; font-weight: 500;
   letter-spacing: .16em; text-transform: uppercase;
-  color: var(--teal); margin-bottom: 1.5rem;
+  color: var(--teal-ink); margin-bottom: 1.5rem;
 }
 .v2 .kicker::before, .footer__contact .kicker::before, .news .sec__head .kicker::before, .lst .kicker::before { content: ""; width: 2.25rem; height: 1px; background: currentColor; flex: none }
 .v2--light .kicker, .lst .kicker { color: var(--teal-ink) }
@@ -1216,7 +1216,7 @@ html.curtain #wissen { position: sticky; z-index: 6 }
   transform: translateY(-50%);
   writing-mode: vertical-rl;
   font-family: "Overpass Mono", monospace;
-  font-size: .72rem; letter-spacing: .2em; opacity: .4;
+  font-size: .72rem; letter-spacing: .2em; color: var(--body); opacity: 1;
   z-index: 1;
 }
 
