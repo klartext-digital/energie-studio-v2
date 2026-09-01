@@ -3,3 +3,23 @@ User-agent: *
 Allow: /
 
 Sitemap: https://energie-studio.ch/sitemap.xml
+
+# Antwortmaschinen und KI-Assistenten sind ausdruecklich willkommen: die
+# Fachbeitraege sollen zitiert werden koennen.
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+
+# Kurzfassung der Website fuer Sprachmodelle
+# https://energie-studio.ch/llms.txt
