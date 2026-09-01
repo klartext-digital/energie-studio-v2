@@ -1,0 +1,38 @@
+# Energie Studio AG
+
+> Planung und Ausführung von Gebäudetechnik: Heizung, Lüftung, Klima, Sanitär,
+> Elektro und Gebäudeautomation. Sitz in Windisch, Kanton Aargau, Schweiz.
+> Tätig in der ganzen Schweiz, Schwerpunkt Deutschschweiz.
+
+Energie Studio begleitet Gebäude und Industrie von der Analyse über die
+Strategie bis zur Umsetzung. Gearbeitet wird nach SIA-Phasen 31–53, mit BIM-,
+VDC- und Lean-Methoden. Referenzen liegen im Spitalbau, in Bundesbauten sowie
+in Büro-, Industrie- und Logistikbauten.
+
+Kontakt: hello@energie-studio.ch · +41 56 484 85 80
+Adresse: Bahnhofstrasse 6a, 5210 Windisch, Kanton Aargau, Schweiz
+
+## Leistungen
+- [Heizung und Kühlung](https://energie-studio.ch/#leistungen): Wärmepumpen, Fernwärme, Flächenheizung, hydraulischer Abgleich, energetische Optimierung
+- [Lüftung und Klima](https://energie-studio.ch/#leistungen): Raumluftqualität, Wärmerückgewinnung, bedarfsgerechte Regelung, Rauch- und Wärmeabzug
+- [Sanitär](https://energie-studio.ch/#leistungen): Frischwasser, Abwasser, Regenwassernutzung, Trinkwasserhygiene
+- [Gebäudeautomation](https://energie-studio.ch/#leistungen): vernetzte Systeme, Echtzeit-Überwachung, Energiemanagement
+
+## Referenzen
+- [Projekte](https://energie-studio.ch/projekte.html): realisierte Bauten mit Gewerk, Jahr und Bauherrschaft
+
+## Fachbeiträge
+- [Hydraulischer Abgleich](https://energie-studio.ch/wissen/hydraulischer-abgleich.html): Pflicht, Nutzen und Stolpersteine
+- [Wärmepumpe im Bestand](https://energie-studio.ch/wissen/waermepumpe-im-bestand.html): wann sie funktioniert und wann nicht
+- [Fördergelder in der Schweiz](https://energie-studio.ch/wissen/foerdergelder-reihenfolge.html): warum die Reihenfolge über die Zusage entscheidet
+- [Lüftung nach SIA 382/1](https://energie-studio.ch/wissen/lueftung-sia-382.html): was bei der Abnahme geprüft wird
+- [Trinkwasser und Legionellen](https://energie-studio.ch/wissen/trinkwasser-legionellen.html): Temperaturhaltung, Stagnation, Totleitungen
+- [GEAK, Minergie, SNBS](https://energie-studio.ch/wissen/geak-minergie-snbs.html): welches Label wofür
+- [Free Cooling](https://energie-studio.ch/wissen/free-cooling.html): wann sich freie Kühlung rechnet
+- [Betriebsoptimierung](https://energie-studio.ch/wissen/betriebsoptimierung.html): die ersten zwei Jahre nach der Inbetriebnahme
+- [Messkonzept und Monitoring](https://energie-studio.ch/wissen/messkonzept-monitoring.html): welche Zähler wirklich nötig sind
+- [Integrale Planung](https://energie-studio.ch/wissen/integrale-planung.html): warum Einzeloptimierung scheitert
+- [Gebäudeautomation nachrüsten](https://energie-studio.ch/wissen/gebaeudeautomation-nachruesten.html): Schnittstellen und Migrationspfade
+
+## Rechtliches
+- [Impressum und Datenschutz](https://energie-studio.ch/impressum.html)
