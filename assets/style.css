@@ -1923,3 +1923,16 @@ h3, h4, .karte h3, .case h2, .news__titel { letter-spacing: 0 }
    eine Spur mehr Gewicht und Abstand, sonst wirkt sie duenn. */
 .btn { font-weight: 600; letter-spacing: .04em }
 .nav__links a, .mobile-menu a, .sidebar__item .t { font-weight: 600; letter-spacing: .05em }
+
+
+/* Zurueck zur Startseite — auf Unterseiten gab es bisher nur den Browser-Pfeil. */
+.zurueck {
+  display: inline-flex; align-items: center; gap: .5rem;
+  margin-bottom: 1.1rem;
+  font-family: "Overpass Mono", monospace; font-size: .72rem;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--teal-ink); text-decoration: none;
+  transition: gap 260ms var(--ease-out), opacity 260ms var(--ease-out);
+}
+.zurueck:hover { gap: .8rem; opacity: .75 }
+.zurueck:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 2px }
