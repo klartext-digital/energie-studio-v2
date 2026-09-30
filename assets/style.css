@@ -1936,3 +1936,9 @@ h3, h4, .karte h3, .case h2, .news__titel { letter-spacing: 0 }
 }
 .zurueck:hover { gap: .8rem; opacity: .75 }
 .zurueck:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; border-radius: 2px }
+
+
+/* Weg aus dem Gewerk-Schieber auf die jeweilige Leistungsseite. */
+.lst__mehr { margin-top: 1.4rem }
+.lst__mehr .link { font-size: .82rem }
+@media (max-width: 900px) { .lst__mehr { margin-top: 1.1rem } }
