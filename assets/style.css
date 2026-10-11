@@ -1471,8 +1471,25 @@ body.menu-open .sidebar__menu .bars span:nth-child(3) { transform: translateY(-6
 
 .person__bar {
   position: absolute; left: 0; right: 0; bottom: 0; z-index: 2;
-  padding: 1.6rem 1.4rem 1.3rem;
-  background: linear-gradient(to top, rgba(8,13,11,.94) 0%, rgba(8,13,11,.72) 55%, rgba(8,13,11,0) 100%);
+  padding: 4.5rem 1.4rem 1.3rem;
+  /* Weicher Auslauf statt sichtbarer Kante. Ein Verlauf mit wenigen Stufen
+     setzt oben als Linie an, weil die Deckkraft dort schlagartig zu steigen
+     beginnt. Viele Stufen bilden eine S-Kurve nach: unten satt, oben
+     unmerklich auslaufend. */
+  background: linear-gradient(to top,
+    rgba(8,13,11,.94)   0%,
+    rgba(8,13,11,.930) 10%,
+    rgba(8,13,11,.900) 19%,
+    rgba(8,13,11,.852) 28%,
+    rgba(8,13,11,.784) 37%,
+    rgba(8,13,11,.684) 46%,
+    rgba(8,13,11,.570) 55%,
+    rgba(8,13,11,.448) 64%,
+    rgba(8,13,11,.322) 73%,
+    rgba(8,13,11,.200) 82%,
+    rgba(8,13,11,.100) 90%,
+    rgba(8,13,11,.038) 96%,
+    rgba(8,13,11,0)   100%);
   display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 1rem;
 }
 /* Der Abstand um den Namen waechst mit auf. Er darf nicht am zugeklappten
