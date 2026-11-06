@@ -22,6 +22,7 @@ Adresse: Bahnhofstrasse 6a, 5210 Windisch, Kanton Aargau, Schweiz
 - [Projekte](https://energie-studio.ch/projekte.html): realisierte Bauten mit Gewerk, Jahr und Bauherrschaft
 
 ## Fachbeiträge
+- [Wärmepumpen in grossen Gebäuden](https://energie-studio.ch/wissen/waermepumpe-lastspitzen.html): Lastspitzen im Winter vermeiden
 - [Hydraulischer Abgleich](https://energie-studio.ch/wissen/hydraulischer-abgleich.html): Pflicht, Nutzen und Stolpersteine
 - [Wärmepumpe im Bestand](https://energie-studio.ch/wissen/waermepumpe-im-bestand.html): wann sie funktioniert und wann nicht
 - [Fördergelder in der Schweiz](https://energie-studio.ch/wissen/foerdergelder-reihenfolge.html): warum die Reihenfolge über die Zusage entscheidet
