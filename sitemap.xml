@@ -6,97 +6,97 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/projekte.html</loc>
+    <loc>https://energie-studio.ch/projekte</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/wissen.html</loc>
+    <loc>https://energie-studio.ch/wissen</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/wissen/betriebsoptimierung.html</loc>
+    <loc>https://energie-studio.ch/wissen/betriebsoptimierung</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/wissen/foerdergelder-reihenfolge.html</loc>
+    <loc>https://energie-studio.ch/wissen/foerdergelder-reihenfolge</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/wissen/free-cooling.html</loc>
+    <loc>https://energie-studio.ch/wissen/free-cooling</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/wissen/geak-minergie-snbs.html</loc>
+    <loc>https://energie-studio.ch/wissen/geak-minergie-snbs</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/wissen/gebaeudeautomation-nachruesten.html</loc>
+    <loc>https://energie-studio.ch/wissen/gebaeudeautomation-nachruesten</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/wissen/hydraulischer-abgleich.html</loc>
+    <loc>https://energie-studio.ch/wissen/hydraulischer-abgleich</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/wissen/integrale-planung.html</loc>
+    <loc>https://energie-studio.ch/wissen/integrale-planung</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/wissen/lueftung-sia-382.html</loc>
+    <loc>https://energie-studio.ch/wissen/lueftung-sia-382</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/wissen/messkonzept-monitoring.html</loc>
+    <loc>https://energie-studio.ch/wissen/messkonzept-monitoring</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/wissen/trinkwasser-legionellen.html</loc>
+    <loc>https://energie-studio.ch/wissen/trinkwasser-legionellen</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/wissen/waermepumpe-im-bestand.html</loc>
+    <loc>https://energie-studio.ch/wissen/waermepumpe-im-bestand</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/wissen/waermepumpe-lastspitzen.html</loc>
+    <loc>https://energie-studio.ch/wissen/waermepumpe-lastspitzen</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/impressum.html</loc>
+    <loc>https://energie-studio.ch/impressum</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/leistungen/heizung-kuehlung.html</loc>
+    <loc>https://energie-studio.ch/leistungen/heizung-kuehlung</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/leistungen/lueftung-klima.html</loc>
+    <loc>https://energie-studio.ch/leistungen/lueftung-klima</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/leistungen/sanitaer.html</loc>
+    <loc>https://energie-studio.ch/leistungen/sanitaer</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://energie-studio.ch/leistungen/gebaeudeautomation.html</loc>
+    <loc>https://energie-studio.ch/leistungen/gebaeudeautomation</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
