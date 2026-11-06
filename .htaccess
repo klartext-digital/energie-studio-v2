@@ -1,6 +1,10 @@
 # ── Weiterleitungen und Fehlerseite ──────────────────────────────────────
 # Reihenfolge ist entscheidend: erst die bekannten Umzuege, dann erst die
 # Auffangregel. Andersherum verschluckt die Fehlerseite jede Weiterleitung.
+# "wissen" ist Seite UND Ordner: ohne das haengt Apache einen Schraegstrich an.
+DirectorySlash Off
+Options -MultiViews
+
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
@@ -20,10 +24,25 @@
   RewriteCond %{HTTP_HOST} ^www\.energie-studio\.ch$ [NC]
   RewriteRule ^(.*)$ https://energie-studio.ch/$1 [R=301,L]
 
+  # Saubere Adressen ohne .html (06.11.2026). Die Dateien heissen weiter .html,
+  # sichtbar ist nur die kurze Adresse. Alte Adressen leiten dauerhaft um.
+  # Ausgenommen: Fehlerseite und die Google-Bestaetigungsdatei (NIE umleiten).
+  # THE_REQUEST statt des Pfads, sonst laeuft die interne Umschreibung im Kreis.
+  RewriteCond %{THE_REQUEST} \s/+index\.html[\s?] [NC]
+  RewriteRule ^index\.html$ / [R=301,L]
+  RewriteCond %{REQUEST_URI} !^/(404|google88d67248850361f7)\.html$ [NC]
+  RewriteCond %{THE_REQUEST} \s/+([^?\s]+)\.html[\s?] [NC]
+  RewriteRule ^ /%1 [R=301,L]
+
+  # Schraegstrich am Ende weg. "leistungen" hat keine eigene Seite: Startseite.
+  RewriteRule ^leistungen/?$ /#leistungen [NE,R=301,L]
+  RewriteCond %{REQUEST_URI} !^/\.well-known/ [NC]
+  RewriteRule ^(.+)/$ /$1 [R=301,L]
+
   # Die einzige Adresse der alten WordPress-Seite, die Google kennt.
   # Fuehrender Schraegstrich: zeigt auf die Domainwurzel. Greift deshalb
   # erst, wenn die Seite dort liegt — im Vorschau-Unterordner nicht.
-  RewriteRule ^impressum-datenschutz/?$ /impressum.html [R=301,L]
+  RewriteRule ^impressum-datenschutz/?$ /impressum [R=301,L]
 
   # Reste der alten Installation laufen auf die Startseite statt ins Leere.
   RewriteRule ^(wp-content|wp-includes|wp-json|feed|comments)(/.*)?$ / [R=301,L]
@@ -36,6 +55,10 @@
 
   # Archiv-, Schlagwort- und Autorenseiten der alten Installation, ebenso.
   RewriteRule ^(category|tag|author)(/.*)?$ - [G,L]
+
+  # Kurze Adresse zeigt intern auf die .html-Datei. Muss zuletzt stehen.
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.+)$ $1.html [L]
 </IfModule>
 
 # Keine Auffangregel per Umschreibung: die wuerde die Fehlerseite mit dem
