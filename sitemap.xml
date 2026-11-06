@@ -71,6 +71,11 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://energie-studio.ch/wissen/waermepumpe-lastspitzen.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://energie-studio.ch/impressum.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.2</priority>
