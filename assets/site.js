@@ -1051,7 +1051,9 @@
         if (knopf) { knopf.disabled = true; }
         sagen("Wird gesendet …", false);
 
-        fetch("senden.php", { method: "POST", body: d })
+        /* Fester Pfad ab der Domainwurzel: das Formular steht auch auf Unterseiten
+           wie /wissen/... und /leistungen/..., dort gibt es keine eigene senden.php. */
+        fetch("/senden.php", { method: "POST", body: d })
           .then(function (r) {
             /* Kein PHP am Ziel: die Anfrage kommt als HTML-Fehlerseite
                zurueck. Dann der Weg ueber das Mailprogramm. */
